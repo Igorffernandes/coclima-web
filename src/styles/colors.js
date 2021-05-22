@@ -10,6 +10,7 @@ const Colors = {
   brancoDaMassa: "#FFFFFF",
   pretoDaMassa: "#1B2430",
   darkCyanBlue: "#142847",
+  grey3: "#F8F8F8",
 };
 
 export default Colors;
