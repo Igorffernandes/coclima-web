@@ -1,6 +1,7 @@
 const routePaths = {
   authRoutes: {
     login: '/',
+    feiraoDoComponent: '/showroom',
   },
   mainRoutes: {
     dashboard: '/dashboard',

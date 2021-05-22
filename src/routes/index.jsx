@@ -28,12 +28,15 @@ import BlockedApps from 'screens/Main/BlockedApps/BlockedAppsPage';
 
 import MapsView from 'screens/Main/Maps/MapsView';
 
+import ComponentShowRoom from 'screens/ComponentShowRoom';
+
 import LogsList from 'screens/Main/Logs/LogsList';
 import LogPage from 'screens/Main/Logs/LogShow';
 
 const Router = () => (
   <Switch>
     <Route path={routesEnum.authRoutes.login} exact component={LoginPage} />
+    <Route path={routesEnum.authRoutes.feiraoDoComponent} exat component={ComponentShowRoom} />
     <Route
       path={routesEnum.mainRoutes.dashboard}
       component={DashboardPage}
