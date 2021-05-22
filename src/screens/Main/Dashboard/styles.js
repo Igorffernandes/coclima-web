@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import dashboard from '../../../assets/Images/dashboard.jpg';
 
 export const Container = styled.div`
   height: 100vh;
@@ -9,6 +8,6 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   margin-left: 250px;
-  background-image: url(${dashboard});
+  background-color: 'white';
   background-size: cover;
 `;
