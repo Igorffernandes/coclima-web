@@ -27,6 +27,7 @@ export const FormPasswordForgot = styled.a`
   text-decoration: underline;
   font-family: "Inter";
   color: ${colors.cinzaDaMassa};
+  cursor: pointer;
 `;
 
 export const FormTitle = styled.a`
