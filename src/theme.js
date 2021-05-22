@@ -22,10 +22,10 @@ const blue = {
 };
 
 const green = {
-  light: "#81C784",
-  main: "#4CAF50",
-  dark: "#388E3C",
-  contrastText: "#FFF",
+  light: '#81C784',
+  main: '#0EC164',
+  dark: '#388E3C',
+  contrastText: '#FFF',
 };
 
 const red = {
@@ -65,7 +65,7 @@ const black = {
 
 const theme = {
   palette: {
-    primary: black,
+    primary: green,
     secondary: orange,
     success: blue,
     warning: white,

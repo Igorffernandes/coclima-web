@@ -1,7 +1,7 @@
 {
-  "name": "armario-web",
+  "name": "coclima-web",
   "version": "1.0.0",
-  "description": "Armario web",
+  "description": "CoClima web",
   "private": false,
   "main": "dist/index.js",
   "dependencies": {
@@ -49,7 +49,7 @@
     "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
   },
   "keywords": [],
-  "author": "Armario web",
+  "author": "CoClima web",
   "license": "MIT",
   "optionalDependencies": {
     "@types/googlemaps": "3.39.6",
