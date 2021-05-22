@@ -6,6 +6,7 @@ const Colors = {
   verdeDaMassa: "#0EC164",
   verdeClaroDaMassa: "#2e7a5f",
   verdeMaisClaroDaMassa: "#349b75",
+  cinzaDaMassa: "#808EA9",
   azulDaMassa: "#205BAF",
   brancoDaMassa: "#FFFFFF",
   pretoDaMassa: "#1B2430",
