@@ -10,7 +10,6 @@ export const Container = styled.div`
   align-items: flex-start;
   margin-left: 258px;
   background-color: ${colors.brancoDaMassa};
-  background-size: cover;
 `;
 
 export const Header = styled.div`
@@ -75,28 +74,124 @@ export const Transfer = styled.div`
 export const ChartDiv = styled.div`
   display: flex;
   flex-direction: column;
+  margin-top: 35px;
   width: 100%;
 `;
 
 export const ChartOptions = styled.div`
   display: flex;
-  width: 100%;
+  width: 95%;
   justify-content: space-between;
   align-items: center;
+  margin-left: 36px;
 `;
 
 export const TimeOption = styled.div`
-
+  display: flex;
 `;
 
 export const ChartType = styled.div`
-
+  display: flex;
 `;
 
-export const OptionText = styled.a`
+export const Hr = styled.div`
+  margin-left: 36px;
+  margin-top: 35px;
+  margin-bottom: 48px;
+  width: 95%;
+  height: 1px;
+  background-color: ${colors.cinzaDaMassa};
+`;
+
+export const OptionText1 = styled.a`
   font-family: 'Inter';
   font-weight: 700;
   font-size: 14px;
-  color: ${props => props.active ? colors.verdeDaMassa : colors.darkCyanBlue };
+  color: ${props => props.active === '30d' ? colors.verdeDaMassa : colors.darkCyanBlue };
   text-transform: uppercase;
+  margin-right: 15px;
+  margin-left: 15px;
+  cursor: pointer;
 `;
+
+export const OptionText2 = styled.a`
+  font-family: 'Inter';
+  font-weight: 700;
+  font-size: 14px;
+  color: ${props => props.active === '3m' ? colors.verdeDaMassa : colors.darkCyanBlue };
+  text-transform: uppercase;
+  margin-right: 15px;
+  margin-left: 15px;
+  cursor: pointer;
+`;
+
+export const OptionText3 = styled.a`
+  font-family: 'Inter';
+  font-weight: 700;
+  font-size: 14px;
+  color: ${props => props.active === '1a' ? colors.verdeDaMassa : colors.darkCyanBlue };
+  text-transform: uppercase;
+  margin-right: 15px;
+  margin-left: 15px;
+  cursor: pointer;
+`;
+
+export const OptionText4 = styled.a`
+  font-family: 'Inter';
+  font-weight: 700;
+  font-size: 14px;
+  color: ${props => props.active === 'tudo' ? colors.verdeDaMassa : colors.darkCyanBlue };
+  text-transform: uppercase;
+  margin-right: 15px;
+  margin-left: 15px;
+  cursor: pointer;
+`;
+
+export const OptionChart1 = styled.a`
+  font-family: 'Inter';
+  font-weight: 700;
+  font-size: 14px;
+  color: ${props => props.active === 'line' ? colors.verdeDaMassa : colors.darkCyanBlue };
+  text-transform: uppercase;
+  margin-right: 15px;
+  margin-left: 15px;
+  cursor: pointer;
+`;
+
+export const OptionChart2 = styled.a`
+  font-family: 'Inter';
+  font-weight: 700;
+  font-size: 14px;
+  color: ${props => props.active === 'bar' ? colors.verdeDaMassa : colors.darkCyanBlue };
+  text-transform: uppercase;
+  margin-right: 15px;
+  margin-left: 15px;
+  cursor: pointer;
+`;
+
+export const OptionChart3 = styled.a`
+  font-family: 'Inter';
+  font-weight: 700;
+  font-size: 14px;
+  color: ${props => props.active === 'list' ? colors.verdeDaMassa : colors.darkCyanBlue };
+  text-transform: uppercase;
+  margin-right: 15px;
+  margin-left: 15px;
+  cursor: pointer;
+`;
+
+export const FilterCardsDiv = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const FilterOptions = styled.div`
+  margin-right: 36px;
+  display: flex;
+  width: 50%;
+  justify-content: flex-end;
+  align-items: center;
+`;
+

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from "@material-ui/core/Button";
 
 import {
   Container,
@@ -12,22 +13,34 @@ import {
   ChartOptions,
   TimeOption,
   ChartType,
-  OptionText,
+  OptionText1,
+  OptionText2,
+  OptionText3,
+  OptionText4,
+  OptionChart1,
+  OptionChart2,
+  OptionChart3,
+  Hr,
+  FilterCardsDiv,
+  FilterOptions,
 } from './styles';
 import InfoCards from 'components/InfoCards';
 import FilterCards from 'components/FilterCards';
 import LineChart from 'components/LineChart';
 
+import colors from 'styles/colors';
+
 const Dashboard = () => {
   const [planting, setPlanting] = useState(true);
   const [transfer, setTransfer] = useState(false);
-  const [filterType, setFilterType] = useState('line')
+  const [chartType, setChartType] = useState('line');
+  const [range, setChartRange] = useState('30d');
   const [data, setData] = useState({
     three: 13,
     carbon: 1690,
     capital: 74000.32
   });
-  const [filterData, setFilterData] = useState([
+  const [chartData, setChartData] = useState([
     { x: 1, y: 7 },
     { x: 2, y: 5 },
     { x: 3, y: 1 },
@@ -61,20 +74,42 @@ const Dashboard = () => {
         <Planting selected={planting} onClick={() => handleChange(planting)}>PLANTIO</Planting>
         <Transfer selected={transfer} onClick={() => handleChange(transfer)}>REPASSE</Transfer>
       </PlantingTransferDiv>
-      <FilterCards info={data} />
+      <FilterCardsDiv>
+        <FilterCards info={data} />
+        <FilterOptions>
+          <Button
+            variant="outlined"
+            color="secondary"
+            style={{
+              color: colors.darkCyanBlue,
+              borderRadius: 8,
+              fontWeight: 'bold',
+              fontFamily: 'Inter',
+              paddingTop: 15,
+              paddingBottom: 15,
+              paddingRight: 30,
+              paddingLeft: 30,
+            }}
+            onClick={() => null}
+          >
+            Filtros
+          </Button>
+        </FilterOptions>
+      </FilterCardsDiv>
       <ChartDiv>
-        <LineChart type={filterType} filter={filterData} />
+        <LineChart type={chartType} filter={chartData} />
+        <Hr />
         <ChartOptions>
           <TimeOption>
-            <OptionText>30d</OptionText>
-            <OptionText>3m</OptionText>
-            <OptionText>1a</OptionText>
-            <OptionText>tudo</OptionText>
+            <OptionText1 active={range} onClick={() => setChartRange('30d')}>30d</OptionText1>
+            <OptionText2 active={range} onClick={() => setChartRange('3m')}>3m</OptionText2>
+            <OptionText3 active={range} onClick={() => setChartRange('1a')}>1a</OptionText3>
+            <OptionText4 active={range} onClick={() => setChartRange('tudo')}>tudo</OptionText4>
           </TimeOption>
           <ChartType>
-            <OptionText>linha</OptionText>
-            <OptionText>barra</OptionText>
-            <OptionText>lista</OptionText>
+            <OptionChart1 active={chartType} onClick={() => setChartType('line')}>linha</OptionChart1>
+            <OptionChart2 active={chartType} onClick={() => setChartType('bar')}>barra</OptionChart2>
+            <OptionChart3 active={chartType} onClick={() => setChartType('list')}>lista</OptionChart3>
           </ChartType>
         </ChartOptions>
       </ChartDiv>

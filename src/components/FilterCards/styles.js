@@ -4,7 +4,8 @@ import colors from '../../styles/colors';
 export const Container = styled.div`
   margin-top: 40px;
   display: flex;
-  justify-content: center;
+  width: 50%;
+  justify-content: flex-start;
   align-items: center;
   margin-left: 14px;
 `;

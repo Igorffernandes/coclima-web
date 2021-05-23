@@ -15,9 +15,9 @@ const orange = {
 };
 
 const blue = {
-  light: "#3a74c4",
-  main: "#205BAF",
-  dark: "#0d4087",
+  light: "#1b365e",
+  main: "#142847",
+  dark: "#0d1a2d",
   contrastText: "#FFF",
 };
 
@@ -66,8 +66,8 @@ const black = {
 const theme = {
   palette: {
     primary: green,
-    secondary: orange,
-    success: blue,
+    secondary: blue,
+    success: orange,
     warning: white,
     error: red,
     blue,
