@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
+import SideBarIcon from 'components/SideBarIcon';
+
 import colors from '../styles/colors';
 
 const SidebarLink = styled(Link)`
@@ -10,19 +12,14 @@ const SidebarLink = styled(Link)`
   color: ${colors.brancoDaMassa};
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
   list-style: none;
   height: 40px;
+  width: 140px;
   text-decoration: none;
-  background: ${(props) =>
-    props.active ? colors.pretoDaMassa : 'transparent'};
   font-size: 18px;
-  border-left: ${(props) => (props.active ? '9px solid ' : '')};
   border-color: ${colors.brancoDaMassa};
 
   &:hover {
-    background: ${colors.pretoDaMassa};
-    border-left: 9px solid ${colors.brancoDaMassa};
     cursor: pointer;
     color: ${colors.verdeDaMassa};
   }
@@ -35,8 +32,23 @@ const SidebarLink = styled(Link)`
 const SidebarLabel = styled.span`
   margin-left: 24px;
   font-weight: bold;
-  color: ${(props) =>
-    props.active ? colors.verdeDaMassa : colors.pretoDaMassa};
+  font-family: Inter;
+  font-style: normal;
+  color: #0A8F4A;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+`;
+
+const SideBarItem = styled.div`
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: ${(props) =>
+    props.active ? colors.greenLight : 'transparent'};
+  border-radius: 8px;
+
 `;
 
 const SubMenu = ({ item }) => {
@@ -54,12 +66,12 @@ const SubMenu = ({ item }) => {
         onClick={item.subNav && showSubnav}
         active={active}
       >
-        <div>
-          {item.icon}
+        <SideBarItem active={active}>
+          <SideBarIcon iconName={item.iconString} active={active} />
           <SidebarLabel id="desc" active={active}>
             {item.title}
           </SidebarLabel>
-        </div>
+        </SideBarItem>
       </SidebarLink>
     </>
   );
