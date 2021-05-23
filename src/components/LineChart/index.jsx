@@ -1,24 +1,54 @@
 import React from 'react';
 
-import { VictoryLine } from 'victory';
+import { VictoryLine, VictoryBar } from 'victory';
 
-const LineChart = ({}) => {
-  return(
+const LineChart = ({type, filter}) => {
+  if (type === 'line') {
+    return( 
+      <div>
+          <VictoryLine
+            height={400}
+            width={1850}
+            style={{
+              data: { stroke: "#0A8F4A" },
+              parent: {
+                border: "0px solid #ccc",
+              },
+            }}
+            data={filter}
+          />
+      </div>
+    )
+  }
+
+  if (type === 'bar') {
+    return( 
+      <div>
+          <VictoryBar
+            style={{
+              data: { stroke: "#0A8F4A" },
+              parent: {
+                border: "0px solid #ccc",
+                width: '100%',
+              },
+            }}
+            data={filter}
+          />
+      </div>
+    )
+  }
+
+  return( 
     <div>
         <VictoryLine
           style={{
             data: { stroke: "#0A8F4A" },
-            parent: { border: "1px solid #ccc"},
+            parent: {
+              border: "0px solid #ccc",
+              width: '100%',
+            },
           }}
-          data={[
-            { x: 1, y: 7 },
-            { x: 2, y: 5 },
-            { x: 3, y: 1 },
-            { x: 4, y: 8 },
-            { x: 5, y: 10 },
-            { x: 6, y: 20 },
-            { x: 7, y: 18 }
-          ]}
+          data={filter}
         />
     </div>
   )

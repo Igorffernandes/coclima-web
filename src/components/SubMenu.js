@@ -17,6 +17,7 @@ const SidebarLink = styled(Link)`
   width: 140px;
   text-decoration: none;
   font-size: 18px;
+  margin: 8px 0 8px 0;
   border-color: ${colors.brancoDaMassa};
 
   &:hover {

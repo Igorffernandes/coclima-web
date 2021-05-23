@@ -8,7 +8,7 @@ import { SidebarData } from './SidebarData';
 import SubMenu from './SubMenu';
 import colors from '../styles/colors';
 import { useAuth } from 'hooks/AuthContext';
-import Logo from 'components/Logo';
+import coclimaLogo from '../assets/Images/logoCoClima.png';
 
 import defaultAvatar from 'assets/Images/avatarPlaceholder.png';
 import exitIcon from 'assets/icons/exitIcon.png';
@@ -43,7 +43,7 @@ const SidebarNav = styled.nav`
   left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
   transition: 350ms;
   z-index: 10;
-  box-shadow: 0px 0px 10px 2px #1b2430;
+  box-shadow: 1px 1px 1px 1px #EBEFF2;
 `;
 
 const SidebarWrap = styled.div`
@@ -90,15 +90,6 @@ const UserName = styled.a`
   color: '#192A3E';
 `;
 
-const UserIcon = styled.img.attrs(props => ({
-  src: props.imagePath,
-}))`
-  width: 60px;
-  height: 60px;
-  border-radius: 10px;
-  background-size: contain;
-`;
-
 const UserEdit = styled.div`
   cursor: pointer;
 `;
@@ -123,11 +114,10 @@ const Divider = styled.div`
 
 const BottomView = styled.div`
   display: flex;
-  flex:1;
   flex-direction: column;
   justify-content: space-between;
   height: 55%;
-  padding: 0px 24px 40px 24px;
+  padding: 0px 24px 20px 24px;
 `;
 
 const ExitIcon = styled.img.attrs({
@@ -157,24 +147,33 @@ const ExitString = styled.a`
   margin-left: 12px;
 `;
 
+const CoClima = styled.img`
+
+`;
+
+const UserIcon = styled.img`
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  background-size: contain;
+`;
 
 const Sidebar = () => {
   const [sidebar] = useState(true);
   const { tokenExpireAt, name, signOut } = useAuth();
-  const classes = useStyles();
   
   const expired = tokenExpireAt ? moment.unix(tokenExpireAt).isBefore() : true;
 
   return (
     <>
-      {/* {!expired && ( */}
+      {!expired && (
         <IconContext.Provider value={{ color: colors.pretoDaMassa }}>
           <SidebarNav sidebar={sidebar}>
             <SidebarWrap>
               <TopView>
                 <UserDiv>
                   <UserImg>
-                  <UserIcon imagePath={defaultAvatar}/>
+                  <UserIcon src={defaultAvatar}/>
                   </UserImg>
                   <UserInfo>
                     <UserName>{name || 'Roberta Estivan'}</UserName>
@@ -188,21 +187,21 @@ const Sidebar = () => {
                 {SidebarData.map((item, index) => {
                   return <SubMenu item={item} key={index} />;
                 })}
-                </TopView>
+              </TopView>
               <Divider />
               <BottomView>
-                <ExitView>
+                <ExitView onClick={signOut}>
                   <ExitIcon />
                   <ExitString>
                     {'Sair'}
                   </ExitString>
                 </ExitView>
-                <Logo type='full' />
+                <CoClima src={coclimaLogo} />
               </BottomView>
             </SidebarWrap>
           </SidebarNav>
         </IconContext.Provider>
-      {/* )} */}
+      )}
     </>
   );
 };
