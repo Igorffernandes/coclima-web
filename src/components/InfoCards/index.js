@@ -40,7 +40,7 @@ const InfoCards = ({ info }) => {
       </CarbonDiv>
       <CapitalDiv>
         <ValueDiv>
-          <InfoValue>R$</InfoValue>
+          <InfoValue >R$</InfoValue>
           <Value>{info.capital}</Value>
         </ValueDiv>
         <DescriptionDiv>

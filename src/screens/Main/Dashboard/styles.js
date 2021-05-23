@@ -6,14 +6,15 @@ export const Container = styled.div`
   flex-direction: column;
   display: flex;
   flex: 1;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   margin-left: 250px;
   background-color: 'white';
   background-size: cover;
 `;
 
 export const Header = styled.div`
+  margin-top: 41px;
   width: 100%;
   display: flex;
   flex-direction: column;
