@@ -6,6 +6,7 @@ const routePaths = {
   mainRoutes: {
     dashboard: '/dashboard',
     managers: '/managers',
+    administrators: '/adm',
     managerForm: '/managers/create',
     managerEdit: '/managers/edit/:manager_id',
     managerData: '/managers/:manager_id',
