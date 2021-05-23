@@ -22,9 +22,9 @@ const blue = {
 };
 
 const green = {
-  light: '#81C784',
+  light: '#14e877',
   main: '#0EC164',
-  dark: '#388E3C',
+  dark: '#0da353',
   contrastText: '#FFF',
 };
 

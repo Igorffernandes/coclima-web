@@ -23,40 +23,47 @@ const AuthProvider = ({ children }) => {
   });
 
   const signIn = useCallback(async (values) => {
-    try {
-      const response = await api.post(auth, values);
+    //TESTE
+    localStorage.setItem('@token', 'iaueajoieuhjfiaouhdsif');
+    localStorage.setItem('@userName', 'admin');
+    localStorage.setItem('@tokenExpireAt', '19/10/2021');
 
-      const { user, token, role } = response.data;
+    setData({ token: 'iaueajoieuhjfiaouhdsif', name: 'admin', tokenExpireAt: '19/10/2021' });
 
-      if (role !== 'manager') {
-        addToast({
-          type: 'error',
-          title: 'Erro na autenticação',
-          description: 'Você não tem permissão para entrar',
-        });
+    // try {
+    //   const response = await api.post(auth, values);
 
-        return;
-      }
+    //   const { user, token, role } = response.data;
 
-      const tokenDecode = jwt_decode(token);
+    //   if (role !== 'manager') {
+    //     addToast({
+    //       type: 'error',
+    //       title: 'Erro na autenticação',
+    //       description: 'Você não tem permissão para entrar',
+    //     });
 
-      localStorage.setItem('@token', token);
-      localStorage.setItem('@userName', user);
-      localStorage.setItem('@tokenExpireAt', tokenDecode.exp);
+    //     return;
+    //   }
 
-      setData({ token, name: user, tokenExpireAt: tokenDecode.exp });
-      addToast({
-        type: 'success',
-        title: `Bem vindo ${user}`,
-        description: 'Login efetuado com sucesso!',
-      });
-    } catch (err) {
-      addToast({
-        type: 'error',
-        title: 'Erro na autenticação',
-        description: 'Usuário ou senha inválidos',
-      });
-    }
+    //   const tokenDecode = jwt_decode(token);
+
+    //   localStorage.setItem('@token', token);
+    //   localStorage.setItem('@userName', user);
+    //   localStorage.setItem('@tokenExpireAt', tokenDecode.exp);
+
+    //   setData({ token, name: user, tokenExpireAt: tokenDecode.exp });
+    //   addToast({
+    //     type: 'success',
+    //     title: `Bem vindo ${user}`,
+    //     description: 'Login efetuado com sucesso!',
+    //   });
+    // } catch (err) {
+    //   addToast({
+    //     type: 'error',
+    //     title: 'Erro na autenticação',
+    //     description: 'Usuário ou senha inválidos',
+    //   });
+    // }
   }, []);
 
   const signOut = useCallback(() => {
