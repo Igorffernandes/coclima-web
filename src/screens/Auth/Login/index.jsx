@@ -6,7 +6,6 @@ import {
   Container,
   LoginCard,
   FormItem,
-  Title,
   FormTitle,
   FormTitleDiv,
   FormPasswordForgot,
@@ -16,7 +15,8 @@ import {
   Image,
   WhiteTextDiv,
   TextWhite,
-  TextCoClima,
+  LogoLarge,
+  LogoSmall,
 } from "./styles";
 import PasswordTextField from "components/PasswordTextField";
 import UsernameTextField from "components/UsernameTextField";
@@ -24,11 +24,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 import loginImage from '../../../assets/Images/login-image.png'
 import colors from "../../../styles/colors";
+import coClimaIcon from 'assets/Images/logoCoClima.png';
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
   const { signIn } = useAuth();
 
   useEffect(() => {
@@ -51,7 +52,7 @@ const LoginPage = () => {
   return (
     <Container>
       <LoginCard>
-        <Title>CoClima</Title>
+        <LogoLarge src={coClimaIcon} />
         <FormItem>
           <FormTitle>Email</FormTitle>
           <UsernameTextField
@@ -101,7 +102,7 @@ const LoginPage = () => {
         <WhiteTextDiv>
           <TextWhite>Plantanto</TextWhite>
           <TextWhite>o futuro.</TextWhite>
-          <TextCoClima>coclima</TextCoClima>
+          <LogoSmall src={coClimaIcon}/>
         </WhiteTextDiv>
       </LogoImage>
     </Container>

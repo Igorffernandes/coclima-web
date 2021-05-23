@@ -27,6 +27,7 @@ export const FormPasswordForgot = styled.a`
   text-decoration: underline;
   font-family: "Inter";
   color: ${colors.cinzaDaMassa};
+  cursor: pointer;
 `;
 
 export const FormTitle = styled.a`
@@ -111,8 +112,13 @@ export const TextWhite = styled.a`
   margin-left: 45px;
 `;
 
-export const TextCoClima = styled.a`
-  font-size: 22px;
-  font-weight: bold;
+export const LogoLarge = styled.img`
+  width: 200px;
+  margin-bottom: 45px;
+`;
+
+export const LogoSmall = styled.img`
+  margin-top: 10px;
+  width: 133px;
   margin-left: 45px;
 `;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import coClimaIcon from 'assets/icons/logoCoClima.png';
+import coClimaIcon from 'assets/Images/logoCoClima.png';
 import leafIcon from 'assets/icons/logoIcon.png';
 import circledicon from 'assets/icons/circledIcon.png';
 import circledmobileicon from 'assets/icons/circledMobileicon.png';
@@ -9,8 +9,8 @@ export const iconPath = coClimaIcon;
 export const FullIcon = styled.div.attrs({
   alt: 'CoClima',
 })`
-  width: 162px;
-  height: 44px;
+  width: ${props => props.fullWidth};
+  height: ${props => props.fullHeight};
   background-image: url(${coClimaIcon});
 `;
 
