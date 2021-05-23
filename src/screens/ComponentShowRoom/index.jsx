@@ -7,6 +7,8 @@ import Logo from 'components/Logo';
 import Badge from 'components/Badge';
 import SideBarIcon from 'components/SideBarIcon';
 
+import LineChart from 'components/LineChart';
+
 const ComponentShowRoom = ({}) => {
   return(
     <ShowView>
@@ -41,6 +43,8 @@ const ComponentShowRoom = ({}) => {
           <SideBarIcon iconName={'adm'} active/>
           <SideBarIcon iconName={'adm'}/>
         </div>
+        <h2>GRAFICOS</h2>
+        <LineChart />
       </GridContainer>
     </ShowView>
   )

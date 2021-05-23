@@ -1,42 +1,22 @@
-import React from 'react';
-import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
-import * as IoIcons from 'react-icons/io';
-
 export const SidebarData = [
   {
-    title: 'Home',
+    title: 'Dashboard',
     path: '/dashboard',
-    icon: <AiIcons.AiFillHome />,
+    iconString: 'dashboard',
   },
   {
-    title: 'Gestores',
-    path: '/managers',
-    icon: <FaIcons.FaUserFriends />,
+    title: 'Plantio',
+    path: '/plantio',
+    iconString: 'plantio',
   },
   {
-    title: 'Colaboradores',
-    path: '/collaborators',
-    icon: <IoIcons.IoMdPeople />,
-  },
-  // {
-  //   title: 'Apps',
-  //   path: '/apps',
-  //   icon: <FaIcons.FaMobile />,
-  // },
-  {
-    title: 'Apps bloqueados',
-    path: '/blocked_apps',
-    icon: <FaIcons.FaMobile />,
+    title: 'Marketing',
+    path: '/marketing',
+    iconString: 'marketing',
   },
   {
-    title: 'Mapa',
-    path: '/maps',
-    icon: <FaIcons.FaMap />,
-  },
-  {
-    title: 'Relatório de ações',
-    path: '/logs',
-    icon: <IoIcons.IoMdHelpCircle />,
+    title: 'Administrativo',
+    path: '/adm',
+    iconString: 'adm',
   },
 ];

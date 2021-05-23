@@ -12,6 +12,10 @@ const Colors = {
   pretoDaMassa: "#1B2430",
   darkCyanBlue: "#142847",
   grey3: "#F8F8F8",
+  almostBlack: "#192A3E",
+  greenLight: '#DBFCEB',
+  anotherGrayInTheWall: '#90A0B7',
+  dividerColor: '#EBEFF2',
 };
 
 export default Colors;

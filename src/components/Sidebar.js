@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { IconContext } from 'react-icons/lib';
 import moment from 'moment';
-import Button from '@material-ui/core/Button';
-import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { SidebarData } from './SidebarData';
 import SubMenu from './SubMenu';
 import colors from '../styles/colors';
 import { useAuth } from 'hooks/AuthContext';
+import Logo from 'components/Logo';
+
+import defaultAvatar from 'assets/Images/avatarPlaceholder.png';
+import exitIcon from 'assets/icons/exitIcon.png';
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -32,8 +34,7 @@ const NavTitleDiv = styled.div`
 `;
 
 const SidebarNav = styled.nav`
-  background: ${colors.verdeDaMassa};
-  width: 250px;
+  width: 256px;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -47,6 +48,10 @@ const SidebarNav = styled.nav`
 
 const SidebarWrap = styled.div`
   width: 100%;
+`;
+
+const TopView = styled.div`
+  padding: 40px 24px 0px 24px;
 `;
 
 const UserDiv = styled.div`
@@ -67,7 +72,7 @@ const UserImg = styled.div`
 const UserInfo = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-start;
   width: 70%;
 `;
@@ -76,57 +81,128 @@ const UserName = styled.a`
   -webkit-line-clamp: 1;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
-  font-size: 20px;
   color: ${colors.pretoDaMassa};
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+  color: '#192A3E';
 `;
+
+const UserIcon = styled.img.attrs(props => ({
+  src: props.imagePath,
+}))`
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+  background-size: contain;
+`;
+
+const UserEdit = styled.div`
+  cursor: pointer;
+`;
+
+const EditText = styled.a`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.01em;
+  color: ${colors.anotherGrayInTheWall};
+`;
+
+const Divider = styled.div`
+  width: 100%;
+  height: 1px;
+  background: ${colors.dividerColor};
+  margin-top: 48px;
+  margin-bottom: 32px;
+`;
+
+const BottomView = styled.div`
+  display: flex;
+  flex:1;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 55%;
+  padding: 0px 24px 40px 24px;
+`;
+
+const ExitIcon = styled.img.attrs({
+  src: exitIcon,
+})`
+  width: 16px;
+  height: 16px;
+  border: 0px;
+  box-sizing: border-box;
+`;
+
+const ExitView = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 12px;
+  cursor: pointer;
+`;
+
+const ExitString = styled.a`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+  color: ${colors.almostBlack};
+  margin-left: 12px;
+`;
+
 
 const Sidebar = () => {
   const [sidebar] = useState(true);
   const { tokenExpireAt, name, signOut } = useAuth();
   const classes = useStyles();
-
+  
   const expired = tokenExpireAt ? moment.unix(tokenExpireAt).isBefore() : true;
 
   return (
     <>
-      {!expired && (
+      {/* {!expired && ( */}
         <IconContext.Provider value={{ color: colors.pretoDaMassa }}>
           <SidebarNav sidebar={sidebar}>
             <SidebarWrap>
-              <NavTitleDiv>
-                <NavTitle>ARMARIO</NavTitle>
-              </NavTitleDiv>
-              <UserDiv>
-                <UserImg>
-                  <Avatar
-                    className={classes.large}
-                    alt={name}
-                    src="assets/img/new_logo.png"
-                  />
-                </UserImg>
-                <UserInfo>
-                  <UserName>{name.split(' ')[0]}</UserName>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    style={{
-                      color: colors.verdeDaMassa,
-                      height: 20,
-                    }}
-                    onClick={signOut}
-                  >
-                    Sair
-                  </Button>
-                </UserInfo>
-              </UserDiv>
-              {SidebarData.map((item, index) => {
-                return <SubMenu item={item} key={index} />;
-              })}
+              <TopView>
+                <UserDiv>
+                  <UserImg>
+                  <UserIcon imagePath={defaultAvatar}/>
+                  </UserImg>
+                  <UserInfo>
+                    <UserName>{name || 'Roberta Estivan'}</UserName>
+                    <UserEdit>
+                      <EditText>
+                        EDITAR
+                      </EditText>
+                    </UserEdit>
+                  </UserInfo>
+                </UserDiv>
+                {SidebarData.map((item, index) => {
+                  return <SubMenu item={item} key={index} />;
+                })}
+                </TopView>
+              <Divider />
+              <BottomView>
+                <ExitView>
+                  <ExitIcon />
+                  <ExitString>
+                    {'Sair'}
+                  </ExitString>
+                </ExitView>
+                <Logo type='full' />
+              </BottomView>
             </SidebarWrap>
           </SidebarNav>
         </IconContext.Provider>
-      )}
+      {/* )} */}
     </>
   );
 };
