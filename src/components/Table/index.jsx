@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 
 import MaterialTable, { MTableToolbar } from 'material-table';
 import CustomButton from 'components/CustomButtons/Button';
+import FilterButton from 'components/FilterButton';
+import TableAddButton from 'components/TableAddButton';
 
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -21,7 +23,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 
-import { TableHeaderDiv, TableTitle } from './styles';
+import { TableHeaderDiv, TableTitle, SubHeaderDiv } from './styles';
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -76,7 +78,11 @@ const UsersList = ({
         Toolbar: (props) => (
           <div>
             <TableHeaderDiv>
-              <TableTitle>{title}</TableTitle>
+              <SubHeaderDiv>
+                <TableTitle>{title}</TableTitle>
+                <FilterButton />
+              </SubHeaderDiv>
+              <TableAddButton />
               {handleNewEntry && (
                 <CustomButton color={'primary'} onClick={handleNewEntry}>
                   {handleNewEntryText}
@@ -86,6 +92,7 @@ const UsersList = ({
             <MTableToolbar {...props} />
           </div>
         ),
+        Container: props => <div {...props}></div>
       }}
     />
   );
