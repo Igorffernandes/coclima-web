@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Button from "@material-ui/core/Button";
 
 import {
   Container,
@@ -27,8 +26,8 @@ import {
 import InfoCards from 'components/InfoCards';
 import FilterCards from 'components/FilterCards';
 import LineChart from 'components/LineChart';
-
-import colors from 'styles/colors';
+import FilterButton from 'components/FilterButton';
+import ExtractButton from 'components/ExtractButton';
 
 const Dashboard = () => {
   const [planting, setPlanting] = useState(true);
@@ -77,23 +76,8 @@ const Dashboard = () => {
       <FilterCardsDiv>
         <FilterCards info={data} />
         <FilterOptions>
-          <Button
-            variant="outlined"
-            color="secondary"
-            style={{
-              color: colors.darkCyanBlue,
-              borderRadius: 8,
-              fontWeight: 'bold',
-              fontFamily: 'Inter',
-              paddingTop: 15,
-              paddingBottom: 15,
-              paddingRight: 30,
-              paddingLeft: 30,
-            }}
-            onClick={() => null}
-          >
-            Filtros
-          </Button>
+          <FilterButton />
+          <ExtractButton />
         </FilterOptions>
       </FilterCardsDiv>
       <ChartDiv>
