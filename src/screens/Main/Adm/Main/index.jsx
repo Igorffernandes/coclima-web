@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Table from 'components/Table';
+import ActionCard from 'components/ActionCard';
 
 import { Container, Header, Title, TableDiv, CardsDiv, SubContainer } from './styles';
 
@@ -22,7 +23,10 @@ const AdmMainPage = () => {
             actions={[]}
           />
         </TableDiv>
-        <CardsDiv/>
+        <CardsDiv>
+          <ActionCard/>
+          <ActionCard type='photo' />
+        </CardsDiv>
       </SubContainer>
     </Container>
   )
