@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import colors from 'styles/colors';
 
-import arrowDownIcon from 'assets/icons/arrowDown.png';
-
 export const StyledButton = styled.button`
   display: flex;
   flex-direction: row;
@@ -23,13 +21,4 @@ export const FilterText = styled.a`
   font-size: 14px;
   line-height: 17px;
   color: ${colors.almostBlack};
-`;
-
-export const ArrowIcon = styled.img.attrs({
-  src: arrowDownIcon
-})`
-  box-sizing: border-box;
-  width: 16px;
-  height: 10px;
-  margin-left: 8px;
 `;

@@ -1,6 +1,7 @@
 /* eslint-disable react/display-name */
 import React, { forwardRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import colors from 'styles/colors';
 
 import MaterialTable, { MTableToolbar } from 'material-table';
 import CustomButton from 'components/CustomButtons/Button';
@@ -23,7 +24,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 
-import { TableHeaderDiv, TableTitle, SubHeaderDiv } from './styles';
+import { TableHeaderDiv, TableTitle, SubHeaderDiv, CustomHeaderContainer, CustomHeaderColumnName } from './styles';
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -56,8 +57,6 @@ const UsersList = ({
   columns,
   data,
   actions,
-  handleNewEntry,
-  handleNewEntryText,
 }) => {
   const pageSize = useMemo(
     () => (data.length > PAGESIZE ? PAGESIZE : data.length),
@@ -65,36 +64,36 @@ const UsersList = ({
   );
 
   return (
+    <>
+    <TableHeaderDiv>
+          <SubHeaderDiv>
+            <TableTitle>{title}</TableTitle>
+            <FilterButton onClick={() => console.log('filtro')}/>
+          </SubHeaderDiv>
+          <TableAddButton />
+        </TableHeaderDiv>
     <MaterialTable
-      title={''}
       columns={columns}
       icons={tableIcons}
       data={data}
       actions={actions}
       options={{
         pageSize: pageSize,
+        search: false,
+        headerStyle: {
+          backgroundColor: colors.verdeDaMassa,
+          color: '#FFF',
+          position: 'sticky',
+          top: 0,
+          borderLeftRadius: '2px',
+        },
+        toolbar: false,
       }}
       components={{
-        Toolbar: (props) => (
-          <div>
-            <TableHeaderDiv>
-              <SubHeaderDiv>
-                <TableTitle>{title}</TableTitle>
-                <FilterButton />
-              </SubHeaderDiv>
-              <TableAddButton />
-              {handleNewEntry && (
-                <CustomButton color={'primary'} onClick={handleNewEntry}>
-                  {handleNewEntryText}
-                </CustomButton>
-              )}
-            </TableHeaderDiv>
-            <MTableToolbar {...props} />
-          </div>
-        ),
         Container: props => <div {...props}></div>
       }}
     />
+    </>
   );
 };
 

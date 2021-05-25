@@ -10,7 +10,6 @@ export const Container = styled.div`
   align-items: flex-start;
   margin-left: 258px;
   background-color: ${colors.brancoDaMassa};
-  background-size: cover;
 `;
 
 export const Header = styled.div`
@@ -39,24 +38,26 @@ export const SubTitle = styled.a`
   margin-left: 36px;
 `;
 
-export const SubContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex:1;
-  width: 100%;
-  height: 100%;
-`;
-
-
-export const TableDiv = styled.div`
-  width: 70%;
-  height: 100%;
-  padding: 9px 0px 0px 23px;
-`;
-
-export const CardsDiv = styled.div`
+export const SubView = styled.div`
   display: flex;
   flex-direction: column;
-  flex:1;
+  width: -webkit-fill-available;
+`;
+
+export const SearchView = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 36px;
+  justify-content: space-between;
+  width: -webkit-fill-available;
   align-items: center;
+`;
+
+export const FoldersView = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: -webkit-fill-available;
+  align-items: center;
+  flex-wrap: wrap;
 `;
