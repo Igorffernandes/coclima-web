@@ -37,3 +37,27 @@ export const SubTitle = styled.a`
   color: #142847;
   margin-left: 36px;
 `;
+
+export const SubView = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: -webkit-fill-available;
+`;
+
+export const SearchView = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 36px;
+  justify-content: space-between;
+  width: -webkit-fill-available;
+  align-items: center;
+`;
+
+export const FoldersView = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: -webkit-fill-available;
+  align-items: center;
+  flex-wrap: wrap;
+`;
