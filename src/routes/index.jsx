@@ -9,7 +9,7 @@ import ComponentShowRoom from 'screens/ComponentShowRoom';
 
 import DashboardPage from '../screens/Main/Dashboard';
 import PlantingPage from '../screens/Main/Planting/Main';
-// import MarketingPage from '../screens/Main/Marketing';
+import MarketingPage from '../screens/Main/Marketing';
 import AdmMainpage from 'screens/Main/Adm/Main';
 
 const Router = () => (
@@ -25,6 +25,12 @@ const Router = () => (
       path={routesEnum.mainRoutes.planting}
       component={PlantingPage}
       isPrivate
+    />
+    <Route
+      path={routesEnum.mainRoutes.marketing}
+      component={MarketingPage}
+      isPrivate
+      exact
     />
     <Route
       path={routesEnum.mainRoutes.administrators}
