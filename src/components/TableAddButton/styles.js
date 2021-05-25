@@ -11,8 +11,9 @@ export const ButtonContainer = styled.button`
   padding: 12px 8px;
   border-radius: 2.62626e+06px;
   background-color: ${colors.verdeDaMassa};
-  background: #0EC164;
   height: 33px;
+  border-style: hidden;
+  cursor: pointer;
 `;
 
 export const PlusIcon = styled.img.attrs({

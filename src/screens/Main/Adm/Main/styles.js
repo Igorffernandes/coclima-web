@@ -55,7 +55,8 @@ export const TableDiv = styled.div`
 `;
 
 export const CardsDiv = styled.div`
-  width: 30%;
-  height: 100%;
-  background-color: blue;
+  display: flex;
+  flex-direction: column;
+  flex:1;
+  align-items: center;
 `;
