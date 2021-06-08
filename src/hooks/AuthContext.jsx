@@ -14,9 +14,10 @@ const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('@token');
     const name = localStorage.getItem('@userName');
     const tokenExpireAt = localStorage.getItem('@tokenExpireAt');
+    const role = localStorage.getItem('@role');
 
-    if (token && name && tokenExpireAt) {
-      return { token, name, tokenExpireAt };
+    if (token && name && tokenExpireAt && role) {
+      return { token, name, tokenExpireAt, role };
     }
 
     return {};
@@ -34,8 +35,9 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem('@token', token);
       localStorage.setItem('@userName', user.name);
       localStorage.setItem('@tokenExpireAt', tokenDecode.exp);
+      localStorage.setItem('@role', user.role);
 
-      setData({ token, name: user.name, tokenExpireAt: tokenDecode.exp });
+      setData({ token, name: user.name, tokenExpireAt: tokenDecode.exp, role: user.role });
       addToast({
         type: 'success',
         title: `Bem vindo ${user.name}`,
@@ -54,6 +56,7 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem('@token');
     localStorage.removeItem('@userName');
     localStorage.removeItem('@tokenExpireAt');
+    localStorage.removeItem('@role');
 
     setData({});
   }, []);
@@ -64,6 +67,7 @@ const AuthProvider = ({ children }) => {
         name: data.name,
         token: data.token,
         tokenExpireAt: data.tokenExpireAt,
+        role: data.role,
         signIn,
         signOut,
       }}
