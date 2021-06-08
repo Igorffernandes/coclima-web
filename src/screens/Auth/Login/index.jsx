@@ -100,7 +100,7 @@ const LoginPage = () => {
       <LogoImage>
         <Image src={loginImage}/>
         <WhiteTextDiv>
-          <TextWhite>Plantanto</TextWhite>
+          <TextWhite>Plantando</TextWhite>
           <TextWhite>o futuro.</TextWhite>
           <LogoSmall src={coClimaIcon}/>
         </WhiteTextDiv>
