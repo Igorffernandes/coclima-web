@@ -1,6 +1,6 @@
-export const url = 'https://armario-api-dewxu.ondigitalocean.app';
+export const url = 'http://localhost:3000';
 export const api = `${url}/api/v1`;
-export const auth = `${api}/auth`;
+export const auth = `${url}/login`;
 export const user = `${api}/users`;
 
 export const civilStateOptions = [
