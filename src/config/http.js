@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { getToken } from '../helpers/authToken';
-import { api } from 'config/constants';
+import { url } from 'config/constants';
 
 const http = axios.create({
-  baseURL: api,
+  baseURL: url,
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json;charset=utf-8',

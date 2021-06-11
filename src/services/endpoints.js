@@ -1,5 +1,6 @@
+export const companies = `/companies`;
+
 export const users = `/armario/users`;
-export const companies = `/armario/companies`;
 export const managers = `/armario/managers`;
 export const collaborators = `/armario/collaborators`;
 export const permissions = `/armario/permissions`;
