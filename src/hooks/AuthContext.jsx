@@ -26,9 +26,9 @@ const AuthProvider = ({ children }) => {
     //TESTE
     localStorage.setItem('@token', 'iaueajoieuhjfiaouhdsif');
     localStorage.setItem('@userName', 'admin');
-    localStorage.setItem('@tokenExpireAt', '1622153163');
+    localStorage.setItem('@tokenExpireAt', '1653203483');
 
-    setData({ token: 'iaueajoieuhjfiaouhdsif', name: 'admin', tokenExpireAt: '1622153163' });
+    setData({ token: 'iaueajoieuhjfiaouhdsif', name: 'admin', tokenExpireAt: '1623203483' });
 
     // try {
     //   const response = await api.post(auth, values);

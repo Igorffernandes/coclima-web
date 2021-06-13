@@ -57,6 +57,7 @@ const UsersList = ({
   columns,
   data,
   actions,
+  handleAddEmpresa,
 }) => {
   const pageSize = useMemo(
     () => (data.length > PAGESIZE ? PAGESIZE : data.length),
@@ -70,7 +71,7 @@ const UsersList = ({
             <TableTitle>{title}</TableTitle>
             <FilterButton onClick={() => console.log('filtro')}/>
           </SubHeaderDiv>
-          <TableAddButton />
+          <TableAddButton handleClick={handleAddEmpresa}/>
         </TableHeaderDiv>
     <MaterialTable
       columns={columns}
@@ -104,6 +105,7 @@ UsersList.propTypes = {
   actions: PropTypes.array,
   handleNewEntry: PropTypes.func,
   handleNewEntryText: PropTypes.string,
+  handleAddEmpresa: PropTypes.func,
 };
 
 export default UsersList;
