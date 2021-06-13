@@ -81,4 +81,17 @@ export const ButtonText = styled.a`
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #FFFFFF;
+  text-decoration: auto;
 `;
+
+export const styleObjectButtonText = {
+  fontFamily: 'Inter',
+  fontStyle: 'normal',
+  fontWeight: 'normal',
+  fontSize: '10px',
+  lineHeight: '12px',
+  textAlign: 'center',
+  letterSpacing: '0.06em',
+  textTransform: 'uppercase',
+  color: '#ffffff',
+}

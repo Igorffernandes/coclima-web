@@ -1,4 +1,7 @@
 export const companies = `/companies`;
+export const plantations = `/plantations`;
+export const dashboard = `/dashboard`;
+export const archives = `/archives`;
 
 export const users = `/armario/users`;
 export const managers = `/armario/managers`;
