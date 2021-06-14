@@ -14,62 +14,49 @@ const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('@token');
     const name = localStorage.getItem('@userName');
     const tokenExpireAt = localStorage.getItem('@tokenExpireAt');
+    const role = localStorage.getItem('@role');
 
-    if (token && name && tokenExpireAt) {
-      return { token, name, tokenExpireAt };
+    if (token && name && tokenExpireAt && role) {
+      return { token, name, tokenExpireAt, role };
     }
 
     return {};
   });
 
   const signIn = useCallback(async (values) => {
-    //TESTE
-    localStorage.setItem('@token', 'iaueajoieuhjfiaouhdsif');
-    localStorage.setItem('@userName', 'admin');
-    localStorage.setItem('@tokenExpireAt', '1653203483');
 
-    setData({ token: 'iaueajoieuhjfiaouhdsif', name: 'admin', tokenExpireAt: '1623203483' });
+    try {
+      const response = await api.post(auth, { email: values.username, password: values.password });
 
-    // try {
-    //   const response = await api.post(auth, values);
+      const { user, token } = response.data;
+      
+      const tokenDecode = jwt_decode(token);
 
-    //   const { user, token, role } = response.data;
+      localStorage.setItem('@token', token);
+      localStorage.setItem('@userName', user.name);
+      localStorage.setItem('@tokenExpireAt', tokenDecode.exp);
+      localStorage.setItem('@role', user.role);
 
-    //   if (role !== 'manager') {
-    //     addToast({
-    //       type: 'error',
-    //       title: 'Erro na autenticação',
-    //       description: 'Você não tem permissão para entrar',
-    //     });
-
-    //     return;
-    //   }
-
-    //   const tokenDecode = jwt_decode(token);
-
-    //   localStorage.setItem('@token', token);
-    //   localStorage.setItem('@userName', user);
-    //   localStorage.setItem('@tokenExpireAt', tokenDecode.exp);
-
-    //   setData({ token, name: user, tokenExpireAt: tokenDecode.exp });
-    //   addToast({
-    //     type: 'success',
-    //     title: `Bem vindo ${user}`,
-    //     description: 'Login efetuado com sucesso!',
-    //   });
-    // } catch (err) {
-    //   addToast({
-    //     type: 'error',
-    //     title: 'Erro na autenticação',
-    //     description: 'Usuário ou senha inválidos',
-    //   });
-    // }
+      setData({ token, name: user.name, tokenExpireAt: tokenDecode.exp, role: user.role });
+      addToast({
+        type: 'success',
+        title: `Bem vindo ${user.name}`,
+        description: 'Login efetuado com sucesso!',
+      });
+    } catch (err) {
+      addToast({
+        type: 'error',
+        title: 'Erro na autenticação',
+        description: 'Usuário ou senha inválidos',
+      });
+    }
   }, []);
 
   const signOut = useCallback(() => {
     localStorage.removeItem('@token');
     localStorage.removeItem('@userName');
     localStorage.removeItem('@tokenExpireAt');
+    localStorage.removeItem('@role');
 
     setData({});
   }, []);
@@ -80,6 +67,7 @@ const AuthProvider = ({ children }) => {
         name: data.name,
         token: data.token,
         tokenExpireAt: data.tokenExpireAt,
+        role: data.role,
         signIn,
         signOut,
       }}
