@@ -9,6 +9,7 @@ import AddEmpresaModal from 'components/AddEmpresaModal';
 import AddEmpresaModalSuccess from 'components/AddEmpresaModalSuccess';
 import AddPlantioModal from 'components/AddPlantioModal';
 import AddPlantioModalSuccess from 'components/AddPlantioModalSuccess';
+import EditEmpresaModal from 'components/EditEmpresaModal';
 
 import { fetchCompanies, deactivateCompany } from 'services/companies';
 
@@ -17,6 +18,14 @@ import { Container, Header, Title, TableDiv, CardsDiv, SubContainer } from './st
 const AdmMainPage = () => {
   const [companiesData, setCompaniesData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [editCompany, setEditCompany] = useState('');
+  const [editCompanyModal, setEditCompanyModal] = useState('');
+  const [modalPlantio, setModalPlantio] = useState(false)
+  const [modalPlantioSuccess, setModalPlantioSuccess] = useState(false)
+  const [modalPhoto, setModalPhoto] = useState(false)
+  const [modalPhotoSuccess, setModalPhotoSuccess] = useState(false)
+  const [modalAddEmpresa, setModalAddEmpresa] = useState(false)
+  const [modalAddEmpresaSuccess, setModalAddEmpresaSuccess] = useState(false)
   
   const companiesFetch = async () => {
     try{
@@ -36,7 +45,7 @@ const AdmMainPage = () => {
       await deactivateCompany(company_id);
       const companies = await fetchCompanies();
       setCompaniesData(companies);
-    } catch {
+    } catch (err){
       console.log(err);
     } finally {
       setLoading(false);
@@ -52,16 +61,18 @@ const AdmMainPage = () => {
     { title: 'Empresa', field: 'name' },
     { title: 'Email', field: 'email' },
     { field: 'id', hidden: true },
-    { render: rowData => <div><TableButton title={'Editar'} onClick={() => console.log('EDITAR EMAIL')}/></div>},
+    { render: rowData => <div><TableButton title={'Editar'} onClick={() => handleEdit(rowData.id)}/></div>},
     { render: rowData => <div><TableButton title={'Excluir'} onClick={async () => excludeCompany(rowData.id)}/></div>},
   ];
+  
+  function handleCompanyModal(){
+    setEditCompanyModal(!editCompanyModal)
+  }
 
-  const [modalPlantio, setModalPlantio] = useState(false)
-  const [modalPlantioSuccess, setModalPlantioSuccess] = useState(false)
-  const [modalPhoto, setModalPhoto] = useState(false)
-  const [modalPhotoSuccess, setModalPhotoSuccess] = useState(false)
-  const [modalAddEmpresa, setModalAddEmpresa] = useState(false)
-  const [modalAddEmpresaSuccess, setModalAddEmpresaSuccess] = useState(false)
+  function handleEdit(id){
+    setEditCompany(id)
+    setEditCompanyModal(!editCompanyModal)
+  }
 
   function handleModalPlantio() {
     setModalPlantio(!modalPlantio)
@@ -111,6 +122,11 @@ const AdmMainPage = () => {
   function handlePlantioSuccess(){
     setModalPlantioSuccess(!modalPlantioSuccess)
     handleModalPlantio()
+  }
+
+  const callbackEdit = async () => {
+    const companies = await fetchCompanies();
+    setCompaniesData(companies);
   }
 
   return(
@@ -163,6 +179,12 @@ const AdmMainPage = () => {
         visible={modalPlantioSuccess} 
         onClose={handleModalPlantioSuccess}
         handleButton={handlePlantioSuccess}/>
+      <EditEmpresaModal 
+        visible={editCompanyModal} 
+        onClose={handleCompanyModal}
+        companyID={editCompany}
+        callbackEdit={callbackEdit}/>
+
     </Container>
   )
 }

@@ -42,7 +42,7 @@ export async function createCompany(values) {
 export async function editCompany(values, company_id) {
   try {
     const companyData = await http.put(`${companies}/${company_id}`, values);
-    resolve(companyData.data);
+    return(companyData.data);
   } catch (err) {
     console.log(err);
     throw err;

@@ -3,8 +3,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as Styled from './styles';
 import { useState } from 'react';
+import { editCompany } from 'services/companies';
+import { useEffect } from 'react';
 
-const EditEmpresaModal = ({visible, onClose}) => {
+const EditEmpresaModal = ({visible, onClose, companyID, callbackEdit}) => {
   const [email, setEmail] = useState('')
   const [emailConfirmation, setEmailConfirmation] = useState('')
 
@@ -16,9 +18,23 @@ const EditEmpresaModal = ({visible, onClose}) => {
     setEmailConfirmation(value.target.value)
   }
 
-  function handleButton(){
-    console.log('faz post')
-    onClose()
+  useEffect(() => {
+    setEmail('');
+    setEmailConfirmation('');
+  },[visible])
+
+  async function editNewCompany(){
+    if(email === emailConfirmation && email !== ''){
+      try{
+        const data = {email, emailConfirmation}
+        await editCompany(data, companyID);
+        onClose();
+        callbackEdit();
+      } catch (err){
+        console.log(err);
+      }
+    }
+    
   }
 
   return  <BaseModal 
@@ -44,7 +60,7 @@ const EditEmpresaModal = ({visible, onClose}) => {
                     onChange={handleChangeEmailConfirmation}
                     disableUnderline/>
                 </Styled.FormBox>
-                <Styled.ViewButton onClick={handleButton}>
+                <Styled.ViewButton onClick={editNewCompany}>
 									<Styled.TextButton>
 										MUDAR
 									</Styled.TextButton>
@@ -56,6 +72,8 @@ const EditEmpresaModal = ({visible, onClose}) => {
 EditEmpresaModal.propTypes = {
     visible: PropTypes.bool,
     onClose: PropTypes.func,
+    companyID: PropTypes.number,
+    callbackEdit: PropTypes.func,
   }
 
 export default EditEmpresaModal;
