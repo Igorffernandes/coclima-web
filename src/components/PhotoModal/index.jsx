@@ -3,6 +3,7 @@ import React, {useCallback, useState} from 'react';
 import PropTypes from 'prop-types';
 import * as Styled from './styles';
 import {useDropzone} from 'react-dropzone';
+import {uploadPhoto} from 'services/archives';
 
 const PhotoModal = ({visible, onClose, handleConfirm}) => {
 	const [image, setImage] = useState();
@@ -17,6 +18,27 @@ const PhotoModal = ({visible, onClose, handleConfirm}) => {
     
   }, [])
   const {getRootProps, getInputProps, acceptedFiles} = useDropzone({onDrop})
+
+  
+  const createPhoto = async (company_id = 1) => {
+    try{
+      const newPhoto = {
+        data: image,
+        type: 'image',
+        company_id: company_id,
+        name: acceptedFiles[0].path,
+        keywords: 'photo'
+      }
+      await uploadPhoto(newPhoto);
+    } catch(err){
+      console.log(err);
+    } 
+  }
+
+  const createNewPhoto = () => {
+    createPhoto()
+    handleConfirm()
+  }
 
   return  <BaseModal 
 			visible={visible} 
@@ -58,7 +80,7 @@ const PhotoModal = ({visible, onClose, handleConfirm}) => {
               </Styled.FormBox>
             </Styled.FormDiv>
           </Styled.ContainerDiv>
-          <Styled.ViewButton extraMargin="38" onClick={handleConfirm}>
+          <Styled.ViewButton extraMargin="38" onClick={createNewPhoto}>
           <Styled.TextButton>
               CONFIRMAR ENVIO
           </Styled.TextButton>

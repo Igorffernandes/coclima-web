@@ -42,7 +42,7 @@ const AdmMainPage = () => {
       setLoading(false);
     }
   }
-  
+
   useEffect(() => {
     companiesFetch();
   }, [])
@@ -85,8 +85,6 @@ const AdmMainPage = () => {
   }
 
   function handleConfirmPhoto() {
-    //manda o post da foto
-    console.log('faz post nas fotos')
     handleModalPhoto()
     handleModalPhotoSuccess()
   }

@@ -12,20 +12,20 @@ const FolderCard = ({
 
   return(
   <Container>
-    {type === 'image' && <CardImage src={`data:image/jpeg;base64, ${data}`}/>}
+    {type === 'image' && <CardImage src={`${data}`}/>}
     {type === 'pdf' && <NoImageDiv><FileIcon /></NoImageDiv>}
     <FooterView>
       <FooterText>{title}</FooterText>
       <ButtonContainer>
         {type==='image' && <Base64Downloader 
           Tag="a" 
-          base64={`${type === 'image' ? 'data:image/jpeg;base64,' : 'data:application/pdf;base64,'} ${data}`} 
+          base64={data} 
           style={styleObjectButtonText} 
-          downloadName="1x1_red_pixel"
+          downloadName={title}
         >
           Baixar
         </Base64Downloader>}
-        {type === 'pdf' && <ButtonText href={`data:application/pdf;base64, ${data}`} download="file.pdf">BAIXAR</ButtonText>}
+        {type === 'pdf' && <ButtonText href={data} download={`${title}`}>BAIXAR</ButtonText>}
       </ButtonContainer>
     </FooterView>
   </Container>)

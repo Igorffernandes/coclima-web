@@ -96,7 +96,7 @@ const MarketingPage = () => {
           <TableAddButton handleClick={handleModalArchive}/>
         </SearchView>
         <FoldersView>
-          {archives.length > 0 && archives.map(item => <FolderCard type={item.type} data={item.data} title={item.title || 'sem título'} />)}
+          {archives.length > 0 && archives.map(item => <FolderCard type={item.type} data={item.data} title={item.name || 'sem título'} />)}
         </FoldersView>
       </SubView>
       {modalArchive &&

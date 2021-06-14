@@ -119,7 +119,7 @@ const Planting = () => {
         <PhotoGrid>
           {photos.length > 0 && photos.map(item => {
             return (
-              <PhotoPrevew src={`data:image/jpeg;base64, ${item.data}`} />
+              <PhotoPrevew src={`${item.data}`} />
             )
           })}
         </PhotoGrid>
