@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   Container,
@@ -29,15 +29,18 @@ import LineChart from 'components/LineChart';
 import FilterButton from 'components/FilterButton';
 import ExtractButton from 'components/ExtractButton';
 
+import { fetchDashboard } from 'services/dashboard';
+
 const Dashboard = () => {
+  const [loading, setLoading] = useState(false);
   const [planting, setPlanting] = useState(true);
   const [transfer, setTransfer] = useState(false);
   const [chartType, setChartType] = useState('line');
   const [range, setChartRange] = useState('30d');
   const [data, setData] = useState({
-    three: 13,
-    carbon: 1690,
-    capital: 74000.32
+    trees: 0,
+    carbon: 0,
+    capital: 0
   });
   const [chartData, setChartData] = useState([
     { x: 1, y: 7 },
@@ -62,13 +65,28 @@ const Dashboard = () => {
     }
   }
 
+  useEffect(() => {
+    const fetchDashData = async () => {
+      try{
+        setLoading(true);
+        const dashData = await fetchDashboard();
+        setData({...data, ...dashData});
+      } catch(err){
+        console.log(err);
+      } finally{
+        setLoading(false);
+      }
+    }
+    fetchDashData();
+  }, [])
+
   return (
     <Container>
       <Header>
         <Title>Dashboard</Title>
         <SubTitle>Veja o quanto você já mudou o mundo!</SubTitle>
       </Header>
-      <InfoCards info={data} />
+      <InfoCards info={data} loading={loading}/>
       <PlantingTransferDiv>
         <Planting selected={planting} onClick={() => handleChange(planting)}>PLANTIO</Planting>
         <Transfer selected={transfer} onClick={() => handleChange(transfer)}>REPASSE</Transfer>

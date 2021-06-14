@@ -16,12 +16,14 @@ import IconTree from '../../assets/icons/overviewTree.png';
 import IconCarbon from '../../assets/icons/overviewCarbon.png';
 import IconCapital from '../../assets/icons/overviewMoney.png';
 
-const InfoCards = ({ info }) => {
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+const InfoCards = ({ info, loading }) => {
   return (
     <Container>
       <TreeDiv>
         <ValueDiv>
-          <Value>{info.three}</Value>
+          {loading ? <CircularProgress/> : <Value>{info.trees}</Value>}
         </ValueDiv>
         <DescriptionDiv>
           <Icon iconPath={IconTree}/>
@@ -30,7 +32,7 @@ const InfoCards = ({ info }) => {
       </TreeDiv>
       <CarbonDiv>
         <ValueDiv>
-          <Value>{info.carbon}</Value>
+          {loading ? <CircularProgress/> : <Value>{info.carbon}</Value>}
           <InfoValue>g</InfoValue>
         </ValueDiv>
         <DescriptionDiv>
@@ -41,7 +43,7 @@ const InfoCards = ({ info }) => {
       <CapitalDiv>
         <ValueDiv>
           <InfoValue >R$</InfoValue>
-          <Value>{info.capital}</Value>
+          {loading ? <CircularProgress/> : <Value>{info.capital}</Value>}
         </ValueDiv>
         <DescriptionDiv>
           <Icon iconPath={IconCapital}/>

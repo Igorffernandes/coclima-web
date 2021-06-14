@@ -17,7 +17,7 @@ const FilterCards = ({ info }) => {
     <Container>
       <TreeDiv>
         <ValueDiv>
-          <Value>{info.three}</Value>
+          <Value>{info.trees}</Value>
         </ValueDiv>
         <DescriptionDiv>
           <DescriptionText>Árvores plantadas</DescriptionText>

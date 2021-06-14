@@ -3,75 +3,75 @@ import React from 'react';
 import TableButton from 'components/TableButton';
 
 export const columns = [
-  { title: 'Empresa', field: 'company' },
-  { title: 'Email', field: 'email' },
+  { title: 'Empresa', field: 'name' },
+  { title: 'Email', field: 'site' },
   { render: rowData => <div><TableButton title={'Editar email'} onClick={() => console.log('EDITAR EMAIL')}/></div>},
   { render: rowData => <div><TableButton title={'Excluir'} onClick={() => console.log('Excluir')}/></div>},
 ];
 
-export const fakeData = [
-  {
-    company: '99app',
-    email: 'viniciuspbl96@gmail.com',
-  },
-  {
-    company: '99app',
-    email: 'viniciuspbl96@gmail.com',
-  },
-  {
-    company: '99app',
-    email: 'viniciuspbl96@gmail.com',
-  },
-  {
-    company: '99app',
-    email: 'viniciuspbl96@gmail.com',
-  },
-  {
-    company: '99app',
-    email: 'viniciuspbl96@gmail.com',
-  },
-  {
-    company: '99app',
-    email: 'viniciuspbl96@gmail.com',
-  },
-  {
-    company: '99app',
-    email: 'viniciuspbl96@gmail.com',
-  },
-  {
-    company: '99app',
-    email: 'viniciuspbl96@gmail.com',
-  },
-  {
-    company: '99app',
-    email: 'viniciuspbl96@gmail.com',
-  },
-  {
-    company: '99app',
-    email: 'viniciuspbl96@gmail.com',
-  },
-  {
-    company: '99app',
-    email: 'viniciuspbl96@gmail.com',
-  },
-  {
-    company: '99app',
-    email: 'viniciuspbl96@gmail.com',
-  },
-  {
-    company: '99app',
-    email: 'viniciuspbl96@gmail.com',
-  },
-  {
-    company: '99app',
-    email: 'viniciuspbl96@gmail.com',
-  },
-  {
-    company: '99app',
-    email: 'viniciuspbl96@gmail.com',
-  },
-  {
-    company: '99app',
-    email: 'viniciuspbl96@gmail.com',
-  }
-]
+// export const fakeData = [
+//   {
+//     company: '99app',
+//     email: 'viniciuspbl96@gmail.com',
+//   },
+//   {
+//     company: '99app',
+//     email: 'viniciuspbl96@gmail.com',
+//   },
+//   {
+//     company: '99app',
+//     email: 'viniciuspbl96@gmail.com',
+//   },
+//   {
+//     company: '99app',
+//     email: 'viniciuspbl96@gmail.com',
+//   },
+//   {
+//     company: '99app',
+//     email: 'viniciuspbl96@gmail.com',
+//   },
+//   {
+//     company: '99app',
+//     email: 'viniciuspbl96@gmail.com',
+//   },
+//   {
+//     company: '99app',
+//     email: 'viniciuspbl96@gmail.com',
+//   },
+//   {
+//     company: '99app',
+//     email: 'viniciuspbl96@gmail.com',
+//   },
+//   {
+//     company: '99app',
+//     email: 'viniciuspbl96@gmail.com',
+//   },
+//   {
+//     company: '99app',
+//     email: 'viniciuspbl96@gmail.com',
+//   },
+//   {
+//     company: '99app',
+//     email: 'viniciuspbl96@gmail.com',
+//   },
+//   {
+//     company: '99app',
+//     email: 'viniciuspbl96@gmail.com',
+//   },
+//   {
+//     company: '99app',
+//     email: 'viniciuspbl96@gmail.com',
+//   },
+//   {
+//     company: '99app',
+//     email: 'viniciuspbl96@gmail.com',
+//   },
+//   {
+//     company: '99app',
+//     email: 'viniciuspbl96@gmail.com',
+//   },
+//   {
+//     company: '99app',
+//     email: 'viniciuspbl96@gmail.com',
+//   }
+// ]
