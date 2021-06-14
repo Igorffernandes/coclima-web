@@ -26,7 +26,6 @@ export async function deactivateCompany(company_id) {
     const userData = await http.delete(`${companies}/${company_id}`);
     return userData.data;
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }
@@ -34,9 +33,8 @@ export async function deactivateCompany(company_id) {
 export async function createCompany(values) {
   try {
     const companyData = await http.post(companies, values);
-    resolve(companyData.data);
+    return(companyData.data);
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }

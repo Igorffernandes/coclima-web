@@ -65,6 +65,7 @@ export const ViewButton = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 20px;
+  cursor: pointer;
 `;
 
 export const ViewButtonGoBack = styled.div`
@@ -78,6 +79,7 @@ export const ViewButtonGoBack = styled.div`
   justify-content: center;
   margin-top: 20px;
   margin-bottom: 24px;
+  cursor: pointer;
 `;
 
 export const TextButtonGoback = styled.a`

@@ -94,7 +94,6 @@ const AdmMainPage = () => {
   }
 
   function handleAddEmpresa(){
-    console.log('faz post add empresa')
     setModalAddEmpresa(false)
     setModalAddEmpresaSuccess(!modalAddEmpresaSuccess)
   }
@@ -102,6 +101,11 @@ const AdmMainPage = () => {
   function handleAddEmpresaSuccess(){
     setModalAddEmpresaSuccess(!modalAddEmpresaSuccess)
     handleModalAddEmpresa()
+  }
+
+  function handleAddEmpresaClose(){
+    setModalAddEmpresaSuccess(false)
+    setModalAddEmpresa(false)
   }
 
   function handlePlantioSuccess(){
@@ -147,7 +151,7 @@ const AdmMainPage = () => {
       }
       <AddEmpresaModalSuccess
         visible={modalAddEmpresaSuccess} 
-        onClose={handleAddEmpresaSuccess}
+        onClose={handleAddEmpresaClose}
         handleButton={handleAddEmpresaSuccess}/>
       {modalPlantio &&
         <AddPlantioModal 

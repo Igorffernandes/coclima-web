@@ -41,6 +41,7 @@ export const ViewButton = styled.div`
   justify-content: center;
   margin-bottom: 44px;
   padding: 0 24px;
+  cursor: pointer;
 `;
 
 export const FormBox = styled.div`

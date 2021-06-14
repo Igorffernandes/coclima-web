@@ -109,4 +109,5 @@ export const ViewButton = styled.div`
   align-items: center;
   justify-content: center;
   margin-bottom: 44px;
+  cursor: pointer;
 `;
