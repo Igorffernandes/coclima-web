@@ -6,7 +6,6 @@ export const ViewContainer = styled.div`
     align-items: center;
     align-self: center;
     flex-direction: column;
-    height: 350px;
     width: 400px;
 `;
 
@@ -46,7 +45,6 @@ export const ViewButton = styled.div`
 
 export const FormBox = styled.div`
   display: flex;
-  height: 200px;
   justify-content: center;
   flex-direction: column;
 `;
@@ -65,6 +63,21 @@ export const TextLabel = styled.a`
 export const MaterialInput = styled(Input)`
   height: 48px;
   width: 535px;
+  border-radius: 6px;
+  border: 1px solid #D2D6E0;
+  margin-top: 8px;
+  margin-bottom: 16px;
+`
+
+export const CoordFormBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+`;
+
+export const MaterialInputSmall = styled(Input)`
+  height: 48px;
+  width: 250px;
   border-radius: 6px;
   border: 1px solid #D2D6E0;
   margin-top: 8px;

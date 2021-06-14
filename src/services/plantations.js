@@ -10,6 +10,15 @@ export async function fetchPlantations() {
   }
 }
 
+export async function createPlantations(values) {
+  try {
+    const plantationsData = await http.post(plantations, values);
+    return(plantationsData.data);
+  } catch (err) {
+    throw err;
+  }
+}
+
 // export function fetchLogs() {
 //   return new Promise(async (resolve, reject) => {
 //     try {

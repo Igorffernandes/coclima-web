@@ -3,17 +3,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as Styled from './styles';
 import { useState } from 'react';
+import { createPlantations } from 'services/plantations';
 
-const AddPlantioModal = ({visible, onClose, handleButton}) => {
-  const [name, setName] = useState('')
-  const [coord, setCoord] = useState('')
+const AddPlantioModal = ({visible, onClose, handleButton, companyID}) => {
+  const [date, setDate] = useState('')
+  const [lat, setLat] = useState('')
+  const [lng, setLng] = useState('')
+  const [trees, setTrees] = useState('')
 
-  function handleChangeCoord(value){
-    setCoord(value.target.value)
-  }
-
-  function handleChangeName(value){
-    setName(value.target.value)
+  async function handleAdicionar(){
+    try{
+      const newData = {
+        date,
+        geolocation: {lat, lng},
+        trees,
+        company_id: companyID,
+      }
+      await createPlantations(newData);
+      handleButton();
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   return  <BaseModal 
@@ -25,21 +35,41 @@ const AddPlantioModal = ({visible, onClose, handleButton}) => {
                 </Styled.TextTitle>
                 <Styled.FormBox>
                   <Styled.TextLabel>
-                    Nome
+                    Data
                   </Styled.TextLabel>
                   <Styled.MaterialInput 
-                    value={name}
-                    onChange={handleChangeName}
+                    value={date}
+                    onChange={(value) => setDate(value.target.value)}
                     disableUnderline/>
                   <Styled.TextLabel>
-                    Coodernadas
+                    Árvores
                   </Styled.TextLabel>
                   <Styled.MaterialInput 
-                    value={coord}
-                    onChange={handleChangeCoord}
+                    value={trees}
+                    onChange={(value) => setTrees(value.target.value)}
                     disableUnderline/>
+                  <Styled.CoordFormBox>
+                    <Styled.FormBox>
+                      <Styled.TextLabel>
+                        Latitude
+                      </Styled.TextLabel>
+                      <Styled.MaterialInputSmall 
+                        value={lat}
+                        onChange={(value) => setLat(value.target.value)}
+                        disableUnderline/>
+                    </Styled.FormBox>
+                    <Styled.FormBox>
+                      <Styled.TextLabel>
+                        Longitude
+                      </Styled.TextLabel>
+                      <Styled.MaterialInputSmall 
+                        value={lng}
+                        onChange={(value) => setLng(value.target.value)}
+                        disableUnderline/>
+                    </Styled.FormBox>
+                    </Styled.CoordFormBox>
                 </Styled.FormBox>
-                <Styled.ViewButton onClick={handleButton}>
+                <Styled.ViewButton onClick={handleAdicionar}>
 									<Styled.TextButton>
                     ADICIONAR
 									</Styled.TextButton>
@@ -52,6 +82,7 @@ AddPlantioModal.propTypes = {
     visible: PropTypes.bool,
     onClose: PropTypes.func,
     handleButton: PropTypes.func,
+    companyID: PropTypes.number,
   }
 
 export default AddPlantioModal;

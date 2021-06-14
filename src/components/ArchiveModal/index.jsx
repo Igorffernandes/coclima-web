@@ -6,37 +6,41 @@ import {useDropzone} from 'react-dropzone';
 import {uploadPhoto} from 'services/archives';
 
 const ArchiveModal = ({visible, onClose}) => {
-  const [archive, setArchive] = useState();
+  const [archive, setArchive] = useState([]);
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
       const reader = new FileReader()
       reader.readAsDataURL(file)
 			reader.onload = () => {
-        setArchive(reader.result)
+        setArchive(archive => [...archive, {base64: reader.result, path: file.path}]);
 				}
     })
     
   }, [])
 
-  const {getRootProps, getInputProps, acceptedFiles} = useDropzone({onDrop})
+  const {getRootProps, getInputProps, acceptedFiles} = useDropzone({onDrop, 
+    accept: 'image/*, .pdf'
+  })
 
   const createArquive = async (company_id = 1) => {
-    try{
-      const newArchive = {
-        data: archive,
-        type: 'pdf',
-        company_id: company_id,
-        name: acceptedFiles[0].path,
-        keywords: 'archive'
-      }
-      await uploadPhoto(newArchive);
-    } catch(err){
-      console.log(err);
-    } 
+    await archive.map(async (element) => {
+      try{
+        const newArchive = {
+          data: element.base64,
+          type: 'pdf',
+          company_id: company_id,
+          name: element.path,
+          keywords: 'archive'
+        }
+        await uploadPhoto(newArchive);
+      } catch(err){
+        console.log(err);
+      } 
+    })
   }
 
-	function handleButton(){
-      createArquive();
+  async function handleButton(){
+      await createArquive();
       onClose();
 	}
 

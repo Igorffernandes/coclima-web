@@ -17,7 +17,9 @@ const PhotoModal = ({visible, onClose, handleConfirm}) => {
     })
     
   }, [])
-  const {getRootProps, getInputProps, acceptedFiles} = useDropzone({onDrop})
+  const {getRootProps, getInputProps, acceptedFiles} = useDropzone({onDrop, 
+    accept: 'image/jpeg, image/png'
+  })
 
   
   const createPhoto = async (company_id = 1) => {

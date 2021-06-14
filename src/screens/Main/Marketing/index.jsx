@@ -4,67 +4,13 @@ import TableAddButton from 'components/TableAddButton';
 import FolderCard from 'components/FolderCard';
 import ArchiveModal from 'components/ArchiveModal';
 
-import documentPlaceholder from 'assets/Images/documentPlaceholder.png';
-
 import { fetchArchives } from 'services/archives';
 
 import { Container, Header, Title, SubTitle, SubView, SearchView, FoldersView } from './styles';
 
-const fakeData = [
-  {
-    title: 'Panfleto informativo',
-    image: null,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: documentPlaceholder,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: documentPlaceholder,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: documentPlaceholder,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: documentPlaceholder,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: documentPlaceholder,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: null,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: documentPlaceholder,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: documentPlaceholder,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: documentPlaceholder,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: null,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: documentPlaceholder,
-  }
-];
-
-
-
 const MarketingPage = () => {
   const [archives, setArchives] = useState(false);
+  const [modalArchive, setModalArchive] = useState(false)
 
   const fetchArchivesData = async () => {
     try{
@@ -78,8 +24,13 @@ const MarketingPage = () => {
   useEffect(() => {
     fetchArchivesData();
   }, [])
-  const [modalArchive, setModalArchive] = useState(false)
 
+  useEffect(() => {
+    if(modalArchive === false){
+      fetchArchivesData();
+    }
+  }, [modalArchive])
+  
   function handleModalArchive() {
     setModalArchive(!modalArchive)
   }
