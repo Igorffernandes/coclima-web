@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker} from '@react-google-maps/api';
 import FilterButton from 'components/FilterButton';
+import { useHistory } from 'react-router-dom';
+
 import Logo from 'components/Logo';
 import Filter from 'components/Filter';
 
@@ -81,6 +83,8 @@ const Planting = () => {
     fetchPhotos();
   }, []);
 
+  const history = useHistory();
+
   return (
     <Container>
       <OptionsDiv>
@@ -114,7 +118,7 @@ const Planting = () => {
         </CardsDiv>
         <GeneralDiv>
           <GeneralText>Fotos</GeneralText>
-          <GeneralButton>Ver Todas</GeneralButton>
+          <GeneralButton onClick={() => history.push('/photos')}>Ver Todas</GeneralButton>
         </GeneralDiv>
         <PhotoGrid>
           {photos.length > 0 && photos.map(item => {

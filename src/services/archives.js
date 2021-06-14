@@ -18,3 +18,12 @@ export async function uploadPhoto(values) {
     throw err;
   }
 }
+
+export async function deleteArchive(archive_id){
+  try{
+    const photoUploadResp = await http.delete(`${archives}/${archive_id}`);
+    return photoUploadResp.data;
+  } catch(err){
+    throw err;
+  }
+}

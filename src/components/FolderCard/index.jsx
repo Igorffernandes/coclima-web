@@ -2,16 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Base64Downloader from 'react-base64-downloader';
 
-import { Container, CardImage, NoImageDiv, FileIcon, FooterView, FooterText, ButtonContainer, ButtonText, styleObjectButtonText } from './styles';
+import { 
+  Container, 
+  CardImage, 
+  NoImageDiv, 
+  FileIcon, 
+  FooterView, 
+  FooterText, 
+  ButtonContainer, 
+  ButtonText, 
+  styleObjectButtonText,
+  FileItemTrash,
+} from './styles';
 
 const FolderCard = ({
   title,
   type,
   data,
+  onPressDelete,
 }) => {
-
   return(
   <Container>
+    {onPressDelete && <FileItemTrash onClick={onPressDelete}/>}
     {type === 'image' && <CardImage src={`${data}`}/>}
     {type === 'pdf' && <NoImageDiv><FileIcon /></NoImageDiv>}
     <FooterView>

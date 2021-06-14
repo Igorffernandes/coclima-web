@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import colors from 'styles/colors';
 
 import fileIcon from 'assets/icons/fileIcon.png';
+import trash from 'assets/icons/trash.png';
 
 export const Container = styled.div`
   display: flex;
@@ -28,6 +29,17 @@ export const FileIcon = styled.img.attrs({
   width: 24px;
   height: 32px;
   box-sizing: border-box;
+`;
+
+export const FileItemTrash = styled.img.attrs({
+  src: trash,
+})`
+  width: 24px;
+  height: 24px;
+  margin-left: 8px;
+  box-sizing: border-box;
+  align-self: flex-end;
+  cursor: pointer;
 `;
 
 export const NoImageDiv = styled.div`
