@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, LoadScript, Marker} from '@react-google-maps/api';
-import FilterButton from 'components/FilterButton';
-import Logo from 'components/Logo';
+import { useHistory } from 'react-router-dom';
+
 import Filter from 'components/Filter';
 
 import IconTree from 'assets/icons/overviewTree.png';
 import IconCarbon from 'assets/icons/overviewCarbon.png';
-import fotoexemplo from 'assets/Images/fotoexemplo1.png';
 import circledicon from 'assets/icons/circledIcon.png';
 
 import { fetchPlantations } from 'services/plantations';
@@ -53,33 +52,46 @@ const Planting = () => {
     carbon: 0,
   });
   const [loading, setLoading] = useState(false);
+  const [selectedCompanies, setSelectedCompanies] = useState([]);
+
+  const fetchPlantationData = async () => {
+    try {
+      setLoading(true);
+      let queryObject = {
+      };
+      if(selectedCompanies.length > 0){
+        queryObject.company_id = selectedCompanies;
+      }
+      const plantationsData = await fetchPlantations(queryObject);
+      setInfo(plantationsData);
+    } catch(err){
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const fetchPhotos = async () => {
+    try{
+      let queryObject = {
+        type: 'image',
+      };
+      if(selectedCompanies.length > 0){
+        queryObject.company_id = selectedCompanies;
+      }
+      const archivesData = await fetchArchives(queryObject);
+      setPhotos(archivesData);
+    } catch(err){
+      console.log(err);
+    }
+  }
 
   useEffect(() => {
-    const fetchPlantationData = async () => {
-      try {
-        setLoading(true);
-        const plantationsData = await fetchPlantations();
-        setInfo(plantationsData);
-      } catch(err){
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    }
     fetchPlantationData();
-  }, []);
-
-  useEffect(() => {
-    const fetchPhotos = async () => {
-      try{
-        const archivesData = await fetchArchives({ type: 'image' });
-        setPhotos(archivesData);
-      } catch(err){
-        console.log(err);
-      }
-    }
     fetchPhotos();
   }, []);
+
+  const history = useHistory();
 
   return (
     <Container>
@@ -89,7 +101,14 @@ const Planting = () => {
             <Title>Nossos plantios</Title>
             <SubTitle>Confira como estão as arvóres plantadas.</SubTitle>
           </TextHeaderDiv>
-          <Filter />
+          <Filter 
+            selectedCompanies={selectedCompanies} 
+            setSelectedCompanies={setSelectedCompanies}
+            closeCallback={async () => {
+              fetchPhotos();
+              fetchPlantationData();
+            }}
+          />
         </Header>
         <CardsDiv>
           <TreeDiv>
@@ -114,7 +133,7 @@ const Planting = () => {
         </CardsDiv>
         <GeneralDiv>
           <GeneralText>Fotos</GeneralText>
-          <GeneralButton>Ver Todas</GeneralButton>
+          <GeneralButton onClick={() => history.push('/photos')}>Ver Todas</GeneralButton>
         </GeneralDiv>
         <PhotoGrid>
           {photos.length > 0 && photos.map(item => {

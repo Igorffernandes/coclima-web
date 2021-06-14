@@ -17,6 +17,7 @@ const Colors = {
   greenLight: '#DBFCEB',
   anotherGrayInTheWall: '#90A0B7',
   dividerColor: '#EBEFF2',
+  vermelhoDaMassa: '#F6382C',
 };
 
 export default Colors;

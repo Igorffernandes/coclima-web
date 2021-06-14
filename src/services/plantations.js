@@ -1,9 +1,9 @@
 import http from '../config/http';
 import { plantations } from './endpoints';
 
-export async function fetchPlantations() {
+export async function fetchPlantations(query_params) {
   try {
-    const plantationsData = await http.get(plantations);
+    const plantationsData = await http.get(plantations, { params: query_params || {} });
     return plantationsData.data;
   } catch(err){
     throw err;
