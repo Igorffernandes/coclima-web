@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import { ButtonContainer, PlusIcon, ButtonText } from './styles';
 
-const TableAddButton = () => {
+const TableAddButton = ({handleClick}) => {
   return(
-    <ButtonContainer>
+    <ButtonContainer onClick={handleClick}>
       <PlusIcon />
       <ButtonText>
         {'Adicionar'}
@@ -13,5 +13,10 @@ const TableAddButton = () => {
     </ButtonContainer>
   )
 }
+
+TableAddButton.propTypes = {
+  handleClick: PropTypes.func,
+};
+
 
 export default TableAddButton;

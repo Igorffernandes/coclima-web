@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-
 import SearchBox from 'components/SearchBox';
 import TableAddButton from 'components/TableAddButton';
 import FolderCard from 'components/FolderCard';
+import ArchiveModal from 'components/ArchiveModal';
 
 import documentPlaceholder from 'assets/Images/documentPlaceholder.png';
 
@@ -78,6 +78,11 @@ const MarketingPage = () => {
   useEffect(() => {
     fetchArchivesData();
   }, [])
+  const [modalArchive, setModalArchive] = useState(false)
+
+  function handleModalArchive() {
+    setModalArchive(!modalArchive)
+  }
 
   return(
     <Container>
@@ -88,12 +93,17 @@ const MarketingPage = () => {
       <SubView>
         <SearchView>
           <SearchBox />
-          <TableAddButton />
+          <TableAddButton handleClick={handleModalArchive}/>
         </SearchView>
         <FoldersView>
           {archives.length > 0 && archives.map(item => <FolderCard type={item.type} data={item.data} title={item.title || 'sem título'} />)}
         </FoldersView>
       </SubView>
+      {modalArchive &&
+        <ArchiveModal 
+          visible={modalArchive} 
+          onClose={handleModalArchive}/>
+      }
     </Container>
   )
 }
