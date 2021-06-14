@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect } from 'react';
 
 import Table from 'components/Table';
 import ActionCard from 'components/ActionCard';
 import PhotoModal from 'components/PhotoModal';
+import TableButton from 'components/TableButton';
 import PhotoModalSuccess from 'components/PhotoModalSuccess';
 import AddEmpresaModal from 'components/AddEmpresaModal';
 import AddEmpresaModalSuccess from 'components/AddEmpresaModalSuccess';
