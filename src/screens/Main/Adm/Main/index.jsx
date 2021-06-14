@@ -17,11 +17,17 @@ import { Container, Header, Title, TableDiv, CardsDiv, SubContainer } from './st
 const AdmMainPage = () => {
   const [companiesData, setCompaniesData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedCompanies, setSelectedCompanies] = useState([]);
   
   const companiesFetch = async () => {
     try{
       setLoading(true);
-      const companies = await fetchCompanies();
+      let queryObject = {
+      };
+      if(selectedCompanies.length > 0){
+        queryObject.company_id = selectedCompanies;
+      }
+      const companies = await fetchCompanies(queryObject);
       setCompaniesData(companies);
     } catch(err){
       console.log(err);
@@ -121,6 +127,13 @@ const AdmMainPage = () => {
             columns={columns}
             title={'Empresas'}
             actions={[]}
+            filterProps={{
+              selectedCompanies:selectedCompanies, 
+              setSelectedCompanies: setSelectedCompanies,
+              closeCallback: async () => {
+                companiesFetch();
+              }}
+            }
             handleAddEmpresa={handleModalAddEmpresa}
           />}
         </TableDiv>

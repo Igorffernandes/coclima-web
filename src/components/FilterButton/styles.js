@@ -33,3 +33,26 @@ export const ArrowIcon = styled.img.attrs({
   height: 10px;
   margin-left: 8px;
 `;
+
+export const BubbleDiv = styled.div`
+  background-color: ${colors.verdeDaMassa};
+  display: flex;
+  margin-left: 8px;
+  justify-content: center;
+  align-items: center;
+  height: 15px;
+  width: 15px;
+  border-radius: 20px;
+`;
+
+export const BubbleText = styled.a`
+  font-family: Inter;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 9px;
+  line-height: 12px;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+  color: ${colors.brancoDaMassa};
+`;

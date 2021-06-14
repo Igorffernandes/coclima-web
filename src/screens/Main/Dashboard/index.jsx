@@ -26,7 +26,7 @@ import {
 import InfoCards from 'components/InfoCards';
 import FilterCards from 'components/FilterCards';
 import LineChart from 'components/LineChart';
-import FilterButton from 'components/FilterButton';
+import Filter from 'components/Filter';
 import ExtractButton from 'components/ExtractButton';
 
 import { fetchDashboard } from 'services/dashboard';
@@ -42,6 +42,8 @@ const Dashboard = () => {
     carbon: 0,
     capital: 0
   });
+  const [selectedCompanies, setSelectedCompanies] = useState([]);
+
   const [chartData, setChartData] = useState([
     { x: 1, y: 7 },
     { x: 2, y: 5 },
@@ -64,19 +66,25 @@ const Dashboard = () => {
       setTransfer(!transfer);
     }
   }
+  
+  const fetchDashData = async () => {
+    try{
+      setLoading(true);
+      let queryObject = {
+      };
+      if(selectedCompanies.length > 0){
+        queryObject.company_id = selectedCompanies;
+      }
+      const dashData = await fetchDashboard(queryObject);
+      setData({...data, ...dashData});
+    } catch(err){
+      console.log(err);
+    } finally{
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    const fetchDashData = async () => {
-      try{
-        setLoading(true);
-        const dashData = await fetchDashboard();
-        setData({...data, ...dashData});
-      } catch(err){
-        console.log(err);
-      } finally{
-        setLoading(false);
-      }
-    }
     fetchDashData();
   }, [])
 
@@ -94,7 +102,11 @@ const Dashboard = () => {
       <FilterCardsDiv>
         <FilterCards info={data} />
         <FilterOptions>
-          <FilterButton />
+          <Filter 
+            selectedCompanies={selectedCompanies} 
+            setSelectedCompanies={setSelectedCompanies} 
+            closeCallback={async () => fetchDashData()}
+          />
           <ExtractButton />
         </FilterOptions>
       </FilterCardsDiv>

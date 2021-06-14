@@ -1,9 +1,9 @@
 import http from '../config/http';
 import { companies } from './endpoints';
 
-export async function fetchCompanies() {
+export async function fetchCompanies(query_params) {
   try{
-    const companiesData = await http.get(companies);
+    const companiesData = await http.get(companies, { params: query_params || {} });
     return companiesData.data;
   } catch(err){
     console.log(err);
