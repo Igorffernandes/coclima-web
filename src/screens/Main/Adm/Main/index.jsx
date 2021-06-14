@@ -65,6 +65,18 @@ const AdmMainPage = () => {
     { render: rowData => <div><TableButton title={'Excluir'} onClick={async () => excludeCompany(rowData.id)}/></div>},
   ];
   
+  const callbackEdit = async () => {
+      try{
+        setLoading(true);
+        const companies = await fetchCompanies();
+        setCompaniesData(companies);
+      } catch(err) {
+        console.log(err)
+      } finally {
+        setLoading(false);
+      }
+  }
+  
   function handleCompanyModal(){
     setEditCompanyModal(!editCompanyModal)
   }
@@ -104,30 +116,27 @@ const AdmMainPage = () => {
     setModalAddEmpresa(!modalAddEmpresa)
   }
 
-  function handleAddEmpresa(){
+  async function handleAddEmpresa(){
     setModalAddEmpresa(false)
     setModalAddEmpresaSuccess(!modalAddEmpresaSuccess)
   }
 
   function handleAddEmpresaSuccess(){
-    setModalAddEmpresaSuccess(!modalAddEmpresaSuccess)
-    handleModalAddEmpresa()
+    setModalAddEmpresaSuccess(!modalAddEmpresaSuccess);
+    handleModalAddEmpresa();
   }
 
-  function handleAddEmpresaClose(){
-    setModalAddEmpresaSuccess(false)
-    setModalAddEmpresa(false)
+  async function handleAddEmpresaClose(){
+    setModalAddEmpresaSuccess(false);
+    setModalAddEmpresa(false);
+    callbackEdit();
   }
 
   function handlePlantioSuccess(){
-    setModalPlantioSuccess(!modalPlantioSuccess)
-    handleModalPlantio()
+    setModalPlantioSuccess(!modalPlantioSuccess);
+    handleModalPlantio();
   }
 
-  const callbackEdit = async () => {
-    const companies = await fetchCompanies();
-    setCompaniesData(companies);
-  }
 
   return(
     <Container>
