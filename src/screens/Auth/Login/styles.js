@@ -122,3 +122,8 @@ export const LogoSmall = styled.img`
   width: 133px;
   margin-left: 45px;
 `;
+
+export const ButtonDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
