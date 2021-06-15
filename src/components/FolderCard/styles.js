@@ -21,6 +21,7 @@ export const CardImage = styled.img`
   height: 135px;
   box-sizing: border-box;
   align-self: center;
+  object-fit: cover;
 `;
 
 export const FileIcon = styled.img.attrs({

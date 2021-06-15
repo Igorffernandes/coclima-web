@@ -27,6 +27,7 @@ const AdmMainPage = () => {
   const [modalAddEmpresa, setModalAddEmpresa] = useState(false)
   const [modalAddEmpresaSuccess, setModalAddEmpresaSuccess] = useState(false)
   const [selectedCompanies, setSelectedCompanies] = useState([]);
+  const [searchText, setSearchText] = useState('');
   
   const companiesFetch = async () => {
     try{
@@ -61,6 +62,16 @@ const AdmMainPage = () => {
   useEffect(() => {
     companiesFetch();
   }, [])
+
+  useEffect(() => {
+    if(searchText.length > 3){
+      const pesquisa = companiesData.filter(item => String(item.name).toLowerCase().includes(searchText.toLowerCase()))
+      setCompaniesData(pesquisa)
+    }
+    if(searchText.length === 0){
+      companiesFetch();
+    }
+  }, [searchText])
 
   //PEIDEI E NADEI PRO LIFECYCLE 
   const columns = [
@@ -156,13 +167,10 @@ const AdmMainPage = () => {
             columns={columns}
             title={'Empresas'}
             actions={[]}
-            filterProps={{
-              selectedCompanies:selectedCompanies, 
-              setSelectedCompanies: setSelectedCompanies,
-              closeCallback: async () => {
-                companiesFetch();
-              }}
-            }
+            searchProps={{
+              value: searchText,
+              setValue: setSearchText,
+            }}
             handleAddEmpresa={handleModalAddEmpresa}
           />}
         </TableDiv>

@@ -10,6 +10,7 @@ export const InputContainer = styled.div`
   box-sizing: border-box;
   border-radius: 40px;
   display: flex;
+  background-color: ${colors.brancoDaMassa};
   flex-direction: row;
   align-items: center;
 `;

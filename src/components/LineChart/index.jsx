@@ -25,11 +25,12 @@ const LineChart = ({type, filter}) => {
     return( 
       <div>
           <VictoryBar
+            height={400}
+            width={1850}
             style={{
-              data: { stroke: "#0A8F4A" },
+              data: { stroke: "#0A8F4A", fill: '#0A8F4A' },
               parent: {
                 border: "0px solid #ccc",
-                width: '100%',
               },
             }}
             data={filter}

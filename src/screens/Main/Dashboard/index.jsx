@@ -32,32 +32,19 @@ import ExtractButton from 'components/ExtractButton';
 import { fetchDashboard } from 'services/dashboard';
 
 const Dashboard = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [planting, setPlanting] = useState(true);
   const [transfer, setTransfer] = useState(false);
   const [chartType, setChartType] = useState('line');
-  const [range, setChartRange] = useState('30d');
+  const [range, setChartRange] = useState('30');
   const [data, setData] = useState({
     trees: 0,
     carbon: 0,
-    capital: 0
+    capital: 0,
+    treeChartData: {},
+    capitalChartData: {},
   });
   const [selectedCompanies, setSelectedCompanies] = useState([]);
-
-  const [chartData, setChartData] = useState([
-    { x: 1, y: 7 },
-    { x: 2, y: 5 },
-    { x: 3, y: 1 },
-    { x: 4, y: 8 },
-    { x: 5, y: 10 },
-    { x: 6, y: 20 },
-    { x: 7, y: 2 },
-    { x: 8, y: 4},
-    { x: 9, y: 19},
-    { x: 10, y: 8},
-    { x: 11, y: 9},
-    { x: 12, y: 14},
-  ]);
 
   const handleChange = (option) => {
     // Do the filter
@@ -75,6 +62,9 @@ const Dashboard = () => {
       if(selectedCompanies.length > 0){
         queryObject.company_id = selectedCompanies;
       }
+      if(range !== 'tudo'){
+        queryObject.date_filter = range;
+      }
       const dashData = await fetchDashboard(queryObject);
       setData({...data, ...dashData});
     } catch(err){
@@ -86,7 +76,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchDashData();
-  }, [])
+  }, [range])
 
   return (
     <Container>
@@ -111,13 +101,17 @@ const Dashboard = () => {
         </FilterOptions>
       </FilterCardsDiv>
       <ChartDiv>
-        <LineChart type={chartType} filter={chartData} />
+        {!loading && Object.keys(planting ? data?.treeChartData : data?.capitalChartData).length !== 0 && 
+          <LineChart 
+          type={chartType} 
+          filter={planting? data.treeChartData : data.capitalChartData} 
+        />}
         <Hr />
         <ChartOptions>
           <TimeOption>
-            <OptionText1 active={range} onClick={() => setChartRange('30d')}>30d</OptionText1>
-            <OptionText2 active={range} onClick={() => setChartRange('3m')}>3m</OptionText2>
-            <OptionText3 active={range} onClick={() => setChartRange('1a')}>1a</OptionText3>
+            <OptionText1 active={range} onClick={() => setChartRange('30')}>30d</OptionText1>
+            <OptionText2 active={range} onClick={() => setChartRange('90')}>3m</OptionText2>
+            <OptionText3 active={range} onClick={() => setChartRange('365')}>1a</OptionText3>
             <OptionText4 active={range} onClick={() => setChartRange('tudo')}>tudo</OptionText4>
           </TimeOption>
           <ChartType>

@@ -8,6 +8,7 @@ import CustomButton from 'components/CustomButtons/Button';
 import FilterButton from 'components/FilterButton';
 import Filter from 'components/Filter';
 import TableAddButton from 'components/TableAddButton';
+import SearchBox from 'components/SearchBox';
 
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -59,7 +60,7 @@ const UsersList = ({
   data,
   actions,
   handleAddEmpresa,
-  filterProps,
+  searchProps,
 }) => {
   const pageSize = useMemo(
     () => (data.length > PAGESIZE ? PAGESIZE : data.length),
@@ -71,7 +72,8 @@ const UsersList = ({
     <TableHeaderDiv>
           <SubHeaderDiv>
             <TableTitle>{title}</TableTitle>
-            <Filter {...filterProps} />
+            <SearchBox {...searchProps} />
+            {/* <Filter {...filterProps} /> */}
           </SubHeaderDiv>
           <TableAddButton handleClick={handleAddEmpresa}/>
         </TableHeaderDiv>
