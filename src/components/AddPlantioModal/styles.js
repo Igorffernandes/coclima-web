@@ -83,3 +83,12 @@ export const MaterialInputSmall = styled(Input)`
   margin-top: 8px;
   margin-bottom: 16px;
 `
+
+export const DivFilter = styled.div`
+  margin-bottom: 16px;
+`;
+
+export const DateDiv = styled.div`
+  margin: 8px 0;
+`;
+

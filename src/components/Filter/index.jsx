@@ -6,7 +6,7 @@ import FilterItem from 'components/FilterItem';
 
 import { fetchCompanies } from 'services/companies';
 
-const Filter = ({ selectedCompanies, setSelectedCompanies, closeCallback }) => {
+const Filter = ({ selectedCompanies, setSelectedCompanies, closeCallback, singleCompany }) => {
 
   const [companies, setCompanies] = useState([]);
 
@@ -41,8 +41,12 @@ const Filter = ({ selectedCompanies, setSelectedCompanies, closeCallback }) => {
       const prevArr = selectedCompanies.filter(item => item !== id);
       setSelectedCompanies(prevArr);
     } else {
-      const a = [...selectedCompanies, id];
-      setSelectedCompanies(a);
+      if(singleCompany === true){
+        setSelectedCompanies([id]);
+      } else {
+        const a = [...selectedCompanies, id];
+        setSelectedCompanies(a);
+      }
     }
   }
 

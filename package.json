@@ -23,6 +23,7 @@
     "react": "^17.0.2",
     "react-base64-downloader": "^2.1.7",
     "react-chartist": "0.14.3",
+    "react-datepicker": "^4.1.1",
     "react-dom": "^17.0.2",
     "react-dropdown": "^1.9.2",
     "react-dropzone": "^11.3.2",

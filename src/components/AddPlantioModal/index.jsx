@@ -4,20 +4,26 @@ import PropTypes from 'prop-types';
 import * as Styled from './styles';
 import { useState } from 'react';
 import { createPlantations } from 'services/plantations';
+import Filter from 'components/Filter';
+import DatePicker, {registerLocale} from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import pt from 'date-fns/locale/pt-BR';
 
-const AddPlantioModal = ({visible, onClose, handleButton, companyID}) => {
-  const [date, setDate] = useState('')
+const AddPlantioModal = ({visible, onClose, handleButton}) => {
+  registerLocale('pt', pt) 
+  const [date, setDate] = useState(new Date());
   const [lat, setLat] = useState('')
   const [lng, setLng] = useState('')
   const [trees, setTrees] = useState('')
+  const [selectedCompanies, setSelectedCompanies] = useState([])
 
   async function handleAdicionar(){
     try{
       const newData = {
         date,
-        geolocation: {lat, lng},
+        geolocation: {lat: Number(lat), lng: Number(lng)},
         trees,
-        company_id: companyID,
+        company_id: selectedCompanies[0],
       }
       await createPlantations(newData);
       handleButton();
@@ -37,10 +43,13 @@ const AddPlantioModal = ({visible, onClose, handleButton, companyID}) => {
                   <Styled.TextLabel>
                     Data
                   </Styled.TextLabel>
-                  <Styled.MaterialInput 
-                    value={date}
-                    onChange={(value) => setDate(value.target.value)}
-                    disableUnderline/>
+                  <Styled.DateDiv>
+                    <DatePicker 
+                      locale="pt"
+                      dateFormat="dd/MM/yyyy" 
+                      selected={date} 
+                      onChange={(date) => setDate(date)} />
+                  </Styled.DateDiv>
                   <Styled.TextLabel>
                     Árvores
                   </Styled.TextLabel>
@@ -68,7 +77,14 @@ const AddPlantioModal = ({visible, onClose, handleButton, companyID}) => {
                         disableUnderline/>
                     </Styled.FormBox>
                     </Styled.CoordFormBox>
-                </Styled.FormBox>
+                  </Styled.FormBox>
+                  <Styled.DivFilter>
+                    <Filter 
+                      selectedCompanies={selectedCompanies} 
+                      setSelectedCompanies={setSelectedCompanies} 
+                      singleCompany={true}
+                    />
+                  </Styled.DivFilter>
                 <Styled.ViewButton onClick={handleAdicionar}>
 									<Styled.TextButton>
                     ADICIONAR
@@ -82,7 +98,6 @@ AddPlantioModal.propTypes = {
     visible: PropTypes.bool,
     onClose: PropTypes.func,
     handleButton: PropTypes.func,
-    companyID: PropTypes.number,
   }
 
 export default AddPlantioModal;

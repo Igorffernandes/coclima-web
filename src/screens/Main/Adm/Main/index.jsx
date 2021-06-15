@@ -195,8 +195,7 @@ const AdmMainPage = () => {
         <AddPlantioModal 
           visible={modalPlantio} 
           onClose={handleModalPlantio}
-          handleButton={handlePlantioSuccess}
-          companyID={1}/>
+          handleButton={handlePlantioSuccess}/>
       }
       <AddPlantioModalSuccess 
         visible={modalPlantioSuccess} 

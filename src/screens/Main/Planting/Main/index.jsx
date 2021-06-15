@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { GoogleMap, LoadScript, Marker} from '@react-google-maps/api';
+import { GoogleMap, LoadScript, Marker, InfoWindow} from '@react-google-maps/api';
 import { useHistory } from 'react-router-dom';
 
 import Filter from 'components/Filter';
+import Badge from 'components/Badge';
 
 import IconTree from 'assets/icons/overviewTree.png';
 import IconCarbon from 'assets/icons/overviewCarbon.png';
@@ -10,6 +11,7 @@ import circledicon from 'assets/icons/circledIcon.png';
 
 import { fetchPlantations } from 'services/plantations';
 import { fetchArchives } from 'services/archives.js';
+import { fetchCompanies } from 'services/companies';
 
 import {
   Container,
@@ -47,12 +49,17 @@ const center = {
 
 const Planting = () => {
   const [photos, setPhotos] = useState([])
+  const [selectedPlace, setSelectedPlace] = useState(null);
+  const [infoOpen, setInfoOpen] = useState(false);
   const [info, setInfo] = useState({
     trees: 0,
     carbon: 0,
   });
   const [loading, setLoading] = useState(false);
   const [selectedCompanies, setSelectedCompanies] = useState([]);
+  const [markerMap, setMarkerMap] = useState({});
+  const [companies, setCompanies] = useState();
+  
 
   const fetchPlantationData = async () => {
     try {
@@ -68,6 +75,15 @@ const Planting = () => {
       console.log(err);
     } finally {
       setLoading(false);
+    }
+  }
+
+  const baixarCompanias = async () => {
+    try {
+      const companias = await fetchCompanies();
+      setCompanies(companias);
+    } catch(err){
+      console.log(err);
     }
   }
 
@@ -89,9 +105,32 @@ const Planting = () => {
   useEffect(() => {
     fetchPlantationData();
     fetchPhotos();
+    baixarCompanias();
   }, []);
 
   const history = useHistory();
+
+  const markerClickHandler = (event, place) => {
+    setSelectedPlace(place);
+
+    if (infoOpen) {
+      setInfoOpen(false);
+    }
+
+    setInfoOpen(true);
+  };
+
+  const markerLoadHandler = (marker, place) => {
+
+    return setMarkerMap(prevState => {
+      return { ...prevState, [place.id]: marker };
+    });
+  };
+
+  const findName = () => {
+    const data = companies.find(item => item.id === selectedPlace.company_id);
+    return data?.name
+  }
 
   return (
     <Container>
@@ -149,11 +188,22 @@ const Planting = () => {
       </OptionsDiv>
       <LoadScript googleMapsApiKey="AIzaSyCRtT4qyUroFx_iVdOmIQS9cbyD0Y2J6AQ">
         <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={8}>
-          {/* Child components, such as markers, info windows, etc. */}
           <>
             {info?.plantation?.length > 0 && info.plantation.map(item => 
-            <Marker position={item.geolocation} icon={circledicon}/>)}
+            <Marker 
+              onMouseOver={event => markerClickHandler(event, item)}
+              position={item.geolocation}
+              onLoad={marker => markerLoadHandler(marker, item)}
+              icon={circledicon}/>)}
           </>
+          {infoOpen && selectedPlace && (
+            <InfoWindow
+              anchor={markerMap[selectedPlace.id]}
+              onCloseClick={() => setInfoOpen(false)}
+            >
+              <Badge text={findName()}/>
+            </InfoWindow>
+          )}
         </GoogleMap>
       </LoadScript>
     </Container>
