@@ -1,6 +1,7 @@
 const routePaths = {
   authRoutes: {
     login: '/',
+    callback: '/coclima',
     feiraoDoComponent: '/showroom',
   },
   mainRoutes: {

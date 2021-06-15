@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from 'react-router-dom';
+
+import { useParams } from 'react-router-dom';
 import Button from "@material-ui/core/Button";
 import { useAuth } from "hooks/AuthContext";
 
@@ -17,6 +20,7 @@ import {
   TextWhite,
   LogoLarge,
   LogoSmall,
+  ButtonDiv,
 } from "./styles";
 import PasswordTextField from "components/PasswordTextField";
 import UsernameTextField from "components/UsernameTextField";
@@ -27,10 +31,14 @@ import colors from "../../../styles/colors";
 import coClimaIcon from 'assets/Images/logoCoClima.png';
 
 const LoginPage = () => {
+  // const { code, api_address } = useParams();
+  const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [checked, setChecked] = useState(false);
   const { signIn } = useAuth();
+  const [api_address, setApiAddress] = useState('gorda');
+  const [code, setCode] = useState('bunda');
 
   useEffect(() => {
     const listener = (event) => {
@@ -78,24 +86,46 @@ const LoginPage = () => {
           />
           <CheckText>Me manter conectado</CheckText>
         </FormCheckBox>
-        <Button
-          variant="contained"
-          color="primary"
-          style={{
-            color: colors.brancoDaMassa,
-            borderRadius: 100,
-            fontWeight: 'bold',
-            fontFamily: 'Inter',
-            paddingTop: 15,
-            paddingBottom: 15,
-            paddingRight: 70,
-            paddingLeft: 70,
-            alignSelf: 'center',
-          }}
-          onClick={handleLogin}
-        >
-          Entrar
-        </Button>
+        <ButtonDiv>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{
+              color: colors.brancoDaMassa,
+              borderRadius: 100,
+              fontWeight: 'bold',
+              fontFamily: 'Inter',
+              paddingTop: 15,
+              paddingBottom: 15,
+              paddingRight: 70,
+              paddingLeft: 70,
+              alignSelf: 'center',
+            }}
+            onClick={handleLogin}
+          >
+            Entrar
+          </Button>
+          {code && api_address && 
+          <Button
+            variant="contained"
+            color="primary"
+            style={{
+              color: colors.brancoDaMassa,
+              borderRadius: 100,
+              fontWeight: 'bold',
+              fontFamily: 'Inter',
+              marginLeft: 15,
+              paddingTop: 15,
+              paddingBottom: 15,
+              paddingRight: 55,
+              paddingLeft: 55,
+              alignSelf: 'center',
+            }}
+            onClick={() => history.push('/coclima', {code, api_address})}
+          >
+            Cadastrar
+          </Button>}
+        </ButtonDiv>
       </LoginCard>
       <LogoImage>
         <Image src={loginImage}/>
