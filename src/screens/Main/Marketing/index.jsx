@@ -4,67 +4,14 @@ import TableAddButton from 'components/TableAddButton';
 import FolderCard from 'components/FolderCard';
 import ArchiveModal from 'components/ArchiveModal';
 
-import documentPlaceholder from 'assets/Images/documentPlaceholder.png';
-
 import { fetchArchives } from 'services/archives';
 
 import { Container, Header, Title, SubTitle, SubView, SearchView, FoldersView } from './styles';
 
-const fakeData = [
-  {
-    title: 'Panfleto informativo',
-    image: null,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: documentPlaceholder,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: documentPlaceholder,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: documentPlaceholder,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: documentPlaceholder,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: documentPlaceholder,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: null,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: documentPlaceholder,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: documentPlaceholder,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: documentPlaceholder,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: null,
-  },
-  {
-    title: 'Panfleto informativo',
-    image: documentPlaceholder,
-  }
-];
-
-
-
 const MarketingPage = () => {
   const [archives, setArchives] = useState(false);
+  const [modalArchive, setModalArchive] = useState(false)
+  const [searchText, setSearchText] = useState('');
 
   const fetchArchivesData = async () => {
     try{
@@ -78,8 +25,23 @@ const MarketingPage = () => {
   useEffect(() => {
     fetchArchivesData();
   }, [])
-  const [modalArchive, setModalArchive] = useState(false)
 
+  useEffect(() => {
+    if(searchText.length > 3){
+      const responseDaBusca = archives.filter(item => String(item.name).toLowerCase().includes(searchText.toLowerCase()));
+      setArchives(responseDaBusca);
+    }
+    if(searchText.length === 0){
+      fetchArchivesData();
+    }
+  }, [searchText]);
+
+  useEffect(() => {
+    if(modalArchive === false){
+      fetchArchivesData();
+    }
+  }, [modalArchive])
+  
   function handleModalArchive() {
     setModalArchive(!modalArchive)
   }
@@ -92,11 +54,11 @@ const MarketingPage = () => {
       </Header>
       <SubView>
         <SearchView>
-          <SearchBox />
+          <SearchBox value={searchText} setValue={setSearchText}/>
           <TableAddButton handleClick={handleModalArchive}/>
         </SearchView>
         <FoldersView>
-          {archives.length > 0 && archives.map(item => <FolderCard type={item.type} data={item.data} title={item.title || 'sem título'} />)}
+          {archives.length > 0 && archives.map(item => <FolderCard type={item.type} data={item.data} title={item.name || 'sem título'} />)}
         </FoldersView>
       </SubView>
       {modalArchive &&

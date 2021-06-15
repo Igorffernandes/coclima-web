@@ -3,9 +3,13 @@ import React, {useCallback, useState} from 'react';
 import PropTypes from 'prop-types';
 import * as Styled from './styles';
 import {useDropzone} from 'react-dropzone';
+import {uploadPhoto} from 'services/archives';
+import Filter from 'components/Filter';
 
 const PhotoModal = ({visible, onClose, handleConfirm}) => {
 	const [image, setImage] = useState();
+  const [selectedCompanies, setSelectedCompanies] = useState([])
+
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
       const reader = new FileReader()
@@ -16,7 +20,30 @@ const PhotoModal = ({visible, onClose, handleConfirm}) => {
     })
     
   }, [])
-  const {getRootProps, getInputProps, acceptedFiles} = useDropzone({onDrop})
+  const {getRootProps, getInputProps, acceptedFiles} = useDropzone({onDrop, 
+    accept: 'image/jpeg, image/png, image/jpg'
+  })
+
+  
+  const createPhoto = async () => {
+    try{
+      const newPhoto = {
+        data: image,
+        type: 'image',
+        company_id: selectedCompanies[0],
+        name: acceptedFiles[0].path,
+        keywords: 'photo'
+      }
+      await uploadPhoto(newPhoto);
+    } catch(err){
+      console.log(err);
+    } 
+  }
+
+  const createNewPhoto = () => {
+    createPhoto()
+    handleConfirm()
+  }
 
   return  <BaseModal 
 			visible={visible} 
@@ -58,7 +85,14 @@ const PhotoModal = ({visible, onClose, handleConfirm}) => {
               </Styled.FormBox>
             </Styled.FormDiv>
           </Styled.ContainerDiv>
-          <Styled.ViewButton extraMargin="38" onClick={handleConfirm}>
+          <Styled.DivFilter>
+              <Filter 
+                selectedCompanies={selectedCompanies} 
+                setSelectedCompanies={setSelectedCompanies} 
+                singleCompany={true}
+              />
+            </Styled.DivFilter>
+          <Styled.ViewButton extraMargin="38" onClick={createNewPhoto}>
           <Styled.TextButton>
               CONFIRMAR ENVIO
           </Styled.TextButton>

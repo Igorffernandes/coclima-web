@@ -1,16 +1,47 @@
 import BaseModal from 'components/BaseModal';
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import PropTypes from 'prop-types';
 import * as Styled from './styles';
 import {useDropzone} from 'react-dropzone';
+import {uploadPhoto} from 'services/archives';
 
 const ArchiveModal = ({visible, onClose}) => {
+  const [archive, setArchive] = useState([]);
+  const onDrop = useCallback((acceptedFiles) => {
+    acceptedFiles.forEach((file) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+			reader.onload = () => {
+        setArchive(archive => [...archive, {base64: reader.result, path: file.path}]);
+				}
+    })
+    
+  }, [])
 
-  const {getRootProps, getInputProps, acceptedFiles} = useDropzone()
+  const {getRootProps, getInputProps, acceptedFiles} = useDropzone({onDrop, 
+    accept: 'image/*, .pdf'
+  })
 
-	function handleButton(){
-			console.log('faz post dos arquivos')
-      onClose()
+  const createArquive = async (company_id = 1) => {
+    await archive.map(async (element) => {
+      try{
+        const newArchive = {
+          data: element.base64,
+          type: 'pdf',
+          company_id: company_id,
+          name: element.path,
+          keywords: 'archive'
+        }
+        await uploadPhoto(newArchive);
+      } catch(err){
+        console.log(err);
+      } 
+    })
+  }
+
+  async function handleButton(){
+      await createArquive();
+      onClose();
 	}
 
   return  <BaseModal 

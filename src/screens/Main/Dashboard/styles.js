@@ -107,7 +107,7 @@ export const OptionText1 = styled.a`
   font-family: 'Inter';
   font-weight: 700;
   font-size: 14px;
-  color: ${props => props.active === '30d' ? colors.verdeDaMassa : colors.darkCyanBlue };
+  color: ${props => props.active == 30 ? colors.verdeDaMassa : colors.darkCyanBlue };
   text-transform: uppercase;
   margin-right: 15px;
   margin-left: 15px;
@@ -118,7 +118,7 @@ export const OptionText2 = styled.a`
   font-family: 'Inter';
   font-weight: 700;
   font-size: 14px;
-  color: ${props => props.active === '3m' ? colors.verdeDaMassa : colors.darkCyanBlue };
+  color: ${props => props.active == 90 ? colors.verdeDaMassa : colors.darkCyanBlue };
   text-transform: uppercase;
   margin-right: 15px;
   margin-left: 15px;
@@ -129,7 +129,7 @@ export const OptionText3 = styled.a`
   font-family: 'Inter';
   font-weight: 700;
   font-size: 14px;
-  color: ${props => props.active === '1a' ? colors.verdeDaMassa : colors.darkCyanBlue };
+  color: ${props => props.active == 365 ? colors.verdeDaMassa : colors.darkCyanBlue };
   text-transform: uppercase;
   margin-right: 15px;
   margin-left: 15px;

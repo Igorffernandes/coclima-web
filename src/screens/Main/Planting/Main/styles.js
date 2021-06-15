@@ -93,6 +93,8 @@ export const PhotoPrevew = styled.img`
   border: 8px;
   margin-top: 5px;
   margin-left: 15px;
+  box-sizing: border-box;
+  object-fit: cover;
 `;
 
 export const SubTitle = styled.a`

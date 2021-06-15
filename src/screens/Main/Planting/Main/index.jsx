@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { GoogleMap, LoadScript, Marker} from '@react-google-maps/api';
-import FilterButton from 'components/FilterButton';
-import Logo from 'components/Logo';
+import { GoogleMap, LoadScript, Marker, InfoWindow} from '@react-google-maps/api';
+import { useHistory } from 'react-router-dom';
+
 import Filter from 'components/Filter';
+import Badge from 'components/Badge';
 
 import IconTree from 'assets/icons/overviewTree.png';
 import IconCarbon from 'assets/icons/overviewCarbon.png';
-import fotoexemplo from 'assets/Images/fotoexemplo1.png';
 import circledicon from 'assets/icons/circledIcon.png';
 
 import { fetchPlantations } from 'services/plantations';
 import { fetchArchives } from 'services/archives.js';
+import { fetchCompanies } from 'services/companies';
 
 import {
   Container,
@@ -48,38 +49,88 @@ const center = {
 
 const Planting = () => {
   const [photos, setPhotos] = useState([])
+  const [selectedPlace, setSelectedPlace] = useState(null);
+  const [infoOpen, setInfoOpen] = useState(false);
   const [info, setInfo] = useState({
     trees: 0,
     carbon: 0,
   });
   const [loading, setLoading] = useState(false);
+  const [selectedCompanies, setSelectedCompanies] = useState([]);
+  const [markerMap, setMarkerMap] = useState({});
+  const [companies, setCompanies] = useState();
+  
+
+  const fetchPlantationData = async () => {
+    try {
+      setLoading(true);
+      let queryObject = {
+      };
+      if(selectedCompanies.length > 0){
+        queryObject.company_id = selectedCompanies;
+      }
+      const plantationsData = await fetchPlantations(queryObject);
+      setInfo(plantationsData);
+    } catch(err){
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const baixarCompanias = async () => {
+    try {
+      const companias = await fetchCompanies();
+      setCompanies(companias);
+    } catch(err){
+      console.log(err);
+    }
+  }
+
+  const fetchPhotos = async () => {
+    try{
+      let queryObject = {
+        type: 'image',
+      };
+      if(selectedCompanies.length > 0){
+        queryObject.company_id = selectedCompanies;
+      }
+      const archivesData = await fetchArchives(queryObject);
+      setPhotos(archivesData);
+    } catch(err){
+      console.log(err);
+    }
+  }
 
   useEffect(() => {
-    const fetchPlantationData = async () => {
-      try {
-        setLoading(true);
-        const plantationsData = await fetchPlantations();
-        setInfo(plantationsData);
-      } catch(err){
-        console.log(err);
-      } finally {
-        setLoading(false);
-      }
-    }
     fetchPlantationData();
+    fetchPhotos();
+    baixarCompanias();
   }, []);
 
-  useEffect(() => {
-    const fetchPhotos = async () => {
-      try{
-        const archivesData = await fetchArchives({ type: 'image' });
-        setPhotos(archivesData);
-      } catch(err){
-        console.log(err);
-      }
+  const history = useHistory();
+
+  const markerClickHandler = (event, place) => {
+    setSelectedPlace(place);
+
+    if (infoOpen) {
+      setInfoOpen(false);
     }
-    fetchPhotos();
-  }, []);
+
+    setInfoOpen(true);
+  };
+
+  const markerLoadHandler = (marker, place) => {
+
+    return setMarkerMap(prevState => {
+      return { ...prevState, [place.id]: marker };
+    });
+  };
+
+  const findName = () => {
+    const data = companies.find(item => item.id === selectedPlace.company_id);
+    return data?.name
+  }
 
   return (
     <Container>
@@ -89,7 +140,14 @@ const Planting = () => {
             <Title>Nossos plantios</Title>
             <SubTitle>Confira como estão as arvóres plantadas.</SubTitle>
           </TextHeaderDiv>
-          <Filter />
+          <Filter 
+            selectedCompanies={selectedCompanies} 
+            setSelectedCompanies={setSelectedCompanies}
+            closeCallback={async () => {
+              fetchPhotos();
+              fetchPlantationData();
+            }}
+          />
         </Header>
         <CardsDiv>
           <TreeDiv>
@@ -114,12 +172,12 @@ const Planting = () => {
         </CardsDiv>
         <GeneralDiv>
           <GeneralText>Fotos</GeneralText>
-          <GeneralButton>Ver Todas</GeneralButton>
+          <GeneralButton onClick={() => history.push('/photos')}>Ver Todas</GeneralButton>
         </GeneralDiv>
         <PhotoGrid>
           {photos.length > 0 && photos.map(item => {
             return (
-              <PhotoPrevew src={`data:image/jpeg;base64, ${item.data}`} />
+              <PhotoPrevew src={`${item.data}`} />
             )
           })}
         </PhotoGrid>
@@ -130,11 +188,22 @@ const Planting = () => {
       </OptionsDiv>
       <LoadScript googleMapsApiKey="AIzaSyCRtT4qyUroFx_iVdOmIQS9cbyD0Y2J6AQ">
         <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={8}>
-          {/* Child components, such as markers, info windows, etc. */}
           <>
             {info?.plantation?.length > 0 && info.plantation.map(item => 
-            <Marker position={item.geolocation} icon={circledicon}/>)}
+            <Marker 
+              onMouseOver={event => markerClickHandler(event, item)}
+              position={item.geolocation}
+              onLoad={marker => markerLoadHandler(marker, item)}
+              icon={circledicon}/>)}
           </>
+          {infoOpen && selectedPlace && (
+            <InfoWindow
+              anchor={markerMap[selectedPlace.id]}
+              onCloseClick={() => setInfoOpen(false)}
+            >
+              <Badge text={findName()} subText={`Árvores: ${selectedPlace.trees}`}/>
+            </InfoWindow>
+          )}
         </GoogleMap>
       </LoadScript>
     </Container>

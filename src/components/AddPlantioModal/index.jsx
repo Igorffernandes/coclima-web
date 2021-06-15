@@ -3,17 +3,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import * as Styled from './styles';
 import { useState } from 'react';
+import { createPlantations } from 'services/plantations';
+import Filter from 'components/Filter';
+import DatePicker, {registerLocale} from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import pt from 'date-fns/locale/pt-BR';
 
 const AddPlantioModal = ({visible, onClose, handleButton}) => {
-  const [name, setName] = useState('')
-  const [coord, setCoord] = useState('')
+  registerLocale('pt', pt) 
+  const [date, setDate] = useState(new Date());
+  const [lat, setLat] = useState('')
+  const [lng, setLng] = useState('')
+  const [trees, setTrees] = useState('')
+  const [selectedCompanies, setSelectedCompanies] = useState([])
 
-  function handleChangeCoord(value){
-    setCoord(value.target.value)
-  }
-
-  function handleChangeName(value){
-    setName(value.target.value)
+  async function handleAdicionar(){
+    try{
+      const newData = {
+        date,
+        geolocation: {lat: Number(lat), lng: Number(lng)},
+        trees,
+        company_id: selectedCompanies[0],
+      }
+      await createPlantations(newData);
+      handleButton();
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   return  <BaseModal 
@@ -25,21 +41,51 @@ const AddPlantioModal = ({visible, onClose, handleButton}) => {
                 </Styled.TextTitle>
                 <Styled.FormBox>
                   <Styled.TextLabel>
-                    Nome
+                    Data
                   </Styled.TextLabel>
-                  <Styled.MaterialInput 
-                    value={name}
-                    onChange={handleChangeName}
-                    disableUnderline/>
+                  <Styled.DateDiv>
+                    <DatePicker 
+                      locale="pt"
+                      dateFormat="dd/MM/yyyy" 
+                      selected={date} 
+                      onChange={(date) => setDate(date)} />
+                  </Styled.DateDiv>
                   <Styled.TextLabel>
-                    Coodernadas
+                    Árvores
                   </Styled.TextLabel>
                   <Styled.MaterialInput 
-                    value={coord}
-                    onChange={handleChangeCoord}
+                    value={trees}
+                    onChange={(value) => setTrees(value.target.value)}
                     disableUnderline/>
-                </Styled.FormBox>
-                <Styled.ViewButton onClick={handleButton}>
+                  <Styled.CoordFormBox>
+                    <Styled.FormBox>
+                      <Styled.TextLabel>
+                        Latitude
+                      </Styled.TextLabel>
+                      <Styled.MaterialInputSmall 
+                        value={lat}
+                        onChange={(value) => setLat(value.target.value)}
+                        disableUnderline/>
+                    </Styled.FormBox>
+                    <Styled.FormBox>
+                      <Styled.TextLabel>
+                        Longitude
+                      </Styled.TextLabel>
+                      <Styled.MaterialInputSmall 
+                        value={lng}
+                        onChange={(value) => setLng(value.target.value)}
+                        disableUnderline/>
+                    </Styled.FormBox>
+                    </Styled.CoordFormBox>
+                  </Styled.FormBox>
+                  <Styled.DivFilter>
+                    <Filter 
+                      selectedCompanies={selectedCompanies} 
+                      setSelectedCompanies={setSelectedCompanies} 
+                      singleCompany={true}
+                    />
+                  </Styled.DivFilter>
+                <Styled.ViewButton onClick={handleAdicionar}>
 									<Styled.TextButton>
                     ADICIONAR
 									</Styled.TextButton>

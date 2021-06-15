@@ -8,6 +8,7 @@ const routePaths = {
     planting: '/plantio',
     marketing: '/marketing',
     administrators: '/adm',
+    plantingPhoto: '/photos',
   },
 };
 

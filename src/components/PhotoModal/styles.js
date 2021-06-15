@@ -167,3 +167,7 @@ export const ContainerDiv = styled.div`
     display: flex;
     flex-direction: row;
 `;
+
+export const DivFilter = styled.div`
+  margin-bottom: 16px;
+`;

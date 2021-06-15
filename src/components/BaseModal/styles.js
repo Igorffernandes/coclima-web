@@ -23,6 +23,7 @@ export const ViewButton = styled.div`
   align-items: center;
   justify-content: center;
   margin-bottom: 44px;
+  cursor: pointer;
 `;
 
 export const ViewCloseIcon = styled.div`
@@ -34,6 +35,7 @@ export const ViewCloseIcon = styled.div`
   align-items: center;
   justify-content: center;
   align-self: flex-end;
+  cursor: pointer;
 `;
 
 export const CloseIcon = styled.img.attrs({
@@ -48,7 +50,7 @@ export const ViewContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  width: 600px;
+  min-width: 600px;
   padding: 22px;
   border-radius: 20px;
 `;

@@ -9,6 +9,7 @@ import AddEmpresaModal from 'components/AddEmpresaModal';
 import AddEmpresaModalSuccess from 'components/AddEmpresaModalSuccess';
 import AddPlantioModal from 'components/AddPlantioModal';
 import AddPlantioModalSuccess from 'components/AddPlantioModalSuccess';
+import EditEmpresaModal from 'components/EditEmpresaModal';
 
 import { fetchCompanies, deactivateCompany } from 'services/companies';
 
@@ -17,11 +18,26 @@ import { Container, Header, Title, TableDiv, CardsDiv, SubContainer } from './st
 const AdmMainPage = () => {
   const [companiesData, setCompaniesData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [editCompany, setEditCompany] = useState('');
+  const [editCompanyModal, setEditCompanyModal] = useState('');
+  const [modalPlantio, setModalPlantio] = useState(false)
+  const [modalPlantioSuccess, setModalPlantioSuccess] = useState(false)
+  const [modalPhoto, setModalPhoto] = useState(false)
+  const [modalPhotoSuccess, setModalPhotoSuccess] = useState(false)
+  const [modalAddEmpresa, setModalAddEmpresa] = useState(false)
+  const [modalAddEmpresaSuccess, setModalAddEmpresaSuccess] = useState(false)
+  const [selectedCompanies, setSelectedCompanies] = useState([]);
+  const [searchText, setSearchText] = useState('');
   
   const companiesFetch = async () => {
     try{
       setLoading(true);
-      const companies = await fetchCompanies();
+      let queryObject = {
+      };
+      if(selectedCompanies.length > 0){
+        queryObject.company_id = selectedCompanies;
+      }
+      const companies = await fetchCompanies(queryObject);
       setCompaniesData(companies);
     } catch(err){
       console.log(err);
@@ -36,32 +52,56 @@ const AdmMainPage = () => {
       await deactivateCompany(company_id);
       const companies = await fetchCompanies();
       setCompaniesData(companies);
-    } catch {
+    } catch (err){
       console.log(err);
     } finally {
       setLoading(false);
     }
   }
-  
+
   useEffect(() => {
     companiesFetch();
   }, [])
+
+  useEffect(() => {
+    if(searchText.length > 3){
+      const pesquisa = companiesData.filter(item => String(item.name).toLowerCase().includes(searchText.toLowerCase()))
+      setCompaniesData(pesquisa)
+    }
+    if(searchText.length === 0){
+      companiesFetch();
+    }
+  }, [searchText])
 
   //PEIDEI E NADEI PRO LIFECYCLE 
   const columns = [
     { title: 'Empresa', field: 'name' },
     { title: 'Email', field: 'email' },
     { field: 'id', hidden: true },
-    { render: rowData => <div><TableButton title={'Editar'} onClick={() => console.log('EDITAR EMAIL')}/></div>},
+    { render: rowData => <div><TableButton title={'Editar'} onClick={() => handleEdit(rowData.id)}/></div>},
     { render: rowData => <div><TableButton title={'Excluir'} onClick={async () => excludeCompany(rowData.id)}/></div>},
   ];
+  
+  const callbackEdit = async () => {
+      try{
+        setLoading(true);
+        const companies = await fetchCompanies();
+        setCompaniesData(companies);
+      } catch(err) {
+        console.log(err)
+      } finally {
+        setLoading(false);
+      }
+  }
+  
+  function handleCompanyModal(){
+    setEditCompanyModal(!editCompanyModal)
+  }
 
-  const [modalPlantio, setModalPlantio] = useState(false)
-  const [modalPlantioSuccess, setModalPlantioSuccess] = useState(false)
-  const [modalPhoto, setModalPhoto] = useState(false)
-  const [modalPhotoSuccess, setModalPhotoSuccess] = useState(false)
-  const [modalAddEmpresa, setModalAddEmpresa] = useState(false)
-  const [modalAddEmpresaSuccess, setModalAddEmpresaSuccess] = useState(false)
+  function handleEdit(id){
+    setEditCompany(id)
+    setEditCompanyModal(!editCompanyModal)
+  }
 
   function handleModalPlantio() {
     setModalPlantio(!modalPlantio)
@@ -85,8 +125,6 @@ const AdmMainPage = () => {
   }
 
   function handleConfirmPhoto() {
-    //manda o post da foto
-    console.log('faz post nas fotos')
     handleModalPhoto()
     handleModalPhotoSuccess()
   }
@@ -95,21 +133,27 @@ const AdmMainPage = () => {
     setModalAddEmpresa(!modalAddEmpresa)
   }
 
-  function handleAddEmpresa(){
-    console.log('faz post add empresa')
+  async function handleAddEmpresa(){
     setModalAddEmpresa(false)
     setModalAddEmpresaSuccess(!modalAddEmpresaSuccess)
   }
 
   function handleAddEmpresaSuccess(){
-    setModalAddEmpresaSuccess(!modalAddEmpresaSuccess)
-    handleModalAddEmpresa()
+    setModalAddEmpresaSuccess(!modalAddEmpresaSuccess);
+    handleModalAddEmpresa();
+  }
+
+  async function handleAddEmpresaClose(){
+    setModalAddEmpresaSuccess(false);
+    setModalAddEmpresa(false);
+    callbackEdit();
   }
 
   function handlePlantioSuccess(){
-    setModalPlantioSuccess(!modalPlantioSuccess)
-    handleModalPlantio()
+    setModalPlantioSuccess(!modalPlantioSuccess);
+    handleModalPlantio();
   }
+
 
   return(
     <Container>
@@ -123,6 +167,10 @@ const AdmMainPage = () => {
             columns={columns}
             title={'Empresas'}
             actions={[]}
+            searchProps={{
+              value: searchText,
+              setValue: setSearchText,
+            }}
             handleAddEmpresa={handleModalAddEmpresa}
           />}
         </TableDiv>
@@ -149,7 +197,7 @@ const AdmMainPage = () => {
       }
       <AddEmpresaModalSuccess
         visible={modalAddEmpresaSuccess} 
-        onClose={handleAddEmpresaSuccess}
+        onClose={handleAddEmpresaClose}
         handleButton={handleAddEmpresaSuccess}/>
       {modalPlantio &&
         <AddPlantioModal 
@@ -161,6 +209,12 @@ const AdmMainPage = () => {
         visible={modalPlantioSuccess} 
         onClose={handleModalPlantioSuccess}
         handleButton={handlePlantioSuccess}/>
+      <EditEmpresaModal 
+        visible={editCompanyModal} 
+        onClose={handleCompanyModal}
+        companyID={editCompany}
+        callbackEdit={callbackEdit}/>
+
     </Container>
   )
 }
