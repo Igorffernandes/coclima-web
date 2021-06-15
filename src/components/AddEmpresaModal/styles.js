@@ -1,13 +1,23 @@
 import styled from 'styled-components';
 import Input from '@material-ui/core/Input';
 
+export const FormDiv = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
+
+export const FormDivCol = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-left: 16px;
+`;
+
 export const ViewContainer = styled.div`
     display: flex;
     align-items: center;
     align-self: center;
     flex-direction: column;
-    height: 350px;
-    width: 400px;
+    /* height: 450px; */
 `;
 
 export const TextTitle = styled.a`
@@ -41,11 +51,11 @@ export const ViewButton = styled.div`
   justify-content: center;
   margin-bottom: 44px;
   padding: 0 24px;
+  cursor: pointer;
 `;
 
 export const FormBox = styled.div`
   display: flex;
-  height: 200px;
   justify-content: center;
   flex-direction: column;
 `;

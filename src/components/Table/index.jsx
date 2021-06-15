@@ -6,7 +6,9 @@ import colors from 'styles/colors';
 import MaterialTable, { MTableToolbar } from 'material-table';
 import CustomButton from 'components/CustomButtons/Button';
 import FilterButton from 'components/FilterButton';
+import Filter from 'components/Filter';
 import TableAddButton from 'components/TableAddButton';
+import SearchBox from 'components/SearchBox';
 
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -58,6 +60,7 @@ const UsersList = ({
   data,
   actions,
   handleAddEmpresa,
+  searchProps,
 }) => {
   const pageSize = useMemo(
     () => (data.length > PAGESIZE ? PAGESIZE : data.length),
@@ -69,7 +72,8 @@ const UsersList = ({
     <TableHeaderDiv>
           <SubHeaderDiv>
             <TableTitle>{title}</TableTitle>
-            <FilterButton onClick={() => console.log('filtro')}/>
+            <SearchBox {...searchProps} />
+            {/* <Filter {...filterProps} /> */}
           </SubHeaderDiv>
           <TableAddButton handleClick={handleAddEmpresa}/>
         </TableHeaderDiv>

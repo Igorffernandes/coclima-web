@@ -12,6 +12,7 @@ import DashboardPage from '../screens/Main/Dashboard';
 import PlantingPage from '../screens/Main/Planting/Main';
 import MarketingPage from '../screens/Main/Marketing';
 import AdmMainpage from 'screens/Main/Adm/Main';
+import PlantingPhotoPage from 'screens/Main/Planting/Photo';
 
 const Router = () => (
   <Switch>
@@ -37,6 +38,12 @@ const Router = () => (
     <Route
       path={routesEnum.mainRoutes.administrators}
       component={AdmMainpage}
+      exact
+      isPrivate
+    />
+    <Route
+      path={routesEnum.mainRoutes.plantingPhoto}
+      component={PlantingPhotoPage}
       exact
       isPrivate
     />
