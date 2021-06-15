@@ -2,18 +2,19 @@ import styled from 'styled-components';
 import colors from 'styles/colors';
 
 export const StyledBadge = styled.div`
-  background-color: ${colors.darkCyanBlue};
   justify-content: center;
   align-items: center;
   padding: 6px 8px;
-  border-radius: 18px;
+  flex-direction: column;
+  display: flex;
 `;
 
 export const StyledText = styled.a`
   font-family: Inter;
   font-style: normal;
-  font-weight: normal;
-  font-size: 10px;
+  font-weight: 700;
+  font-size: 14px;
   line-height: 12px;
-  color: #FFFFFF;
+  color: ${colors.darkCyanBlue};
+  margin-top: 6px;
 `;

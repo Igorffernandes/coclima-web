@@ -201,7 +201,7 @@ const Planting = () => {
               anchor={markerMap[selectedPlace.id]}
               onCloseClick={() => setInfoOpen(false)}
             >
-              <Badge text={findName()}/>
+              <Badge text={findName()} subText={`Árvores: ${selectedPlace.trees}`}/>
             </InfoWindow>
           )}
         </GoogleMap>
