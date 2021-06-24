@@ -1,7 +1,7 @@
 {
   "name": "coclima-web",
   "version": "1.0.0",
-  "homepage": "https://teste.coclima.com/",
+  "homepage": "https://parceiros.coclima.com/",
   "description": "CoClima Web",
   "private": false,
   "main": "dist/index.js",
