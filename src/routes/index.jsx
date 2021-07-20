@@ -5,7 +5,8 @@ import Route from './Route';
 import routesEnum from './routesEnum';
 
 import LoginPage from '../screens/Auth/Login';
-import Callback from '../screens/Public/Callback';
+import Callback from '../screens/Public/Tray/Callback';
+import Auth from '../screens/Public/Tray/Auth';
 import ComponentShowRoom from 'screens/ComponentShowRoom';
 
 import DashboardPage from '../screens/Main/Dashboard';
@@ -17,6 +18,7 @@ import PlantingPhotoPage from 'screens/Main/Planting/Photo';
 const Router = () => (
   <Switch>
     <Route path={routesEnum.authRoutes.callback} exact component={Callback} />
+    <Route path={routesEnum.authRoutes.auth} exact component={Auth} />
     <Route path={routesEnum.authRoutes.login} exact component={LoginPage} />
     <Route path={routesEnum.authRoutes.feiraoDoComponent} exat component={ComponentShowRoom} />
     <Route

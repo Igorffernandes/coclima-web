@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import InputTextField from '../../../components/InputTextField';
-import coclimaLogo from '../../../assets/Images/logoCoClima.png';
-import colors from '../../../styles/colors';
-import { createAssociate } from '../../../services/callback';
-import { useToast } from '../../../hooks/ToastContext';
+import InputTextField from '../../../../components/InputTextField';
+import coclimaLogo from '../../../../assets/Images/logoCoClima.png';
+import colors from '../../../../styles/colors';
+import { createAssociate } from '../../../../services/callback';
+import { useToast } from '../../../../hooks/ToastContext';
 
 import Button from "@material-ui/core/Button";
 
 import {
   Container,
   Logo,
-  Header,
+  Right,
   Description,
   FormItem,
   FormTitle,
-  Form,
+  Left,
+  Spacer,
 } from './styles';
 
 const Callback = () => {
   const { addToast } = useToast();
-  const location = useLocation();
+  const { store, code, api_address } = useParams();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [company, setCompany] = useState('');
@@ -32,12 +33,11 @@ const Callback = () => {
   const [state, setState] = useState('');
   const [cep, setCep] = useState('');
   const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
   const [site, setSite] = useState('');
-  const [apiAddress, setApiAddress] = useState(location.state.api_address);
-  const [code, setCode] = useState(location.state.code);
 
   useEffect(() => {
-    console.log(code, apiAddress);
+    console.log(code, store, api_address);
   })
 
   const handleCreateAccount = async () => {
@@ -53,8 +53,9 @@ const Callback = () => {
       cep: cep.replace(/\D/g, ''),
       phone: phone.replace(/\D/g, ''),
       site,
-      code: '252d00beb0446664e29a53bbd87af1e41faed399b75a24d7b8a246ee247cff93',
-      api_address: 'https://trayparceiros.commercesuite.com.br/web_api',
+      store,
+      code,
+      api_address: `${api_address}/web_api`,
     }
 
     try {
@@ -74,11 +75,14 @@ const Callback = () => {
 
   return (
     <Container>
-      <Header>
+      <Left>
         <Logo src={coclimaLogo} />
-        <Description>Cadastre-se para se integrar a nossa plataforma</Description>
-      </Header>
-      <Form>
+        <Spacer />
+        <Description> Solução ESG para lojas online. Sua loja compensa a pegada de carbono das transações com o plantio de árvores junto a comunidades locais. Inclui o selo Carbono Zero, acesso a relatórios de monitoramento de impacto  e material de comunicação e marketing.</Description>
+        <Spacer />
+        <Description><b>Cadastre-se para se integrar a nossa plataforma</b></Description>
+      </Left>
+      <Right>
         <FormItem>
           <FormTitle>Seu Nome</FormTitle>
           <InputTextField
@@ -91,6 +95,13 @@ const Callback = () => {
           <InputTextField
             value={email}
             onChange={(event) => setEmail(event.target.value)}
+          />
+        </FormItem>
+        <FormItem>
+          <FormTitle>Senha</FormTitle>
+          <InputTextField
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
           />
         </FormItem>
         <FormItem>
@@ -170,14 +181,15 @@ const Callback = () => {
             fontFamily: 'Inter',
             paddingTop: 8,
             paddingBottom: 8,
-            width: '100%',
+            width: '30%',
+            minWidth: 200,
             alignSelf: 'center',
           }}
           onClick={handleCreateAccount}
         >
-          Cadastrar
+          Finalizar Integração
         </Button>
-      </Form>
+      </Right>
     </Container>
   );
 };

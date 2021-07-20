@@ -1,46 +1,52 @@
 import styled from 'styled-components';
+import colors from '../../../../styles/colors';
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 `;
 
 export const Logo = styled.img`
-  height: 60px;
+  height: 6vw;
 `;
 
 export const Description = styled.a`
   font-family: 'Inter';
   font-size: 24px;
-  text-align: center;
+  text-align: justify;
+  color: ${colors.pretoDaMassa};
+  margin: 0 50px 0 50px;
 `;
 
-export const Header = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: 350px;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30px;
-  margin-bottom: 10px;
-`;
-
-export const Form = styled.div`
+export const Right = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px;
+  width: 40vw;
+  height: 100%;
+`;
+
+export const Spacer = styled.div`
+  height: 6vh;
+`;
+
+export const Left = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 60vw;
+  height: 100%;
 `;
 
 export const FormItem = styled.div`
-  margin-top: 8px;
+  margin-top: 4px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 100%;
 `;
 
 export const FormTitleDiv = styled.div`

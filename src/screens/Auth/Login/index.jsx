@@ -37,8 +37,6 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [checked, setChecked] = useState(false);
   const { signIn } = useAuth();
-  const [api_address, setApiAddress] = useState('gorda');
-  const [code, setCode] = useState('bunda');
 
   useEffect(() => {
     const listener = (event) => {
@@ -105,26 +103,6 @@ const LoginPage = () => {
           >
             Entrar
           </Button>
-          {code && api_address && 
-          <Button
-            variant="contained"
-            color="primary"
-            style={{
-              color: colors.brancoDaMassa,
-              borderRadius: 100,
-              fontWeight: 'bold',
-              fontFamily: 'Inter',
-              marginLeft: 15,
-              paddingTop: 15,
-              paddingBottom: 15,
-              paddingRight: 55,
-              paddingLeft: 55,
-              alignSelf: 'center',
-            }}
-            onClick={() => history.push('/coclima', {code, api_address})}
-          >
-            Cadastrar
-          </Button>}
         </ButtonDiv>
       </LoginCard>
       <LogoImage>
