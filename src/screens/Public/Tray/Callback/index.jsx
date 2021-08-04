@@ -35,12 +35,10 @@ import {
 } from './styles';
 
 const Callback = () => {
-  const { url } = useParams();
-  const teste = useParams();
-
   const handleInstallApp = async () => {
-    console.log('\n\n\n', 'url', window.location.href, '\n\n\n');
-    console.log('\n\n\n', 'params', teste, '\n\n\n');
+    const fullUrl = new URL(window.location.href);
+    const url = fullUrl.searchParams.get("url");
+    console.log('\n\n\n', 'url da loja', url, '\n\n\n');
     const callbackUrl = `${url}/auth.php?response_type=code&consumer_key=${consumerKey}&callback=https://parceiros.coclima.com/callback/tray/auth`;
     console.log('\n\n\n', 'url de callback', callbackUrl, '\n\n\n');
     // window.location.assign(callbackUrl);
