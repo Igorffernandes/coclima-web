@@ -38,7 +38,7 @@ const Callback = () => {
   const { url } = useParams();
 
   const handleInstallApp = async () => {
-    console.log('\n\n\n', 'url', url, '\n\n\n');
+    console.log('\n\n\n', 'url', window.location.href, '\n\n\n');
     const callbackUrl = `${url}/auth.php?response_type=code&consumer_key=${consumerKey}&callback=https://parceiros.coclima.com/callback/tray/auth`;
     console.log('\n\n\n', 'url de callback', callbackUrl, '\n\n\n');
     // window.location.assign(callbackUrl);
