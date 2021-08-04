@@ -1,176 +1,100 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useParams } from "react-router-dom";
 
-import InputTextField from '../../../../components/InputTextField';
 import coclimaLogo from '../../../../assets/Images/logoCoClima.png';
 import colors from '../../../../styles/colors';
-import { createAssociate } from '../../../../services/callback';
-import { useToast } from '../../../../hooks/ToastContext';
+import { consumerKey } from '../../../../config/constants';
+
+import Image1 from '../../../../assets/Images/image1.png'
+import Image2 from '../../../../assets/Images/image2.png'
+import Image3 from '../../../../assets/Images/image3.png'
+import Image4 from '../../../../assets/Images/image4.png'
+import Image5 from '../../../../assets/Images/image1.png'
+import Image6 from '../../../../assets/Images/image2.png'
+import image_item from '../../../../assets/Images/image_auth.png'
 
 import Button from "@material-ui/core/Button";
 
 import {
   Container,
   Logo,
-  Right,
+  Header,
   Description,
-  FormItem,
-  FormTitle,
-  Left,
-  Spacer,
+  BulletDescription,
+  DescriptionLink,
+  Body,
+  LeftContainer,
+  RightContainer,
+  Item,
+  ImageItem,
+  Pin,
+  Image,
+  ItemWithImage,
+  LeftItemContainer,
+  ImageLeft,
 } from './styles';
 
 const Callback = () => {
-  const { addToast } = useToast();
-  const { store, code, api_address } = useParams();
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [company, setCompany] = useState('');
-  const [cpfcnpj, setCpfcnpj] = useState('');
-  const [street, setStreet] = useState('');
-  const [number, setNumber] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [cep, setCep] = useState('');
-  const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
-  const [site, setSite] = useState('');
+  const { url } = useParams();
 
-  useEffect(() => {
-    console.log(code, store, api_address);
-  })
-
-  const handleCreateAccount = async () => {
-    const body = {
-      username,
-      email,
-      name: company,
-      cpfcnpj: cpfcnpj.replace(/\D/g, ''),
-      street,
-      number,
-      city,
-      state,
-      cep: cep.replace(/\D/g, ''),
-      phone: phone.replace(/\D/g, ''),
-      site,
-      store,
-      code,
-      api_address: `${api_address}/web_api`,
-    }
-
-    try {
-      await createAssociate(body);
-      addToast({
-        type: 'success',
-        title: `Cadastro efetuado com sucesso!`,
-      });
-    } catch (err) {
-      addToast({
-        type: 'error',
-        title: 'Ops algo deu errado',
-        description: 'Tente novamente!',
-      });
-    }
+  const handleInstallApp = async () => {
+    console.log('\n\n\n', 'url', url, '\n\n\n');
+    const callbackUrl = `${url}/auth.php?response_type=code&consumer_key=${consumerKey}&callback=https://parceiros.coclima.com/callback/tray/auth`;
+    console.log('\n\n\n', 'url de callback', callbackUrl, '\n\n\n');
+    // window.location.assign(callbackUrl);
   }
 
   return (
     <Container>
-      <Left>
+      <Header>
         <Logo src={coclimaLogo} />
-        <Spacer />
-        <Description> Solução ESG para lojas online. Sua loja compensa a pegada de carbono das transações com o plantio de árvores junto a comunidades locais. Inclui o selo Carbono Zero, acesso a relatórios de monitoramento de impacto  e material de comunicação e marketing.</Description>
-        <Spacer />
-        <Description><b>Cadastre-se para se integrar a nossa plataforma</b></Description>
-      </Left>
-      <Right>
-        <FormItem>
-          <FormTitle>Seu Nome</FormTitle>
-          <InputTextField
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </FormItem>
-        <FormItem>
-          <FormTitle>Email</FormTitle>
-          <InputTextField
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-          />
-        </FormItem>
-        <FormItem>
-          <FormTitle>Senha</FormTitle>
-          <InputTextField
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </FormItem>
-        <FormItem>
-          <FormTitle>Empresa</FormTitle>
-          <InputTextField
-            value={company}
-            onChange={(event) => setCompany(event.target.value)}
-          />
-        </FormItem>
-        <FormItem>
-          <FormTitle>CPF ou CNPJ</FormTitle>
-          <InputTextField
-            mask={'999.999.999/9999-99'}
-            value={cpfcnpj}
-            onChange={(event) => setCpfcnpj(event.target.value)}
-          />
-        </FormItem>
-        <FormItem>
-          <FormTitle>Rua</FormTitle>
-          <InputTextField
-            value={street}
-            onChange={(event) => setStreet(event.target.value)}
-          />
-        </FormItem>
-        <FormItem>
-          <FormTitle>Numero</FormTitle>
-          <InputTextField
-            value={number}
-            onChange={(event) => setNumber(event.target.value)}
-          />
-        </FormItem>
-        <FormItem>
-          <FormTitle>Cidade</FormTitle>
-          <InputTextField
-            value={city}
-            onChange={(event) => setCity(event.target.value)}
-          />
-        </FormItem>
-        <FormItem>
-          <FormTitle>Estado</FormTitle>
-          <InputTextField
-            value={state}
-            onChange={(event) => setState(event.target.value)}
-          />
-        </FormItem>
-        <FormItem>
-          <FormTitle>CEP</FormTitle>
-          <InputTextField
-            mask={'99999-999'}
-            value={cep}
-            onChange={(event) => setCep(event.target.value)}
-          />
-        </FormItem>
-        <FormItem>
-          <FormTitle>Telefone</FormTitle>
-          <InputTextField
-            mask={'(99) 99999-9999'}
-            value={phone}
-            onChange={(event) => setPhone(event.target.value)}
-          />
-        </FormItem>
-        <FormItem>
-          <FormTitle>Site</FormTitle>
-          <InputTextField
-            value={site}
-            onChange={(event) => setSite(event.target.value)}
-          />
-        </FormItem>
-        <Button
+        <Description><b>Aplicativo</b></Description>
+      </Header>
+      <Body>
+        <LeftContainer>
+          <ItemWithImage>
+            <LeftItemContainer>
+              <Item>
+                <Pin />
+                <Description>Transforme compras em árvores</Description>
+              </Item>
+              <Item>
+                <Pin />
+                <Description>Fidelize seus clientes</Description>
+              </Item>
+              <Item>
+                <Pin />
+                <Description>Mostre que você se importa</Description>
+              </Item>
+            </LeftItemContainer>
+            <RightContainer>
+              <ImageLeft src={image_item}/>
+            </RightContainer>
+          </ItemWithImage>
+          <Description>Com o app Coclima, sua empresa <b>compensa a pegada de carbono</b> do seu e-commerce plantando árvores em parceria com comunidades locais.  A Coclima é um jeito fácil, barato e atraente de incluir a <b>agenda ESG</b> (Ambiente, Social e Governança) na sua empresa.</Description>
+          <Description>Tudo isso <b>sem custos fixos</b> e com o <b>mínimo de impacto na exeperiência do usuário.</b></Description>
+          <Description>E você ainda:</Description>
+          <BulletDescription> • Tem acesso a relatórios de monitoramento de impacto;</BulletDescription>
+          <BulletDescription> • Ganha o selo Carbono Zero para usar em toda sua comunicação;</BulletDescription>
+          <BulletDescription> • Passa a fazer parte de uma comunidade de empresas e consumidores conscientes;</BulletDescription>
+          <DescriptionLink onClick={() => window.open('https://coclima.com')}>Clique aqui para saber mais</DescriptionLink>
+        </LeftContainer>
+        <RightContainer>
+          <ImageItem>
+            <Image src={Image1}/>
+            <Image src={Image2}/>
+          </ImageItem>
+          <ImageItem>
+            <Image src={Image3}/>
+            <Image src={Image4}/>
+          </ImageItem>
+          <ImageItem>
+            <Image src={Image5}/>
+            <Image src={Image6}/>
+          </ImageItem>
+        </RightContainer>
+      </Body>
+      <Button
           variant="contained"
           color="primary"
           style={{
@@ -185,11 +109,10 @@ const Callback = () => {
             minWidth: 200,
             alignSelf: 'center',
           }}
-          onClick={handleCreateAccount}
+          onClick={handleInstallApp}
         >
-          Finalizar Integração
+          Instale agora
         </Button>
-      </Right>
     </Container>
   );
 };
