@@ -88,17 +88,13 @@ const Callback = () => {
             <Image src={Image3}/>
             <Image src={Image4}/>
           </ImageItem>
-          <ImageItem>
-            <Image src={Image5}/>
-            <Image src={Image6}/>
-          </ImageItem>
         </RightContainer>
       </Body>
       <Button
           variant="contained"
           color="primary"
           style={{
-            marginTop: 20,
+            marginTop: 10,
             color: colors.brancoDaMassa,
             borderRadius: 6,
             fontWeight: 'bold',

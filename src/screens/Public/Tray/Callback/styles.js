@@ -49,7 +49,6 @@ export const Header = styled.div`
 `;
 
 export const Body = styled.div`
-  margin-top: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,7 +96,7 @@ export const ImageItem = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: start;
-  margin: 10px 0 10px 0;
+  margin: 20px 0 20px 0;
 `;
 
 export const Pin = styled.div`
