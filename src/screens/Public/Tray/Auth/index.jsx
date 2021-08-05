@@ -21,8 +21,11 @@ import {
 } from './styles';
 
 const Auth = () => {
+  const fullUrl = new URL(window.location.href);
+  const code = fullUrl.searchParams.get("code") || null;
+  const api_address = fullUrl.searchParams.get("api_address") || null;
+  const store = fullUrl.searchParams.get("store") || null;
   const { addToast } = useToast();
-  const { store, code, api_address } = useParams();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [company, setCompany] = useState('');
@@ -37,7 +40,7 @@ const Auth = () => {
   const [site, setSite] = useState('');
 
   useEffect(() => {
-    console.log(code, store, api_address);
+    console.log('\n\n\n', fullUrl, code, store, api_address, '\n\n\n');
   })
 
   const handleCreateAccount = async () => {

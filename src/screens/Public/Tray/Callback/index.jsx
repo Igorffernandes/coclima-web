@@ -34,8 +34,6 @@ import {
   Loading,
 } from './styles';
 
-
-
 const Callback = () => {
   const fullUrl = new URL(window.location.href);
   const url = fullUrl.searchParams.get("url");
@@ -43,7 +41,6 @@ const Callback = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('\n\n\n', fullUrl, store, '\n\n\n');
     if (store) {
       fetchStore();
     } else {
@@ -56,7 +53,8 @@ const Callback = () => {
       const result = await getStore(store);
 
       if (result) {
-        window.location.assign('/');
+        window.location.assign('/'); 
+        //TODO já fazer o login
       }
     } catch(e) {
       setLoading(false);
