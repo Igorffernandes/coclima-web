@@ -12,3 +12,14 @@ export function createAssociate(values) {
     }
   });
 }
+
+export function getStore(store) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const managerFetch = await http.get(`${callback}/${store}`);
+      resolve(managerFetch.data);
+    } catch (err) {
+      reject(err);
+    }
+  });
+}

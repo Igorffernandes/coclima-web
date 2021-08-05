@@ -8,6 +8,7 @@ import Sidebar from 'components/Sidebar';
 import moment from 'moment'
 import 'moment/locale/pt-br'  // without this line it didn't work
 moment.locale('pt-br')
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 const App = () => (
   <BrowserRouter>

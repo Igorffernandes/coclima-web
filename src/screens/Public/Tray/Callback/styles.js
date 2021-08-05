@@ -122,3 +122,15 @@ export const ImageLeft = styled.img`
   height: 12vw;
   margin-right: 100px;
 `;
+
+export const Loading = styled.div`
+  position: absolute;
+  background-color: #909090;
+  opacity: 0.9;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99;
+`;
