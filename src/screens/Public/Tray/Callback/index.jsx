@@ -52,10 +52,14 @@ const Callback = () => {
   }, []);
 
   const fetchStore = async () => {
-    const result = await getStore(store);
+    try {
+      const result = await getStore(store);
 
-    if (result) {
-      window.location.assign('/');
+      if (result) {
+        window.location.assign('/');
+      }
+    } catch(e) {
+      setLoading(false);
     }
   }
 
