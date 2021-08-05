@@ -55,7 +55,7 @@ const Auth = () => {
       site,
       store_id: store,
       code,
-      api_address: `${api_address}/web_api`,
+      api_address,
     }
 
     try {

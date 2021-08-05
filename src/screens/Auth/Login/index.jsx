@@ -31,11 +31,8 @@ import colors from "../../../styles/colors";
 import coClimaIcon from 'assets/Images/logoCoClima.png';
 
 const LoginPage = () => {
-  // const { code, api_address } = useParams();
-  const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [checked, setChecked] = useState(false);
   const { signIn } = useAuth();
 
   useEffect(() => {
@@ -77,12 +74,6 @@ const LoginPage = () => {
           />
         </FormItem>
         <FormCheckBox>
-          <Checkbox
-            checked={checked}
-            onChange={() => setChecked(!checked)}
-            color={'primary'}
-          />
-          <CheckText>Me manter conectado</CheckText>
         </FormCheckBox>
         <ButtonDiv>
           <Button
