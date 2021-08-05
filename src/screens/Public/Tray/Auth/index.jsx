@@ -57,7 +57,7 @@ const Auth = () => {
       cep: cep.replace(/\D/g, ''),
       phone: phone.replace(/\D/g, ''),
       site,
-      store_id,
+      store_id: store,
       code,
       api_address: `${api_address}/web_api`,
     }
