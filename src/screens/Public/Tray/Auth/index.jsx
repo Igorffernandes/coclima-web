@@ -68,6 +68,7 @@ const Auth = () => {
         type: 'success',
         title: `Cadastro efetuado com sucesso!`,
       });
+      window.location.assign('/');
     } catch (err) {
       addToast({
         type: 'error',
