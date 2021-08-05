@@ -40,6 +40,7 @@ const SidebarNav = styled.nav`
   justify-content: center;
   position: fixed;
   top: 0;
+  background-color: #FFFFFF;
   left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
   transition: 350ms;
   z-index: 10;

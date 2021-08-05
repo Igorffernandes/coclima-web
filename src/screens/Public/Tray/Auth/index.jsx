@@ -39,10 +39,6 @@ const Auth = () => {
   const [password, setPassword] = useState('');
   const [site, setSite] = useState('');
 
-  useEffect(() => {
-    console.log('\n\n\n', fullUrl, code, store, api_address, '\n\n\n');
-  }, [])
-
   const handleCreateAccount = async () => {
     const body = {
       username,
@@ -105,6 +101,7 @@ const Auth = () => {
         <FormItem>
           <FormTitle>Senha</FormTitle>
           <InputTextField
+            type={'password'}
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
@@ -119,7 +116,6 @@ const Auth = () => {
         <FormItem>
           <FormTitle>CPF ou CNPJ</FormTitle>
           <InputTextField
-            mask={'999.999.999/9999-99'}
             value={cpfcnpj}
             onChange={(event) => setCpfcnpj(event.target.value)}
           />

@@ -5,7 +5,7 @@ import FormControl from '@material-ui/core/FormControl';
 
 import colors from '../../styles/colors';
 
-const InputTextField = ({ mask, value, onChange }) => {
+const InputTextField = ({ mask, value, onChange, type='text' }) => {
   return (
     <FormControl variant="outlined">
       <InputMask
@@ -19,6 +19,7 @@ const InputTextField = ({ mask, value, onChange }) => {
           paddingLeft: 10,
           paddingRight: 10,
         }}
+        type={type}
         mask={mask}
         value={value}
         onChange={onChange}
