@@ -41,13 +41,14 @@ const Auth = () => {
 
   useEffect(() => {
     console.log('\n\n\n', fullUrl, code, store, api_address, '\n\n\n');
-  })
+  }, [])
 
   const handleCreateAccount = async () => {
     const body = {
       username,
       email,
       name: company,
+      password,
       cpfcnpj: cpfcnpj.replace(/\D/g, ''),
       street,
       number,
