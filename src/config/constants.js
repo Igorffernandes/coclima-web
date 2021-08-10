@@ -1,8 +1,26 @@
-export const url = "https://api.coclima.com";
-// export const url = 'http://localhost:3000';
+// export const url = "https://api.coclima.com";
+export const url = 'http://localhost:3000';
 export const api = `${url}/api/v1`;
 export const auth = `${url}/login`;
 export const user = `${api}/users`;
+
+export const admTraslate = {
+  'user': 'Usuários',
+  'company': 'Empresas',
+  'partner': 'Parceiros',
+  'planting': 'Plantios',
+}
+
+export const companyRoles = [
+  { value: 'company' , label: 'Empresa' },
+  { value: 'partner' , label: 'Parceiro' },
+  { value: 'admin' , label: 'Administrador' },
+]
+
+export const userRoles = [
+  { value: 'admin' , label: 'Administrador' },
+  { value: 'user' , label: 'Usuário' },
+]
 
 export const consumerKey =
   "9cfdd65a4b1003cceff8e6ca5a416c18eddba0f635d567f6f535fa6a6f75515c";

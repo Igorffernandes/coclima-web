@@ -77,7 +77,6 @@ export const PhotoGrid = styled.div`
   display: flex;
   height: 40%;
   width: 79%;
-  max-width: 79%;
   margin-left: 36px;
   margin-top: 16px;
   border-radius: 16px;
@@ -85,6 +84,14 @@ export const PhotoGrid = styled.div`
   background-color: ${colors.brancoDaMassa};
   margin-bottom: 120px;
   flex-wrap: wrap;
+  overflow-y: scroll;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const PhotoPrevew = styled.img`

@@ -61,3 +61,20 @@ export const FoldersView = styled.div`
   align-items: center;
   flex-wrap: wrap;
 `;
+
+export const BackButton = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 18px;
+  background-color: ${colors.verdeDaMassa};
+  color: #FFFFFF;
+  font-family: Inter;
+  font-weight: 600;
+  height: 24px;
+  margin-left: 35px;
+  padding: 5px 15px 5px 15px;
+  border-style: hidden;
+  cursor: pointer;
+`;

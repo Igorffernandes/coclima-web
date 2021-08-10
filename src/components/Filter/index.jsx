@@ -4,16 +4,24 @@ import Menu from '@material-ui/core/Menu';
 import FilterButton from 'components/FilterButton';
 import FilterItem from 'components/FilterItem';
 
-import { fetchCompanies } from 'services/companies';
+import { fetchCompanies, fetchPartners } from 'services/companies';
 
-const Filter = ({ selectedCompanies, setSelectedCompanies, closeCallback, singleCompany }) => {
+const Filter = ({ selectedCompanies, setSelectedCompanies, closeCallback, singleCompany, value, type = 'company' }) => {
 
   const [companies, setCompanies] = useState([]);
 
   const baixarCompanias = async () => {
+    let data = [];
     try {
-      const companias = await fetchCompanies();
-      setCompanies(companias);
+      if (type === 'company') {
+        data = await fetchCompanies();
+      }
+
+      if (type === 'partner') {
+        data = await fetchPartners();
+      }
+
+      setCompanies(data);
     } catch(err){
       console.log(err);
     }
@@ -52,7 +60,7 @@ const Filter = ({ selectedCompanies, setSelectedCompanies, closeCallback, single
 
   return(
     <>
-      <FilterButton onClick={handleClick} filterLength={selectedCompanies?.length}/>
+      <FilterButton value={value} onClick={handleClick} filterLength={selectedCompanies?.length}/>
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}

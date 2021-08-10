@@ -22,6 +22,7 @@ import {
   Hr,
   FilterCardsDiv,
   FilterOptions,
+  Spacer,
 } from './styles';
 import InfoCards from 'components/InfoCards';
 import FilterCards from 'components/FilterCards';
@@ -45,6 +46,7 @@ const Dashboard = () => {
     capitalChartData: {},
   });
   const [selectedCompanies, setSelectedCompanies] = useState([]);
+  const [selectedPartners, setSelectedPartners] = useState([])
 
   const handleChange = (option) => {
     // Do the filter
@@ -59,13 +61,21 @@ const Dashboard = () => {
       setLoading(true);
       let queryObject = {
       };
+
       if(selectedCompanies.length > 0){
         queryObject.company_id = selectedCompanies;
       }
+
+      if(selectedPartners.length > 0){
+        queryObject.partner_id = selectedPartners;
+      }
+
       if(range !== 'tudo'){
         queryObject.date_filter = range;
       }
+
       const dashData = await fetchDashboard(queryObject);
+
       setData({...data, ...dashData});
     } catch(err){
       console.log(err);
@@ -92,12 +102,21 @@ const Dashboard = () => {
       <FilterCardsDiv>
         <FilterCards info={data} />
         <FilterOptions>
-          <Filter 
+          <Filter
+            type={'company'}
+            value={'Empresa'}
             selectedCompanies={selectedCompanies} 
-            setSelectedCompanies={setSelectedCompanies} 
-            closeCallback={async () => fetchDashData()}
+            setSelectedCompanies={setSelectedCompanies}
+            singleCompany={true}
           />
-          <ExtractButton />
+          <Spacer />
+          <Filter
+            type={'partner'}
+            value={'Parceiro'}
+            selectedCompanies={selectedPartners} 
+            setSelectedCompanies={setSelectedPartners}
+            singleCompany={true}
+          />
         </FilterOptions>
       </FilterCardsDiv>
       <ChartDiv>
@@ -117,7 +136,6 @@ const Dashboard = () => {
           <ChartType>
             <OptionChart1 active={chartType} onClick={() => setChartType('line')}>linha</OptionChart1>
             <OptionChart2 active={chartType} onClick={() => setChartType('bar')}>barra</OptionChart2>
-            <OptionChart3 active={chartType} onClick={() => setChartType('list')}>lista</OptionChart3>
           </ChartType>
         </ChartOptions>
       </ChartDiv>

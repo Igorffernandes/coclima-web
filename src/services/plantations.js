@@ -1,10 +1,19 @@
 import http from '../config/http';
 import { plantations } from './endpoints';
 
-export async function fetchPlantations(query_params) {
+export async function fetchPlantations() {
   try {
-    const plantationsData = await http.get(plantations, { params: query_params || {} });
-    return plantationsData.data;
+    const result = await http.get(plantations);
+    return result.data;
+  } catch(err){
+    throw err;
+  }
+}
+
+export async function fetchPlantation(plantationId) {
+  try {
+    const result = await http.get(`${plantations}/${plantationId}`);
+    return result.data;
   } catch(err){
     throw err;
   }
@@ -12,31 +21,28 @@ export async function fetchPlantations(query_params) {
 
 export async function createPlantations(values) {
   try {
-    const plantationsData = await http.post(plantations, values);
-    return(plantationsData.data);
+    const result = await http.post(plantations, values);
+    return(result.data);
   } catch (err) {
     throw err;
   }
 }
 
-// export function fetchLogs() {
-//   return new Promise(async (resolve, reject) => {
-//     try {
-//       const logsData = await http.get(logs);
-//       resolve(logsData.data);
-//     } catch (err) {
-//       reject(err);
-//     }
-//   });
-// }
+export async function editPlantation(values, plantation_id) {
+  try {
+    const result = await http.put(`${plantations}/${plantation_id}`, values);
+    return(result.data);
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
 
-// export function fetchLog(log_id) {
-//   return new Promise(async (resolve, reject) => {
-//     try {
-//       const logsData = await http.get(`${logs}/${log_id}`);
-//       resolve(logsData.data);
-//     } catch (err) {
-//       reject(err);
-//     }
-//   });
-// }
+export async function deactivatePlanting(plantation_id) {
+  try {
+    const result = await http.delete(`${plantations}/${plantation_id}`);
+    return result.data;
+  } catch (err) {
+    throw err;
+  }
+}

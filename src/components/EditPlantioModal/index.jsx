@@ -1,16 +1,17 @@
 import BaseModal from 'components/BaseModal';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import * as Styled from './styles';
-import { createPlantations } from 'services/plantations';
+import { editPlantation, fetchPlantation } from 'services/plantations';
+import { deleteArchive } from 'services/archives';
 import { uploadPhoto } from 'services/archives';
 import Filter from 'components/Filter';
-import DatePicker, {registerLocale} from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import pt from 'date-fns/locale/pt-BR';
-import {useDropzone} from 'react-dropzone';
+import { useDropzone } from 'react-dropzone';
 
-const AddPlantioModal = ({visible, onClose, handleButton}) => {
+const EditPlantioModal = ({visible, onClose, plantationId, handleButton}) => {
   registerLocale('pt', pt)
   const [date, setDate] = useState(new Date());
   const [lat, setLat] = useState('')
@@ -29,13 +30,48 @@ const AddPlantioModal = ({visible, onClose, handleButton}) => {
         setArchive(archive => [...archive, {base64: reader.result, path: file.path, type: 'image'}]);
       }
     })
-  }, [])
+  }, []);
 
   const {getRootProps, getInputProps, acceptedFiles} = useDropzone({onDrop, 
     accept: 'image/*'
-  })
+  });
 
-  async function handleAdicionar(){
+  const formatRepasse = (value) => {
+    const repasse = value.replace('.', ',');
+
+    return `R$ ${repasse}`;
+  }
+
+  const fetchPlantationData = async () => {
+    const plantations = await fetchPlantation(plantationId);
+    const result = plantations.dataValues;
+
+    if (plantations.archives.length > 0) {
+      let list = [];
+      plantations.archives.map((item) => {
+        list.push({base64: item.data, path: '', type: item.type, id: item.id})
+      })
+
+      setArchive(list);
+    }
+
+
+    setDate(new Date(result.date));
+    setLat(result.geolocation.lat);
+    setLng(result.geolocation.lng);
+    setTrees(result.trees);
+    if (plantations.repasse) {
+      setRepasse(formatRepasse(plantations.repasse))
+    }
+    setSelectedCompanies([result.company_id])
+    setSelectedPartners([result.partner_id])
+  }
+
+  useEffect(() => {
+    fetchPlantationData();
+  }, [])
+
+  async function handleEdit(){
     let valueRepasse = '';
     if (repasse.length > 0) {
       const aux = repasse.replace(/[^\d,]/g, '');
@@ -52,13 +88,20 @@ const AddPlantioModal = ({visible, onClose, handleButton}) => {
         repasse: valueRepasse
       }
 
-      const result = await createPlantations(newData);
+      await editPlantation(newData, plantationId);
+
+      let list = [];
+      archive.map((item) => {
+        if (!item.id) {
+          list.push(item);
+        }
+      })
 
       const data = {
-        data: archive,
+        data: list,
         company_id: selectedCompanies[0],
         partner_id: selectedPartners[0],
-        plantation_id: result.id,
+        plantation_id: plantationId,
       }
 
       await uploadPhoto(data);
@@ -70,6 +113,14 @@ const AddPlantioModal = ({visible, onClose, handleButton}) => {
   }
 
   const handleDeletePhoto = async (file) => {
+    if (file.id) {
+      try {
+        await deleteArchive(file.id);
+      }catch (err) {
+        console.log(err)
+      }
+    }
+
     const newArchive = archive.filter(item => item !== file);
 
     setArchive(newArchive);
@@ -80,7 +131,7 @@ const AddPlantioModal = ({visible, onClose, handleButton}) => {
             onClose={onClose} >
               <Styled.ViewContainer>
                 <Styled.TextTitle>
-                  Adicionar novo plantio
+                  Editar plantio
                 </Styled.TextTitle>
                 <Styled.FormBox>
                   <Styled.TextLabel>
@@ -91,7 +142,7 @@ const AddPlantioModal = ({visible, onClose, handleButton}) => {
                       locale="pt"
                       dateFormat="dd/MM/yyyy"
                       selected={date}
-                      onChange={(date) => setDate(date)} />
+                      onChange={(date) => console.log(date)} />
                   </Styled.DateDiv>
                   <Styled.CoordFormBox>
                     <Styled.FormBox>
@@ -175,25 +226,25 @@ const AddPlantioModal = ({visible, onClose, handleButton}) => {
                       </Styled.ImageViewer>
                     )}
                   </Styled.ViewContainer>
-                    {archive.length > 0 && <Styled.ArchiveButton {...getRootProps({className: 'dropzone'})}>
+                   {archive.length > 0 && <Styled.ArchiveButton {...getRootProps({className: 'dropzone'})}>
                       <input {...getInputProps()} />
                       <Styled.TextBody>
                         Arraste e solte aqui as fotos dos plantios
                       </Styled.TextBody>
                     </Styled.ArchiveButton>}
-                <Styled.ViewButton onClick={handleAdicionar}>
+                <Styled.ViewButton onClick={handleEdit}>
 									<Styled.TextButton>
-                    ADICIONAR
+                    SALVAR
 									</Styled.TextButton>
 								</Styled.ViewButton>
               </Styled.ViewContainer>
           </BaseModal>
 }
 
-AddPlantioModal.propTypes = {
+EditPlantioModal.propTypes = {
     visible: PropTypes.bool,
     onClose: PropTypes.func,
     handleButton: PropTypes.func,
   }
 
-export default AddPlantioModal;
+export default EditPlantioModal;

@@ -51,8 +51,17 @@ export const ViewContainer = styled.div`
   flex-direction: column;
   background-color: #fff;
   min-width: 600px;
+  max-height: 90vh;
   padding: 22px;
   border-radius: 20px;
+  overflow-y: scroll;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  ::-webkit-scrollbar {
+  display: none;
+}
 `;
 
 export const ModalContainer = styled(Modal)`

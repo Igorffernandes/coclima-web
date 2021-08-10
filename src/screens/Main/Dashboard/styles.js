@@ -195,3 +195,6 @@ export const FilterOptions = styled.div`
   align-items: center;
 `;
 
+export const Spacer = styled.div`
+  width: 20px;
+`;

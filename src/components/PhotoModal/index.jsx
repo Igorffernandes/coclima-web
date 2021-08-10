@@ -7,7 +7,7 @@ import {uploadPhoto} from 'services/archives';
 import Filter from 'components/Filter';
 
 const PhotoModal = ({visible, onClose, handleConfirm}) => {
-	const [image, setImage] = useState();
+	const [image, setImage] = useState()
   const [selectedCompanies, setSelectedCompanies] = useState([])
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -20,11 +20,11 @@ const PhotoModal = ({visible, onClose, handleConfirm}) => {
     })
     
   }, [])
+
   const {getRootProps, getInputProps, acceptedFiles} = useDropzone({onDrop, 
     accept: 'image/jpeg, image/png, image/jpg'
   })
 
-  
   const createPhoto = async () => {
     try{
       const newPhoto = {

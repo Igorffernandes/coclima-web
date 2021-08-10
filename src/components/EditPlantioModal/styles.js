@@ -108,6 +108,19 @@ export const DateDiv = styled.div`
   margin: 8px 0;
 `;
 
+export const ArchiveButton = styled.div`
+  height: 48px;
+  width: 471px;
+  border-radius: 20px;
+  background-color: #DBFCEB;
+  border: 1px solid #0A8F4A;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 18px;
+  flex-direction: column;
+`;
+
 export const ArchiveBox = styled.div`
   height: 243px;
   width: 471px;
@@ -165,17 +178,4 @@ export const ImageViewer = styled.div`
   flex-direction: row;
   flex-wrap: wrap;
   width: 100%;
-`;
-
-export const ArchiveButton = styled.div`
-  height: 48px;
-  width: 471px;
-  border-radius: 20px;
-  background-color: #DBFCEB;
-  border: 1px solid #0A8F4A;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 18px;
-  flex-direction: column;
 `;

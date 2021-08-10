@@ -1,11 +1,12 @@
 import BaseModal from 'components/BaseModal';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import * as Styled from './styles';
-import { useState } from 'react';
+import { useDropzone } from 'react-dropzone';
 import {createCompany} from 'services/companies';
 import { useToast } from 'hooks/ToastContext';
 
+import { companyRoles } from 'config/constants';
 
 const AddEmpresaModal = ({visible, onClose, handleButton}) => {
   const { addToast } = useToast();
@@ -16,9 +17,28 @@ const AddEmpresaModal = ({visible, onClose, handleButton}) => {
   const [number, setNumber] = useState('')
   const [city, setCity] = useState('')
   const [state, setState] = useState('')
+  const [complement, setComplement] = useState('')
+  const [district, setDistrict] = useState('')
   const [cep, setCep] = useState('')
   const [phone, setPhone] = useState('')
   const [site, setSite] = useState('')
+  const [role, setRole] = useState('')
+  const [image, setImage] = useState()
+
+  const onDrop = useCallback((acceptedFiles) => {
+    acceptedFiles.forEach((file) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+			reader.onload = () => {
+			   setImage(reader.result)
+				}
+    })
+    
+  }, [])
+
+  const {getRootProps, getInputProps} = useDropzone({onDrop, 
+    accept: 'image/jpeg, image/png, image/jpg'
+  })
 
   const createNewCompany = async () => {
     try{
@@ -28,12 +48,17 @@ const AddEmpresaModal = ({visible, onClose, handleButton}) => {
         cpfcnpj,
         street,
         number,
+        complement,
+        district,
         city,
         state,
         cep,
         phone,
         site,
+        role,
+        image,
       }
+
       await createCompany(newCompany);
       handleButton();
     } catch(err){
@@ -61,7 +86,7 @@ const AddEmpresaModal = ({visible, onClose, handleButton}) => {
                       <Styled.TextLabel>
                         Nome
                       </Styled.TextLabel>
-                      <Styled.MaterialInput 
+                      <Styled.MaterialInput
                         value={name}
                         onChange={(value) => setName(value.target.value)}
                         disableUnderline/>
@@ -77,84 +102,130 @@ const AddEmpresaModal = ({visible, onClose, handleButton}) => {
                     </Styled.FormDivCol>
                   </Styled.FormDiv>
                   <Styled.FormDiv>
-                  <Styled.FormDivCol>
-                    <Styled.TextLabel>
-                      CPFCNPJ
-                    </Styled.TextLabel>
-                    <Styled.MaterialInput 
-                      value={cpfcnpj}
-                      onChange={(value) => setCpfcnpj(value.target.value)}
-                      disableUnderline/>
-                  </Styled.FormDivCol>
-                  <Styled.FormDivCol>
-                    <Styled.TextLabel>
-                      Rua
-                    </Styled.TextLabel>
-                    <Styled.MaterialInput 
-                      value={street}
-                      onChange={(value) => setStreet(value.target.value)}
-                      disableUnderline/>
+                    <Styled.FormDivCol>
+                      <Styled.TextLabel>
+                        CPFCNPJ
+                      </Styled.TextLabel>
+                      <Styled.MaterialInput 
+                        value={cpfcnpj}
+                        onChange={(value) => setCpfcnpj(value.target.value)}
+                        disableUnderline/>
+                    </Styled.FormDivCol>
+                    <Styled.FormDivCol>
+                      <Styled.TextLabel>
+                        Rua
+                      </Styled.TextLabel>
+                      <Styled.MaterialInput 
+                        value={street}
+                        onChange={(value) => setStreet(value.target.value)}
+                        disableUnderline/>
                     </Styled.FormDivCol>
                   </Styled.FormDiv>
                   <Styled.FormDiv>
-                  <Styled.FormDivCol>
-                    <Styled.TextLabel>
-                      Numero
-                    </Styled.TextLabel>
-                    <Styled.MaterialInput 
-                      value={number}
-                      onChange={(value) => setNumber(value.target.value)}
-                      disableUnderline/>
-                  </Styled.FormDivCol>
-                  <Styled.FormDivCol>
-                    <Styled.TextLabel>
-                      Cidade
-                    </Styled.TextLabel>
-                    <Styled.MaterialInput 
-                      value={city}
-                      onChange={(value) => setCity(value.target.value)}
-                      disableUnderline/>
+                    <Styled.FormDivCol>
+                      <Styled.TextLabel>
+                        Numero
+                      </Styled.TextLabel>
+                      <Styled.MaterialInput 
+                        value={number}
+                        onChange={(value) => setNumber(value.target.value)}
+                        disableUnderline/>
+                    </Styled.FormDivCol>
+                    <Styled.FormDivCol>
+                      <Styled.TextLabel>
+                        Complemento
+                      </Styled.TextLabel>
+                      <Styled.MaterialInput 
+                        value={complement}
+                        onChange={(value) => setComplement(value.target.value)}
+                        disableUnderline/>
                     </Styled.FormDivCol>
                   </Styled.FormDiv>
                   <Styled.FormDiv>
-                  <Styled.FormDivCol>
-                    <Styled.TextLabel>
-                      Estado
-                    </Styled.TextLabel>
-                    <Styled.MaterialInput 
-                      value={state}
-                      onChange={(value) => setState(value.target.value)}
-                      disableUnderline/>
-                  </Styled.FormDivCol>
-                  <Styled.FormDivCol>
-                    <Styled.TextLabel>
-                      CEP
-                    </Styled.TextLabel>
-                    <Styled.MaterialInput 
-                      value={cep}
-                      onChange={(value) => setCep(value.target.value)}
-                      disableUnderline/>
+                    <Styled.FormDivCol>
+                      <Styled.TextLabel>
+                        Bairro
+                      </Styled.TextLabel>
+                      <Styled.MaterialInput 
+                        value={district}
+                        onChange={(value) => setDistrict(value.target.value)}
+                        disableUnderline/>
+                    </Styled.FormDivCol>
+                    <Styled.FormDivCol>
+                      <Styled.TextLabel>
+                        Cidade
+                      </Styled.TextLabel>
+                      <Styled.MaterialInput 
+                        value={city}
+                        onChange={(value) => setCity(value.target.value)}
+                        disableUnderline/>
                     </Styled.FormDivCol>
                   </Styled.FormDiv>
                   <Styled.FormDiv>
-                  <Styled.FormDivCol>
-                    <Styled.TextLabel>
-                      Telefone
-                    </Styled.TextLabel>
-                    <Styled.MaterialInput 
-                      value={phone}
-                      onChange={(value) => setPhone(value.target.value)}
-                      disableUnderline/>
-                  </Styled.FormDivCol>
-                  <Styled.FormDivCol>
-                    <Styled.TextLabel>
-                      Site
-                    </Styled.TextLabel>
-                    <Styled.MaterialInput 
-                      value={site}
-                      onChange={(value) => setSite(value.target.value)}
-                      disableUnderline/>
-                  </Styled.FormDivCol>
+                    <Styled.FormDivCol>
+                      <Styled.TextLabel>
+                        Estado
+                      </Styled.TextLabel>
+                      <Styled.MaterialInput 
+                        value={state}
+                        onChange={(value) => setState(value.target.value)}
+                        disableUnderline/>
+                    </Styled.FormDivCol>
+                    <Styled.FormDivCol>
+                      <Styled.TextLabel>
+                        CEP
+                      </Styled.TextLabel>
+                      <Styled.MaterialInput 
+                        value={cep}
+                        onChange={(value) => setCep(value.target.value)}
+                        disableUnderline/>
+                    </Styled.FormDivCol>
+                  </Styled.FormDiv>
+                  <Styled.FormDiv>
+                    <Styled.FormDivCol>
+                      <Styled.TextLabel>
+                        Telefone
+                      </Styled.TextLabel>
+                      <Styled.MaterialInput 
+                        value={phone}
+                        onChange={(value) => setPhone(value.target.value)}
+                        disableUnderline/>
+                    </Styled.FormDivCol>
+                    <Styled.FormDivCol>
+                      <Styled.TextLabel>
+                        Site
+                      </Styled.TextLabel>
+                      <Styled.MaterialInput 
+                        value={site}
+                        onChange={(value) => setSite(value.target.value)}
+                        disableUnderline/>
+                    </Styled.FormDivCol>
+                  </Styled.FormDiv>
+                  <Styled.FormDiv>
+                    <Styled.FormDivCol>
+                      <Styled.TextLabel>
+                        Tipo de cadastro
+                      </Styled.TextLabel>
+                      <Styled.MaterialSelect
+                        value={role}
+                        onChange={(value) => setRole(companyRoles.find(item => item.value === value.target.value).value)}
+                        disableUnderline>
+                          {companyRoles.map(item => (
+                            <option value={item.value}>{item.label}</option>
+                          ))}
+                      </Styled.MaterialSelect>
+                    </Styled.FormDivCol>
+                    <Styled.FormDivCol>
+                      <Styled.TextLabel>
+                        Carregue sua logo
+                      </Styled.TextLabel>
+                      <Styled.ArchiveBox {...getRootProps({className: 'dropzone'})}>
+                        <input {...getInputProps()} />
+                        <Styled.TextBody>
+                            Arraste sua foto aqui ou clique para pesquisar!
+                        </Styled.TextBody>
+                      </Styled.ArchiveBox>
+                    </Styled.FormDivCol>
                   </Styled.FormDiv>
                 </Styled.FormBox>
                 <Styled.ViewButton onClick={createNewCompany}>

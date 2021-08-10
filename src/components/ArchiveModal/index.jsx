@@ -5,14 +5,14 @@ import * as Styled from './styles';
 import {useDropzone} from 'react-dropzone';
 import {uploadPhoto} from 'services/archives';
 
-const ArchiveModal = ({visible, onClose}) => {
+const ArchiveModal = ({visible, onClose, title}) => {
   const [archive, setArchive] = useState([]);
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
       const reader = new FileReader()
       reader.readAsDataURL(file)
 			reader.onload = () => {
-        setArchive(archive => [...archive, {base64: reader.result, path: file.path}]);
+        setArchive(archive => [...archive, {base64: reader.result, path: file.path, type: file.type.split('/')[0]}]);
 				}
     })
     
@@ -22,21 +22,16 @@ const ArchiveModal = ({visible, onClose}) => {
     accept: 'image/*, .pdf'
   })
 
-  const createArquive = async (company_id = 1) => {
-    await archive.map(async (element) => {
-      try{
-        const newArchive = {
-          data: element.base64,
-          type: 'pdf',
-          company_id: company_id,
-          name: element.path,
-          keywords: 'archive'
-        }
-        await uploadPhoto(newArchive);
-      } catch(err){
-        console.log(err);
-      } 
-    })
+  const createArquive = async () => {
+    try{
+      const newArchive = {
+        data: archive,
+        keywords: title,
+      }
+      await uploadPhoto(newArchive);
+    } catch(err){
+      console.log(err);
+    };
   }
 
   async function handleButton(){

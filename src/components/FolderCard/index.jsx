@@ -1,45 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Base64Downloader from 'react-base64-downloader';
 
 import { 
-  Container, 
-  CardImage, 
-  NoImageDiv, 
-  FileIcon, 
-  FooterView, 
+  Container,
   FooterText, 
-  ButtonContainer, 
-  ButtonText, 
-  styleObjectButtonText,
+  ButtonContainer,
   FileItemTrash,
+  Body,
 } from './styles';
 
 const FolderCard = ({
   title,
-  type,
-  data,
+  onPressOpen,
   onPressDelete,
+  item,
 }) => {
   return(
   <Container>
-    {onPressDelete && <FileItemTrash onClick={onPressDelete}/>}
-    {type === 'image' && <CardImage src={`${data}`}/>}
-    {type === 'pdf' && <NoImageDiv><FileIcon /></NoImageDiv>}
-    <FooterView>
-      <FooterText>{title}</FooterText>
-      <ButtonContainer>
-        {type==='image' && <Base64Downloader 
-          Tag="a" 
-          base64={data} 
-          style={styleObjectButtonText} 
-          downloadName={title}
-        >
-          Baixar
-        </Base64Downloader>}
-        {type === 'pdf' && <ButtonText href={data} download={`${title}`}>BAIXAR</ButtonText>}
-      </ButtonContainer>
-    </FooterView>
+      <FileItemTrash onClick={() => onPressDelete(item.id)}/>
+      <Body>
+        <FooterText>{title}</FooterText>
+        <ButtonContainer onClick={() => onPressOpen(title)}>Abrir</ButtonContainer>
+      </Body>
   </Container>)
 }
 

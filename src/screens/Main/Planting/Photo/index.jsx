@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Container, Header, Title, SubView, FoldersView } from './styles';
-import FolderCard from 'components/FolderCard';
+import ItemCard from 'components/ItemCard';
 import ConfirmDeleteModal from 'components/ConfirmDeleteModal';
 
 import { fetchArchives, deleteArchive } from 'services/archives';
@@ -44,7 +44,7 @@ const Photo = () => {
       <SubView>
         <FoldersView>
           {archives.length > 0 && archives.map(item => 
-            <FolderCard 
+            <ItemCard 
               type={item.type} 
               data={item.data} 
               onPressDelete={() => setModal({...modal, open: true, id: item.id})} 
