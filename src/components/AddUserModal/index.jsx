@@ -5,15 +5,45 @@ import * as Styled from './styles';
 import { createUser } from 'services/users';
 import Filter from 'components/Filter';
 import { userRoles } from 'config/constants';
+import { useToast } from '../../hooks/ToastContext.jsx';
 
 const AddUserModal = ({visible, onClose, handleButton}) => {
+  const { addToast } = useToast();
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [selectedCompanies, setSelectedCompanies] = useState([])
   const [role, setRole] = useState('')
   const [password, setPassword] = useState('')
 
+  async function validateFields() {
+    let message;
+
+    if (name.length === 0) return 'Nome deve ser valido!';
+    
+    if (email.length === 0) return 'Email deve ser valido!';
+
+    if (role.length === 0) return 'Tipo de Usuário deve ser valido!';
+
+    if (password.length === 0) return 'Senha deve ser valido!';
+
+    if (selectedCompanies.length === 0) return 'Empresa deve ser valido!';
+
+    return null;
+  }
+
   async function handleAdicionar(){
+    const validate = await validateFields();
+
+    if (validate) {
+      addToast({
+        type: 'error',
+        title: 'Ops!',
+        description: `${validate}`,
+      });
+
+      return false;
+    }
+
     try{
       const newData = {
         name,
@@ -27,7 +57,11 @@ const AddUserModal = ({visible, onClose, handleButton}) => {
 
       handleButton();
     } catch(err) {
-      console.log(err);
+      addToast({
+        type: 'error',
+        title: 'Ops!',
+        description: `${err.message}`,
+      });
     }
   }
 
@@ -36,7 +70,7 @@ const AddUserModal = ({visible, onClose, handleButton}) => {
             onClose={onClose} >
               <Styled.ViewContainer>
                 <Styled.TextTitle>
-                  Adicionar nova Usuário
+                  Adicionar novo Usuário
                 </Styled.TextTitle>
                 <Styled.FormBox>
                   <Styled.CoordFormBox>

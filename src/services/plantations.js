@@ -19,6 +19,15 @@ export async function fetchPlantation(plantationId) {
   }
 }
 
+export async function fetchTreesCompanies(companyId) {
+  try {
+    const result = await http.get(`${plantations}_trees/${companyId}`);
+    return result.data;
+  } catch(err){
+    throw err;
+  }
+}
+
 export async function createPlantations(values) {
   try {
     const result = await http.post(plantations, values);

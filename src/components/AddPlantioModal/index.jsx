@@ -1,25 +1,30 @@
 import BaseModal from 'components/BaseModal';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import * as Styled from './styles';
-import { createPlantations } from 'services/plantations';
+import { createPlantations, fetchTreesCompanies } from 'services/plantations';
 import { uploadPhoto } from 'services/archives';
 import Filter from 'components/Filter';
-import DatePicker, {registerLocale} from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import pt from 'date-fns/locale/pt-BR';
-import {useDropzone} from 'react-dropzone';
+import { useDropzone } from 'react-dropzone';
+import { useToast } from '../../hooks/ToastContext.jsx'
 
 const AddPlantioModal = ({visible, onClose, handleButton}) => {
   registerLocale('pt', pt)
+  const { addToast } = useToast();
   const [date, setDate] = useState(new Date());
-  const [lat, setLat] = useState('')
-  const [lng, setLng] = useState('')
-  const [trees, setTrees] = useState('')
-  const [repasse, setRepasse] = useState('')
-  const [selectedCompanies, setSelectedCompanies] = useState([])
-  const [selectedPartners, setSelectedPartners] = useState([])
-  const [archive, setArchive] = useState([])
+  const [dateRepasse, setDateRepasse] = useState(new Date());
+  const [lat, setLat] = useState('');
+  const [lng, setLng] = useState('');
+  const [trees, setTrees] = useState('');
+  const [repasse, setRepasse] = useState('');
+  const [treeValue, setTreeValue] = useState('');
+  const [selectedCompanies, setSelectedCompanies] = useState([]);
+  const [selectedPartners, setSelectedPartners] = useState([]);
+  const [archive, setArchive] = useState([]);
+  const [treesLeft, setTreesLeft] = useState(0);
 
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.forEach((file) => {
@@ -35,21 +40,82 @@ const AddPlantioModal = ({visible, onClose, handleButton}) => {
     accept: 'image/*'
   })
 
+  useEffect(() => {
+    const fetchTrees = async () => {
+      if (treeValue.length > 0) {
+        const { data } = await fetchTreesCompanies(selectedCompanies[0]);
+        const aux = treeValue.replace(/[^\d,]/g, '');
+        const treeValueFormated = aux.replace(',', '.');  
+        const treesCount = data / treeValueFormated;
+        const treeSome = Number(trees) > 0 ? treesCount - Number(trees) : treesCount;
+        setTreesLeft(treeSome >= 0 ? Math.trunc(treeSome) : 0);
+      }
+    }
+
+    if (selectedCompanies.length > 0) {
+      fetchTrees();
+    }
+  }, [selectedCompanies, trees, treeValue]);
+
+  async function validateFields() {
+    let message;
+
+    if (date.length === 0) return 'A data deve ser valido!';
+
+    if (dateRepasse.length === 0) return 'A data de repasse deve ser valido!';
+
+    if (treeValue.length === 0) return 'O valor da arvore deve ser valido!';
+
+    if (lat.length === 0) return 'A Latitude deve ser valido!';
+    
+    if (lng.length === 0) return 'A Longitude deve ser valido!';
+
+    if (trees.length === 0) return 'Quantidade de arvores deve ser valido!';
+
+    if (repasse.length === 0) return 'O valor do repasse deve ser valido!';
+
+    if (selectedCompanies.length === 0) return 'Empresa deve ser valido!';
+
+    if (selectedPartners.length === 0) return 'Parceiro deve ser valido!';
+
+    return null;
+  }
+
   async function handleAdicionar(){
+    const validate = await validateFields();
+
+    if (validate) {
+      addToast({
+        type: 'error',
+        title: 'Ops!',
+        description: `${validate}`,
+      });
+
+      return false;
+    }
+
     let valueRepasse = '';
+    let treeValueFormated = '';
     if (repasse.length > 0) {
       const aux = repasse.replace(/[^\d,]/g, '');
       valueRepasse = aux.replace(',', '.'); 
     }
 
+    if (treeValue.length > 0) {
+      const aux = treeValue.replace(/[^\d,]/g, '');
+      treeValueFormated = aux.replace(',', '.');
+    }
+
     try{
       const newData = {
         date,
+        date_repasse: dateRepasse,
         geolocation: {lat: Number(lat), lng: Number(lng)},
         trees,
         company_id: selectedCompanies[0],
         partner_id: selectedPartners[0],
-        repasse: valueRepasse
+        repasse: valueRepasse,
+        tree_value: treeValueFormated,
       }
 
       const result = await createPlantations(newData);
@@ -83,16 +149,62 @@ const AddPlantioModal = ({visible, onClose, handleButton}) => {
                   Adicionar novo plantio
                 </Styled.TextTitle>
                 <Styled.FormBox>
-                  <Styled.TextLabel>
-                    Data
-                  </Styled.TextLabel>
-                  <Styled.DateDiv>
-                    <DatePicker
-                      locale="pt"
-                      dateFormat="dd/MM/yyyy"
-                      selected={date}
-                      onChange={(date) => setDate(date)} />
-                  </Styled.DateDiv>
+                  <Styled.DivFilter>
+                    <Filter
+                      type={'company'}
+                      value={'Empresa'}
+                      selectedCompanies={selectedCompanies} 
+                      setSelectedCompanies={setSelectedCompanies}
+                      singleCompany={true}
+                    />
+                    <Filter
+                      type={'partner'}
+                      value={'Parceiro'}
+                      selectedCompanies={selectedPartners} 
+                      setSelectedCompanies={setSelectedPartners}
+                      singleCompany={true}
+                    />
+                  </Styled.DivFilter>
+                  <Styled.CoordFormBox>
+                    <Styled.FormBox>
+                      <Styled.TextLabel>
+                        Data Plantio
+                      </Styled.TextLabel>
+                      <Styled.DateDiv>
+                        <DatePicker
+                          locale="pt"
+                          dateFormat="dd/MM/yyyy"
+                          selected={date}
+                          onChange={(date) => setDate(date)} />
+                      </Styled.DateDiv>
+                    </Styled.FormBox>
+                    <Styled.FormBox>
+                      {treeValue && selectedCompanies.length > 0 && `Esta empresa tem ${treesLeft} arvores em haver`}
+                    </Styled.FormBox>
+                  </Styled.CoordFormBox>
+                  <Styled.CoordFormBox>
+                    <Styled.FormBox>
+                      <Styled.TextLabel>
+                        Data Repasse
+                      </Styled.TextLabel>
+                      <Styled.DateDiv>
+                        <DatePicker
+                          locale="pt"
+                          dateFormat="dd/MM/yyyy"
+                          selected={dateRepasse}
+                          onChange={(date) => setDateRepasse(date)} />
+                      </Styled.DateDiv>
+                    </Styled.FormBox>
+                    <Styled.FormBox>
+                      <Styled.TextLabel>
+                        Valor da Árvore
+                      </Styled.TextLabel>
+                      <Styled.MaterialInput
+                        value={treeValue}
+                        onChange={(value) => setTreeValue(value.target.value)}
+                        disableUnderline/>
+                    </Styled.FormBox>
+                  </Styled.CoordFormBox>
                   <Styled.CoordFormBox>
                     <Styled.FormBox>
                       <Styled.TextLabel>
@@ -134,22 +246,6 @@ const AddPlantioModal = ({visible, onClose, handleButton}) => {
                     </Styled.FormBox>
                     </Styled.CoordFormBox>
                   </Styled.FormBox>
-                  <Styled.DivFilter>
-                    <Filter
-                      type={'company'}
-                      value={'Empresa'}
-                      selectedCompanies={selectedCompanies} 
-                      setSelectedCompanies={setSelectedCompanies}
-                      singleCompany={true}
-                    />
-                    <Filter
-                      type={'partner'}
-                      value={'Parceiro'}
-                      selectedCompanies={selectedPartners} 
-                      setSelectedCompanies={setSelectedPartners}
-                      singleCompany={true}
-                    />
-                  </Styled.DivFilter>
                   <Styled.ViewContainer>
                     {archive.length === 0 ? 
                     (
