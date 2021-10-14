@@ -1,47 +1,63 @@
 import styled from 'styled-components';
 import colors from '../../../../styles/colors';
+import Button from "@material-ui/core/Button";
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
   background-color: #FFFFFF;
-  height: 100vh;
+
+  @media(min-width: 800px) {
+    height: 100vh;
+  }
 `;
 
 export const Logo = styled.img`
-  height: 6vw;
+  height: 70px;
+
+  @media(max-width: 800px) {
+    height: 40px;
+  }
 `;
 
 export const Description = styled.a`
   font-family: 'Inter';
   font-size: 24px;
-  text-align: justify;
+  text-align: center;
   color: ${colors.pretoDaMassa};
-  margin: 0 50px 0 50px;
+  width: 85vw;
+
+  @media(max-width: 800px) {
+    font-size: 16px;
+  }
 `;
 
-export const Right = styled.div`
+export const ContainerDown = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 40vw;
-  height: 100%;
-`;
-
-export const Spacer = styled.div`
-  height: 6vh;
-`;
-
-export const Left = styled.div`
-  display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   width: 60vw;
-  height: 100%;
+
+  @media(max-width: 800px) {
+    width: 100vw;
+    flex-direction: column;
+  }
+`;
+
+export const Spacer = styled.div`
+  height: 2vh;
+`;
+
+export const ContainerUp = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  margin: 15px 0 15px 0;
 `;
 
 export const FormItem = styled.div`
@@ -61,4 +77,37 @@ export const FormTitle = styled.a`
   color: #3e4054;
   font-size: medium;
   font-family: "Inter";
+`;
+
+export const FormLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50vw;
+`;
+
+export const FormRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50vw;
+`;
+
+export const FinishButton = styled(Button)`
+  margin-top: 20px;
+  color: ${colors.brancoDaMassa};
+  border-radius: 6px;
+  font-weight: bold;
+  font-family: 'Inter';
+  padding-top: 8px;
+  padding-bottom: 8px;
+  width: 500px;
+  align-self: 'center';
+
+  @media(max-width: 800px) {
+    width: 200px;
+    margin-bottom: 25px;
+  }
 `;

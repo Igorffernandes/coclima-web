@@ -7,37 +7,52 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #ffffff;
-  height: 100vh;
 `;
 
 export const Logo = styled.img`
-  height: 5vw;
-  min-height: 35px;
+  height: 100px;
+
+  @media(max-width: 800px) {
+    height: 50px;
+  }
 `;
 
 export const Description = styled.a`
   font-family: 'Inter';
-  font-size: 1.2vw;
+  font-size: 20px;
   text-align: start;
   color: ${colors.pretoDaMassa};
+
+  @media(max-width: 800px) {
+    font-size: 16px;
+  }
 `;
 
 export const DescriptionLink = styled.a`
   font-family: 'Inter';
-  font-size: 1.2vw;
+  font-size: 20px;
   text-align: start;
   margin-top: 10px;
   font-weight: 600;
   color: #004AAD;
   cursor: pointer;
+
+  @media(max-width: 800px) {
+    font-size: 16px;
+  }
 `;
 
 export const BulletDescription = styled.a`
   font-family: 'Inter';
-  font-size: 1.2vw;
+  font-size: 20px;
   text-align: start;
+  margin-top: 10px;
   margin-left: 10px;
   color: ${colors.pretoDaMassa};
+
+  @media(max-width: 800px) {
+    font-size: 16px;
+  }
 `;
 
 export const Header = styled.div`
@@ -54,7 +69,11 @@ export const Body = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 100vw;
+
+  @media(max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 
 export const ItemWithImage = styled.div`
@@ -73,10 +92,15 @@ export const LeftContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-left: 6vw;
+  margin-left: 120px;
   justify-content: center;
   width: 50vw;
   min-width: 100px;
+
+  @media(max-width: 800px) {
+    margin-left: 10px;
+    width: 90vw;
+  }
 `;
 
 export const RightContainer = styled.div`
@@ -85,6 +109,10 @@ export const RightContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 50vw;
+
+  @media(max-width: 800px) {
+    width: 80vw;
+  }
 `;
 
 export const Item = styled.div`
@@ -99,6 +127,10 @@ export const ImageItem = styled.div`
   flex-direction: row;
   justify-content: start;
   margin: 20px 0 20px 0;
+
+  @media(max-width: 800px) {
+    flex-direction: column;
+  }
 `;
 
 export const Pin = styled.div`
@@ -115,12 +147,21 @@ export const Pin = styled.div`
 
 export const Image = styled.img`
   margin-left: 15px;
-  height: 10vw;
+  height: 190px;
+
+  @media(max-width: 800px) {
+    margin-left: 0px;
+    height: 150px;
+  }
 `;
 
 export const ImageLeft = styled.img`
-  height: 12vw;
+  height: 230px;
   margin-right: 100px;
+
+  @media(max-width: 800px) {
+    height: 100px;
+  }
 `;
 
 export const Loading = styled.div`

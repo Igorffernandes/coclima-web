@@ -54,7 +54,7 @@ const Callback = () => {
 
       if (result) {
         window.location.assign('/'); 
-        //TODO já fazer o login
+        //TODO: já fazer o login
       }
     } catch(e) {
       setLoading(false);
@@ -136,6 +136,7 @@ const Callback = () => {
             width: '30%',
             minWidth: 200,
             alignSelf: 'center',
+            marginBottom: 15,
           }}
           onClick={handleInstallApp}
         >
